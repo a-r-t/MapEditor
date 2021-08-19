@@ -30,6 +30,8 @@
         {
             this.mapPictureBox = new System.Windows.Forms.PictureBox();
             this.mapPanel = new System.Windows.Forms.Panel();
+            this.widthLabel = new System.Windows.Forms.Label();
+            this.heightLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).BeginInit();
             this.mapPanel.SuspendLayout();
             this.SuspendLayout();
@@ -46,26 +48,53 @@
             // 
             // mapPanel
             // 
+            this.mapPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.mapPanel.AutoScroll = true;
             this.mapPanel.BackColor = System.Drawing.Color.Black;
             this.mapPanel.Controls.Add(this.mapPictureBox);
-            this.mapPanel.Dock = System.Windows.Forms.DockStyle.Fill;
             this.mapPanel.Location = new System.Drawing.Point(0, 0);
             this.mapPanel.Name = "mapPanel";
-            this.mapPanel.Size = new System.Drawing.Size(150, 150);
+            this.mapPanel.Size = new System.Drawing.Size(150, 128);
             this.mapPanel.TabIndex = 1;
+            // 
+            // widthLabel
+            // 
+            this.widthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.widthLabel.AutoSize = true;
+            this.widthLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.widthLabel.Location = new System.Drawing.Point(3, 131);
+            this.widthLabel.Name = "widthLabel";
+            this.widthLabel.Size = new System.Drawing.Size(41, 14);
+            this.widthLabel.TabIndex = 2;
+            this.widthLabel.Text = "Width:";
+            // 
+            // heightLabel
+            // 
+            this.heightLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.heightLabel.AutoSize = true;
+            this.heightLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.heightLabel.Location = new System.Drawing.Point(71, 131);
+            this.heightLabel.Name = "heightLabel";
+            this.heightLabel.Size = new System.Drawing.Size(45, 14);
+            this.heightLabel.TabIndex = 3;
+            this.heightLabel.Text = "Height:";
             // 
             // MapBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.heightLabel);
+            this.Controls.Add(this.widthLabel);
             this.Controls.Add(this.mapPanel);
             this.Name = "MapBuilder";
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MapBuilder_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).EndInit();
             this.mapPanel.ResumeLayout(false);
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -73,5 +102,7 @@
 
         private System.Windows.Forms.PictureBox mapPictureBox;
         private System.Windows.Forms.Panel mapPanel;
+        private System.Windows.Forms.Label widthLabel;
+        private System.Windows.Forms.Label heightLabel;
     }
 }

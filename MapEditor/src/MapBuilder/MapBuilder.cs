@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MapEditor.src.TilePicker;
 using PSA2.src.ExtentionMethods;
+using MapEditor.src.ExtensionMethods;
 
 namespace MapEditor.src.MapBuilder
 {
@@ -23,7 +24,10 @@ namespace MapEditor.src.MapBuilder
             
             map = new Map();
             map.LoadMap("./Resources/MapFiles/test_map.txt", new Tileset("./Resources/Tilesets/CommonTileset.png", 16, 16, 3));
-            DrawMap();            
+            DrawMap();
+            widthLabel.Text = $"Width: {map.Width}";
+            heightLabel.Text = $"Height: {map.Height}";
+            heightLabel.Location = new Point(widthLabel.Location.X + widthLabel.Width + 10, heightLabel.Location.Y);
         }
 
         private void DrawMap()
