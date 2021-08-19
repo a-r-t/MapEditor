@@ -12,8 +12,25 @@ namespace MapEditor.src.MapBuilder
     public class Map
     {
         public int[] MapTiles { get; private set; }
-        private int width;
-        private int height;
+        public int Width { get; private set; }
+        public int Height { get; private set; }
+        
+        public int WidthInPixels
+        {
+            get
+            {
+                return Width * tileset.TilesetScaledWidth;
+            }
+        }
+
+        public int HeightInPixels
+        {
+            get
+            {
+                return Height * tileset.TilesetScaledHeight;
+            }
+        }
+
         private Tileset tileset;
 
         public Map()
@@ -28,10 +45,10 @@ namespace MapEditor.src.MapBuilder
             using (StreamReader sr = File.OpenText(mapFileName))
             {
                 string[] dimensions = sr.ReadLine().Split(' ');
-                width = int.Parse(dimensions[0]);
-                height = int.Parse(dimensions[1]);
+                Width = int.Parse(dimensions[0]);
+                Height = int.Parse(dimensions[1]);
 
-                MapTiles = new int[width * height];
+                MapTiles = new int[Width * Height];
                 string indexes = String.Empty;
                 int heightCounter = 0;
                 while ((indexes = sr.ReadLine()) != null)
@@ -49,7 +66,7 @@ namespace MapEditor.src.MapBuilder
 
         private int GetConvertedIndex(int x, int y)
         {
-            return x + width * y;
+            return x + Width * y;
         }
 
         public int GetMapTile(int x, int y)
@@ -64,9 +81,9 @@ namespace MapEditor.src.MapBuilder
 
         public void PrintMap()
         {
-            for (int i = 0; i < height; i++)
+            for (int i = 0; i < Height; i++)
             {
-                for (int j = 0; j < width; j++)
+                for (int j = 0; j < Width; j++)
                 {
                     Console.Write($"{GetMapTile(j, i)} ");
                 }
@@ -76,6 +93,7 @@ namespace MapEditor.src.MapBuilder
 
         public void Paint(Graphics graphics)
         {
+            
             Bitmap tilesetImage = new Bitmap("./Resources/Tilesets/CommonTileset.png");
             graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
@@ -84,8 +102,8 @@ namespace MapEditor.src.MapBuilder
             for (int i = 0; i < MapTiles.Length; i++)
             {
                 int tileIndex = MapTiles[i];
-                int row = i / width;
-                int column = i % width;
+                int row = i / Width;
+                int column = i % Width;
                 Rectangle tileSubImageRect = tileset.GetTileSubImageRectangle(tileIndex);
                 Console.WriteLine($"Tile sub image: {tileSubImageRect}");
                 Bitmap tilesetSubImage = tilesetImage.Clone(tileSubImageRect, tilesetImage.PixelFormat);

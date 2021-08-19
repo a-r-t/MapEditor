@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MapEditor.src.TilePicker;
+using PSA2.src.ExtentionMethods;
 
 namespace MapEditor.src.MapBuilder
 {
@@ -18,8 +19,21 @@ namespace MapEditor.src.MapBuilder
         public MapBuilder()
         {
             InitializeComponent();
+            //mapPanel.DoubleBuffered(true);
+            
             map = new Map();
             map.LoadMap("./Resources/MapFiles/test_map.txt", new Tileset("./Resources/Tilesets/CommonTileset.png", 16, 16, 3));
+            DrawMap();            
+        }
+
+        private void DrawMap()
+        {
+            mapPictureBox.Image = new Bitmap(map.WidthInPixels, map.HeightInPixels);
+            mapPictureBox.ClientSize = mapPictureBox.Image.Size;
+            using (Graphics graphics = Graphics.FromImage(mapPictureBox.Image))
+            {
+                map.Paint(graphics);
+            }
         }
 
         private void MapBuilder_Paint(object sender, PaintEventArgs e)
@@ -29,7 +43,23 @@ namespace MapEditor.src.MapBuilder
 
         protected override void OnPaint(PaintEventArgs e)
         {
-            map.Paint(e.Graphics);
+        }
+
+        private void mapPanel_Paint(object sender, PaintEventArgs e)
+        {
+            //map.Paint(e.Graphics);
+        }
+
+        private void mapPanel_Scroll(object sender, ScrollEventArgs e)
+        {
+            //mapPanel.Invalidate();
+        }
+
+        private void mapPictureBox_Paint(object sender, PaintEventArgs e)
+        {
+
+            //map.Paint(e.Graphics);
+
         }
     }
 }
