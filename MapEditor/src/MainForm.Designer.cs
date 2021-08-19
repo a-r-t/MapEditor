@@ -29,8 +29,8 @@
         private void InitializeComponent()
         {
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
-            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.mapListPanel = new System.Windows.Forms.Panel();
+            this.splitContainer2 = new System.Windows.Forms.SplitContainer();
             this.mapBuilderPanel = new System.Windows.Forms.Panel();
             this.tilePickerPanel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -61,6 +61,14 @@
             this.splitContainer1.SplitterDistance = 146;
             this.splitContainer1.TabIndex = 0;
             // 
+            // mapListPanel
+            // 
+            this.mapListPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapListPanel.Location = new System.Drawing.Point(0, 0);
+            this.mapListPanel.Name = "mapListPanel";
+            this.mapListPanel.Size = new System.Drawing.Size(146, 450);
+            this.mapListPanel.TabIndex = 0;
+            // 
             // splitContainer2
             // 
             this.splitContainer2.Dock = System.Windows.Forms.DockStyle.Fill;
@@ -78,14 +86,7 @@
             this.splitContainer2.Size = new System.Drawing.Size(650, 450);
             this.splitContainer2.SplitterDistance = 486;
             this.splitContainer2.TabIndex = 0;
-            // 
-            // mapListPanel
-            // 
-            this.mapListPanel.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.mapListPanel.Location = new System.Drawing.Point(0, 0);
-            this.mapListPanel.Name = "mapListPanel";
-            this.mapListPanel.Size = new System.Drawing.Size(146, 450);
-            this.mapListPanel.TabIndex = 0;
+            this.splitContainer2.SplitterMoved += new System.Windows.Forms.SplitterEventHandler(this.splitContainer2_SplitterMoved);
             // 
             // mapBuilderPanel
             // 

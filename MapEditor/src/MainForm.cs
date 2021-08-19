@@ -35,5 +35,11 @@ namespace MapEditor
             tilePickerPanel.Controls.Add(tilePicker);
             tilePicker.Dock = DockStyle.Fill;
         }
+
+        private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
+        {
+            tilePicker.TilePickerRepaint = true;
+            tilePicker.Invalidate();
+        }
     }
 }

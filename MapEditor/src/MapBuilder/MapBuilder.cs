@@ -24,7 +24,7 @@ namespace MapEditor.src.MapBuilder
             //mapPanel.DoubleBuffered(true);
             
             map = new Map();
-            map.LoadMap("./Resources/MapFiles/test_map.txt", new Tileset("./Resources/Tilesets/CommonTileset.png", 16, 16, 3));
+            map.LoadMap("./Resources/MapFiles/test_map.txt");
             DrawMap();
             widthLabel.Text = $"Width: {map.Width}";
             heightLabel.Text = $"Height: {map.Height}";
@@ -62,8 +62,6 @@ namespace MapEditor.src.MapBuilder
 
         private void mapPictureBox_Paint(object sender, PaintEventArgs e)
         {
-
-            //map.Paint(e.Graphics);
             if (mapRepaint)
             {
                 map.Paint(e.Graphics);

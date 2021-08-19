@@ -28,18 +28,47 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.tilePickerPanel = new System.Windows.Forms.Panel();
+            this.tilePickerPictureBox = new System.Windows.Forms.PictureBox();
+            this.tilePickerPanel.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.tilePickerPictureBox)).BeginInit();
             this.SuspendLayout();
+            // 
+            // tilePickerPanel
+            // 
+            this.tilePickerPanel.AutoScroll = true;
+            this.tilePickerPanel.Controls.Add(this.tilePickerPictureBox);
+            this.tilePickerPanel.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.tilePickerPanel.Location = new System.Drawing.Point(0, 0);
+            this.tilePickerPanel.Name = "tilePickerPanel";
+            this.tilePickerPanel.Size = new System.Drawing.Size(150, 150);
+            this.tilePickerPanel.TabIndex = 0;
+            // 
+            // tilePickerPictureBox
+            // 
+            this.tilePickerPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.tilePickerPictureBox.Name = "tilePickerPictureBox";
+            this.tilePickerPictureBox.Size = new System.Drawing.Size(144, 144);
+            this.tilePickerPictureBox.TabIndex = 0;
+            this.tilePickerPictureBox.TabStop = false;
+            this.tilePickerPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.tilePickerPictureBox_Paint);
             // 
             // TilePicker
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ControlDark;
+            this.BackColor = System.Drawing.Color.Black;
+            this.Controls.Add(this.tilePickerPanel);
             this.Name = "TilePicker";
+            this.tilePickerPanel.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.tilePickerPictureBox)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.Panel tilePickerPanel;
+        private System.Windows.Forms.PictureBox tilePickerPictureBox;
     }
 }

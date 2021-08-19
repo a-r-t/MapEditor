@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapEditor.src.MapBuilder;
+using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Linq;
@@ -10,6 +11,8 @@ namespace MapEditor.src.TilePicker
     public class Tileset
     {
         public string TilesetImageFile { get; private set; }
+        public Tile[] Tiles { get; private set; }
+        public Bitmap TilesetImage { get; private set; }
         public int TilesetImageWidth { get; private set; }
         public int TilesetImageHeight { get; private set; }
         public int TileWidth { get; private set; }
@@ -31,18 +34,31 @@ namespace MapEditor.src.TilePicker
         }
         private int numberOfRows;
         private int numberOfColumns;
+        public int NumberOfTiles
+        {
+            get
+            {
+                return numberOfRows * numberOfColumns;
+            }
+        }
 
         public Tileset(string tilesetImageFile, int tileWidth, int tileHeight, int tileScale)
         {
             TilesetImageFile = tilesetImageFile;
-            Bitmap tilesetImage = new Bitmap(tilesetImageFile);
-            TilesetImageWidth = tilesetImage.Width;
-            TilesetImageHeight = tilesetImage.Height;
+            TilesetImage = new Bitmap(tilesetImageFile);
+            TilesetImageWidth = TilesetImage.Width;
+            TilesetImageHeight = TilesetImage.Height;
             TileWidth = tileWidth;
             TileHeight = tileHeight;
             TileScale = tileScale;
             numberOfRows = TilesetImageHeight / TileHeight;
             numberOfColumns = TilesetImageWidth / TileWidth;
+
+            Tiles = new Tile[NumberOfTiles];
+            for (int i = 0; i < NumberOfTiles; i++)
+            {
+                Tiles[i] = new Tile(i, GetTileSubImage(i));
+            }
         }
 
         public Rectangle GetTileSubImageRectangle(int index)
@@ -50,6 +66,12 @@ namespace MapEditor.src.TilePicker
             int row = index / numberOfColumns;
             int column = index % numberOfColumns;
             return new Rectangle(column + (TileWidth * column), row + (TileHeight * row), TileWidth, TileHeight);
+        }
+
+        public Bitmap GetTileSubImage(int index)
+        {
+            Rectangle tileSubImageRect = GetTileSubImageRectangle(index);
+            return TilesetImage.Clone(tileSubImageRect, TilesetImage.PixelFormat);
         }
     }
 }

@@ -65,6 +65,7 @@
       <DependentUpon>MapBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="src\MapBuilder\MapBuilderListener.cs" />
+    <Compile Include="src\MapBuilder\Tile.cs" />
     <Compile Include="src\MapList\MapList.cs">
       <SubType>UserControl</SubType>
     </Compile>
