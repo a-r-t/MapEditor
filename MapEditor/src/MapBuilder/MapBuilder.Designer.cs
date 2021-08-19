@@ -32,6 +32,7 @@
             this.mapPanel = new System.Windows.Forms.Panel();
             this.widthLabel = new System.Windows.Forms.Label();
             this.heightLabel = new System.Windows.Forms.Label();
+            this.selectedTileIndexLabel = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).BeginInit();
             this.mapPanel.SuspendLayout();
             this.SuspendLayout();
@@ -45,6 +46,9 @@
             this.mapPictureBox.TabIndex = 0;
             this.mapPictureBox.TabStop = false;
             this.mapPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.mapPictureBox_Paint);
+            this.mapPictureBox.MouseEnter += new System.EventHandler(this.mapPictureBox_MouseEnter);
+            this.mapPictureBox.MouseLeave += new System.EventHandler(this.mapPictureBox_MouseLeave);
+            this.mapPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapPictureBox_MouseMove);
             // 
             // mapPanel
             // 
@@ -56,7 +60,7 @@
             this.mapPanel.Controls.Add(this.mapPictureBox);
             this.mapPanel.Location = new System.Drawing.Point(0, 0);
             this.mapPanel.Name = "mapPanel";
-            this.mapPanel.Size = new System.Drawing.Size(150, 128);
+            this.mapPanel.Size = new System.Drawing.Size(181, 128);
             this.mapPanel.TabIndex = 1;
             // 
             // widthLabel
@@ -75,21 +79,35 @@
             this.heightLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.heightLabel.AutoSize = true;
             this.heightLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightLabel.Location = new System.Drawing.Point(71, 131);
+            this.heightLabel.Location = new System.Drawing.Point(50, 131);
             this.heightLabel.Name = "heightLabel";
             this.heightLabel.Size = new System.Drawing.Size(45, 14);
             this.heightLabel.TabIndex = 3;
             this.heightLabel.Text = "Height:";
+            // 
+            // selectedTileIndexLabel
+            // 
+            this.selectedTileIndexLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
+            this.selectedTileIndexLabel.AutoSize = true;
+            this.selectedTileIndexLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.selectedTileIndexLabel.Location = new System.Drawing.Point(105, 131);
+            this.selectedTileIndexLabel.Name = "selectedTileIndexLabel";
+            this.selectedTileIndexLabel.Size = new System.Drawing.Size(35, 14);
+            this.selectedTileIndexLabel.TabIndex = 4;
+            this.selectedTileIndexLabel.Text = "X: , Y:";
+            this.selectedTileIndexLabel.Visible = false;
             // 
             // MapBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.selectedTileIndexLabel);
             this.Controls.Add(this.heightLabel);
             this.Controls.Add(this.widthLabel);
             this.Controls.Add(this.mapPanel);
             this.Name = "MapBuilder";
+            this.Size = new System.Drawing.Size(181, 150);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.MapBuilder_Paint);
             ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).EndInit();
             this.mapPanel.ResumeLayout(false);
@@ -104,5 +122,6 @@
         private System.Windows.Forms.Panel mapPanel;
         private System.Windows.Forms.Label widthLabel;
         private System.Windows.Forms.Label heightLabel;
+        private System.Windows.Forms.Label selectedTileIndexLabel;
     }
 }

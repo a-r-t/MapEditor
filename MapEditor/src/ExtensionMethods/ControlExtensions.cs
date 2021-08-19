@@ -6,7 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PSA2.src.ExtentionMethods
+namespace MapEditor.src.ExtensionMethods
 {
     public static class ControlExtensions
     {

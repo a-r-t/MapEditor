@@ -1,4 +1,5 @@
-﻿using MapEditor.src.TilePicker;
+﻿using MapEditor.src.ExtensionMethods;
+using MapEditor.src.TilePicker;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -32,6 +33,22 @@ namespace MapEditor.src.MapBuilder
         }
 
         private Tileset tileset;
+
+        public int MapTileWidth
+        {
+            get
+            {
+                return tileset.TilesetScaledWidth;
+            }
+        }
+
+        public int MapTileHeight
+        {
+            get
+            {
+                return tileset.TilesetScaledHeight;
+            }
+        }
 
         public Map()
         {
@@ -74,6 +91,13 @@ namespace MapEditor.src.MapBuilder
             return MapTiles[GetConvertedIndex(x, y)];
         }
 
+        public Point GetTileIndexByPosition(float xPosition, float yPosition)
+        {
+            int xIndex = (xPosition / (float)tileset.TilesetScaledWidth).Round();
+            int yIndex = (yPosition / (float)tileset.TilesetScaledHeight).Round();
+            return new Point(xIndex, yIndex);
+        }
+
         public void SetMapTile(int x, int y, int tileIndex)
         {
             MapTiles[GetConvertedIndex(x, y)] = tileIndex;
@@ -105,11 +129,11 @@ namespace MapEditor.src.MapBuilder
                 int row = i / Width;
                 int column = i % Width;
                 Rectangle tileSubImageRect = tileset.GetTileSubImageRectangle(tileIndex);
-                Console.WriteLine($"Tile sub image: {tileSubImageRect}");
+                //Console.WriteLine($"Tile sub image: {tileSubImageRect}");
                 Bitmap tilesetSubImage = tilesetImage.Clone(tileSubImageRect, tilesetImage.PixelFormat);
-                Console.WriteLine($"Tile Index: {i}");
-                Console.WriteLine($"Column: {column}, Row: {row}, Tileset Scale: {tileset.TileScale}");
-                Console.WriteLine($"Location: {column * tileset.TilesetScaledWidth},{row * tileset.TilesetScaledHeight}");
+                //Console.WriteLine($"Tile Index: {i}");
+                //Console.WriteLine($"Column: {column}, Row: {row}, Tileset Scale: {tileset.TileScale}");
+                //Console.WriteLine($"Location: {column * tileset.TilesetScaledWidth},{row * tileset.TilesetScaledHeight}");
                 graphics.DrawImage(tilesetSubImage, column * tileset.TilesetScaledWidth, row * tileset.TilesetScaledHeight, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight);
                 //graphics.DrawImage(tilesetSubImage, new Rectangle(column * tileset.TilesetScaledWidth, row * tileset.TilesetScaledHeight, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight), new Rectangle(0,0, tilesetSubImage.Width, tilesetSubImage.Height), GraphicsUnit.Pixel);
 

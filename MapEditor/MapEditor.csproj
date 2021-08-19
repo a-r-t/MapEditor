@@ -47,6 +47,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="src\ExtensionMethods\ControlExtensions.cs" />
+    <Compile Include="src\ExtensionMethods\FloatExtensions.cs" />
     <Compile Include="src\ExtensionMethods\SizeExtensions.cs" />
     <Compile Include="src\MainForm.cs">
       <SubType>Form</SubType>

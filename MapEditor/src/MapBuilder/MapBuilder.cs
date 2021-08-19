@@ -8,7 +8,6 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MapEditor.src.TilePicker;
-using PSA2.src.ExtentionMethods;
 using MapEditor.src.ExtensionMethods;
 
 namespace MapEditor.src.MapBuilder
@@ -16,6 +15,8 @@ namespace MapEditor.src.MapBuilder
     public partial class MapBuilder : ObservableUserControl<MapBuilderListener>
     {
         private Map map;
+        private bool mapRepaint = false;
+        private Point hoveredTileIndex;
 
         public MapBuilder()
         {
@@ -63,7 +64,50 @@ namespace MapEditor.src.MapBuilder
         {
 
             //map.Paint(e.Graphics);
+            if (mapRepaint)
+            {
+                map.Paint(e.Graphics);
+                if (hoveredTileIndex.X != -1 && hoveredTileIndex.Y != -1)
+                {
+                    Pen pen = new Pen(Color.Yellow, 5);
+                    e.Graphics.DrawRectangle(
+                        pen,
+                        new Rectangle(
+                            hoveredTileIndex.X * map.MapTileWidth + 3,
+                            hoveredTileIndex.Y * map.MapTileHeight + 3,
+                            map.MapTileWidth - 5,
+                            map.MapTileHeight - 5
+                        )
+                    );
+                }
 
+                mapRepaint = false;
+            }
+
+        }
+
+        private void mapPictureBox_MouseMove(object sender, MouseEventArgs e)
+        {
+            hoveredTileIndex = map.GetTileIndexByPosition(e.X - map.MapTileWidth / 2, e.Y - map.MapTileHeight / 2);
+            selectedTileIndexLabel.Text = $"X: {hoveredTileIndex.X}, Y: {hoveredTileIndex.Y}";
+            selectedTileIndexLabel.Location = new Point(heightLabel.Location.X + heightLabel.Width + 10, selectedTileIndexLabel.Location.Y);
+
+            mapRepaint = true;
+            mapPictureBox.Invalidate();
+        }
+
+        private void mapPictureBox_MouseLeave(object sender, EventArgs e)
+        {
+            selectedTileIndexLabel.Visible = false;
+            hoveredTileIndex = new Point(-1, -1);
+
+            mapRepaint = true;
+            mapPictureBox.Invalidate();
+        }
+
+        private void mapPictureBox_MouseEnter(object sender, EventArgs e)
+        {
+            selectedTileIndexLabel.Visible = true;
         }
     }
 }
