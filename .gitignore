@@ -1,0 +1,7 @@
+.vs/
+obj/
+bin/
+packages/**/* 
+!packages/repositories.config
+out/
+TestResults/
