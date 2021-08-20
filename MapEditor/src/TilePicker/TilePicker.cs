@@ -31,7 +31,6 @@ namespace MapEditor.src.TilePicker
             Console.WriteLine("setup: " + tilePickerPanel.Width);
 
             int tileSpacing = 5;
-            int scrollBarWidth = tilePickerPanel.VerticalScroll.Visible ? SystemInformation.VerticalScrollBarWidth : 0;
             int numberOfColumns = Math.Max((tilePickerPanel.ClientSize.Width - tileSpacing) / (tileset.TilesetScaledWidth + tileSpacing), 1);
             int numberOfRows = (int)Math.Ceiling(tileset.NumberOfTiles / (float)numberOfColumns);
             tilePickerPictureBox.Location = new Point(0, 0);
