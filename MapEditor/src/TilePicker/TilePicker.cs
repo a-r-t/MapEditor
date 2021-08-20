@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MapEditor.src.MapBuilder;
+using MapEditor.src.ExtensionMethods;
 
 namespace MapEditor.src.TilePicker
 {
@@ -28,12 +29,15 @@ namespace MapEditor.src.TilePicker
 
         public void SetupTilePicker()
         {
+            int tileSpacing = 5;
+            int numberOfColumns = Math.Max(tilePickerPanel.Width / (tileset.TilesetScaledWidth + tileSpacing), 1);
+            int numberOfRows = (int)Math.Ceiling(tileset.NumberOfTiles / (float)numberOfColumns);
+            tilePickerPictureBox.Image = new Bitmap(tilePickerPanel.Width, numberOfRows * tileset.TilesetScaledHeight + (numberOfRows * tileSpacing));
+            tilePickerPictureBox.ClientSize = tilePickerPictureBox.Image.Size;
+            tilePickerPictureBox.Location = new Point(0, 0);
             for (int i = 0; i < tileset.Tiles.Length; i++)
             {
                 Tile tile = tileset.Tiles[i];
-
-                int tileSpacing = 5;
-                int numberOfColumns = Math.Max(tilePickerPanel.Width / (tileset.TilesetScaledWidth + tileSpacing), 1);
                 int row = i / numberOfColumns;
                 int column = i % numberOfColumns;
                 tile.SetLocation(column * tileset.TilesetScaledWidth + (column * tileSpacing), row * tileset.TilesetScaledHeight + (row * tileSpacing));
@@ -43,11 +47,6 @@ namespace MapEditor.src.TilePicker
 
         private void DrawTiles()
         {
-            int tileSpacing = 5;
-            int numberOfColumns = Math.Max(tilePickerPanel.Width / (tileset.TilesetScaledWidth + tileSpacing), 1);
-            int numberOfRows = tileset.NumberOfTiles / numberOfColumns;
-            tilePickerPictureBox.Image = new Bitmap(tilePickerPanel.Width, numberOfRows * tileset.TilesetScaledHeight + (numberOfRows * tileSpacing));
-            tilePickerPictureBox.ClientSize = tilePickerPictureBox.Image.Size;
             using (Graphics graphics = Graphics.FromImage(tilePickerPictureBox.Image))
             {
                 graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
@@ -63,10 +62,13 @@ namespace MapEditor.src.TilePicker
 
         private void tilePickerPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            if (TilePickerRepaint)
+            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+
+            for (int i = 0; i < tileset.Tiles.Length; i++)
             {
-                DrawTiles();
-                TilePickerRepaint = false;
+                Tile tile = tileset.Tiles[i];
+                tile.Paint(e.Graphics);
             }
         }
 
@@ -78,6 +80,12 @@ namespace MapEditor.src.TilePicker
         private void tilePickerPictureBox_MouseLeave(object sender, EventArgs e)
         {
 
+        }
+
+        private void tilePickerPanel_Resize(object sender, EventArgs e)
+        {
+            SetupTilePicker();
+            tilePickerPictureBox.Invalidate();
         }
     }
 }

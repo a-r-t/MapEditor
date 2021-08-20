@@ -38,9 +38,9 @@ namespace MapEditor
 
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
         {
-            tilePicker.SetupTilePicker();
-            tilePicker.TilePickerRepaint = true;
-            tilePicker.Invalidate();
+            //tilePicker.SetupTilePicker();
+            //tilePicker.TilePickerRepaint = true;
+            //tilePicker.Invalidate();
         }
     }
 }

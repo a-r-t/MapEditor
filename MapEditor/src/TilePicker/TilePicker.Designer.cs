@@ -43,6 +43,7 @@
             this.tilePickerPanel.Name = "tilePickerPanel";
             this.tilePickerPanel.Size = new System.Drawing.Size(150, 150);
             this.tilePickerPanel.TabIndex = 0;
+            this.tilePickerPanel.Resize += new System.EventHandler(this.tilePickerPanel_Resize);
             // 
             // tilePickerPictureBox
             // 
