@@ -72,7 +72,7 @@ namespace MapEditor.src.MapBuilder
                 this.tileset = new Tileset($"./Resources/Tilesets/{tilesetName}.png", tilesetTileWidth, tilesetTileHeight, mapTileScale);
                 
                 MapTiles = new Tile[Width * Height];
-                string indexes = String.Empty;
+                string indexes = "";
                 int heightCounter = 0;
                 while ((indexes = sr.ReadLine()) != null)
                 {
@@ -80,15 +80,16 @@ namespace MapEditor.src.MapBuilder
                     for (int i = 0; i < mapTileIndexes.Length; i++)
                     {
                         int tileIndex = int.Parse(mapTileIndexes[i]);
-                        int row = i / Width;
+                        int row = heightCounter;
                         int column = i % Width;
-                        int x = column * tileset.TilesetScaledWidth;
-                        int y = row * tileset.TilesetScaledHeight;
-                        int width = tileset.TilesetScaledWidth;
-                        int height = tileset.TilesetScaledHeight;
+                        int tileX = column * tileset.TilesetScaledWidth;
+                        int tileY = row * tileset.TilesetScaledHeight;
+                        int tileWidth = tileset.TilesetScaledWidth;
+                        int tileHeight = tileset.TilesetScaledHeight;
+
                         Tile tile = new Tile(tileIndex, tileset.GetTileSubImage(tileIndex));
-                        tile.SetLocation(x, y);
-                        tile.SetDimensions(width, height);
+                        tile.SetLocation(tileX, tileY);
+                        tile.SetDimensions(tileWidth, tileHeight);
                         SetMapTile(i, heightCounter, tile);
                     }
                     heightCounter++;
