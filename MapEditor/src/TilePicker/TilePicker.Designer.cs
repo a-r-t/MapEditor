@@ -52,6 +52,8 @@
             this.tilePickerPictureBox.TabIndex = 0;
             this.tilePickerPictureBox.TabStop = false;
             this.tilePickerPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.tilePickerPictureBox_Paint);
+            this.tilePickerPictureBox.MouseLeave += new System.EventHandler(this.tilePickerPictureBox_MouseLeave);
+            this.tilePickerPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.tilePickerPictureBox_MouseMove);
             // 
             // TilePicker
             // 

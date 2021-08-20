@@ -80,7 +80,16 @@ namespace MapEditor.src.MapBuilder
                     for (int i = 0; i < mapTileIndexes.Length; i++)
                     {
                         int tileIndex = int.Parse(mapTileIndexes[i]);
-                        SetMapTile(i, heightCounter, new Tile(tileIndex, tileset.GetTileSubImage(tileIndex)));
+                        int row = i / Width;
+                        int column = i % Width;
+                        int x = column * tileset.TilesetScaledWidth;
+                        int y = row * tileset.TilesetScaledHeight;
+                        int width = tileset.TilesetScaledWidth;
+                        int height = tileset.TilesetScaledHeight;
+                        Tile tile = new Tile(tileIndex, tileset.GetTileSubImage(tileIndex));
+                        tile.SetLocation(x, y);
+                        tile.SetDimensions(width, height);
+                        SetMapTile(i, heightCounter, tile);
                     }
                     heightCounter++;
                 }
@@ -130,9 +139,7 @@ namespace MapEditor.src.MapBuilder
             for (int i = 0; i < MapTiles.Length; i++)
             {
                 Tile tile = MapTiles[i];
-                int row = i / Width;
-                int column = i % Width;
-                tile.Paint(graphics, column * tileset.TilesetScaledWidth, row * tileset.TilesetScaledHeight, tileset.TilesetScaledWidth, tileset.TilesetScaledHeight);
+                tile.Paint(graphics);
             }
         }
 
