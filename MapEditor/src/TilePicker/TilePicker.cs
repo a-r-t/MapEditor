@@ -22,26 +22,32 @@ namespace MapEditor.src.TilePicker
         {
             InitializeComponent();
             this.tileset = new Tileset($"./Resources/Tilesets/CommonTileset.png", 16, 16, 3);
-
             SetupTilePicker();
             DrawTiles();
         }
 
         public void SetupTilePicker()
         {
+            Console.WriteLine("setup: " + tilePickerPanel.Width);
+
             int tileSpacing = 5;
-            int numberOfColumns = Math.Max(tilePickerPanel.Width / (tileset.TilesetScaledWidth + tileSpacing), 1);
+            int scrollBarWidth = tilePickerPanel.VerticalScroll.Visible ? SystemInformation.VerticalScrollBarWidth : 0;
+            int numberOfColumns = Math.Max((tilePickerPanel.ClientSize.Width - tileSpacing) / (tileset.TilesetScaledWidth + tileSpacing), 1);
             int numberOfRows = (int)Math.Ceiling(tileset.NumberOfTiles / (float)numberOfColumns);
-            tilePickerPictureBox.Image = new Bitmap(tilePickerPanel.Width, numberOfRows * tileset.TilesetScaledHeight + (numberOfRows * tileSpacing));
-            tilePickerPictureBox.ClientSize = tilePickerPictureBox.Image.Size;
             tilePickerPictureBox.Location = new Point(0, 0);
+            tilePickerPictureBox.Image = new Bitmap(tilePickerPanel.ClientSize.Width, numberOfRows * tileset.TilesetScaledHeight + (numberOfRows * tileSpacing) + tileSpacing);
+            tilePickerPictureBox.Size = new Size(numberOfColumns * tileset.TilesetScaledWidth + (numberOfColumns * tileSpacing) + tileSpacing, tilePickerPictureBox.Image.Height);
             for (int i = 0; i < tileset.Tiles.Length; i++)
             {
                 Tile tile = tileset.Tiles[i];
                 int row = i / numberOfColumns;
                 int column = i % numberOfColumns;
-                tile.SetLocation(column * tileset.TilesetScaledWidth + (column * tileSpacing), row * tileset.TilesetScaledHeight + (row * tileSpacing));
+                tile.SetLocation(column * tileset.TilesetScaledWidth + (column * tileSpacing) + tileSpacing, row * tileset.TilesetScaledHeight + (row * tileSpacing) + tileSpacing);
                 tile.SetDimensions(tileset.TilesetScaledWidth, tileset.TilesetScaledHeight);
+            }
+            if (tilePickerPanel.HorizontalScroll.Visible)
+            {
+                tilePickerPictureBox.Size = new Size(tilePickerPictureBox.Width - 1, tilePickerPictureBox.Height);
             }
         }
 
@@ -84,6 +90,8 @@ namespace MapEditor.src.TilePicker
 
         private void tilePickerPanel_Resize(object sender, EventArgs e)
         {
+            Console.WriteLine("RESIZE: " + tilePickerPanel.Width);
+
             SetupTilePicker();
             tilePickerPictureBox.Invalidate();
         }
