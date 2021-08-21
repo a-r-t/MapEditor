@@ -12,11 +12,12 @@ using MapEditor.src.ExtensionMethods;
 
 namespace MapEditor.src.MapBuilder
 {
-    public partial class MapBuilder : ObservableUserControl<MapBuilderListener>
+    public partial class MapBuilder : ObservableUserControl<MapBuilderListener>, TilePickerListener
     {
         private Map map;
         private bool mapRepaint = false;
         private Point hoveredTileIndex;
+        private Tile selectedTile;
 
         public MapBuilder()
         {
@@ -106,6 +107,19 @@ namespace MapEditor.src.MapBuilder
         private void mapPictureBox_MouseEnter(object sender, EventArgs e)
         {
             selectedTileIndexLabel.Visible = true;
+        }
+
+        public void OnTileSelect(Tile tile)
+        {
+            selectedTile = tile;
+        }
+
+        private void mapPictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (selectedTile != null)
+            {
+
+            }
         }
     }
 }
