@@ -97,14 +97,10 @@ namespace MapEditor.src.MapBuilder
                         Tile tileToReplace = map.GetMapTile(selectedTileIndex.X, selectedTileIndex.Y);
                         tileToReplace.Index = selectedTile.Index;
                         tileToReplace.Image = (Bitmap)selectedTile.Image.Clone();
-
-                        //DrawTile(tileToReplace);
                     }
                 }
             }
 
-
-            mapRepaint = true;
             mapPictureBox.Invalidate();
         }
 
@@ -141,18 +137,10 @@ namespace MapEditor.src.MapBuilder
                         Tile tileToReplace = map.GetMapTile(selectedTileIndex.X, selectedTileIndex.Y);
                         tileToReplace.Index = selectedTile.Index;
                         tileToReplace.Image = selectedTile.Image;
-                        //DrawTile(tileToReplace);
+
                         mapPictureBox.Invalidate();
                     }
                 }
-            }
-        }
-
-        private void DrawTile(Tile tile)
-        {
-            using (Graphics graphics = Graphics.FromImage(mapPictureBox.Image))
-            {
-                tile.Paint(graphics);
             }
         }
 
