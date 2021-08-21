@@ -16,7 +16,6 @@ namespace MapEditor.src.TilePicker
     {
         private Tileset tileset;
         public bool TilePickerRepaint { get; set; }
-        private bool isHoveringTile = false;
         private Tile selectedTile = null;
 
         public TilePicker()
@@ -24,7 +23,7 @@ namespace MapEditor.src.TilePicker
             InitializeComponent();
             this.tileset = new Tileset($"./Resources/Tilesets/CommonTileset.png", 16, 16, 3);
             SetupTilePicker();
-            DrawTiles();
+            tilePickerPictureBox.Invalidate();
         }
 
         public void SetupTilePicker()
@@ -61,23 +60,6 @@ namespace MapEditor.src.TilePicker
                     Tile tile = tileset.Tiles[i];
                     tile.Paint(graphics);
                 }
-
-                /*
-                if (selectedTile != null)
-                {
-                    Console.WriteLine("x: " + selectedTile.X + ", y: " + selectedTile.Y);
-                    Pen pen = new Pen(Color.Yellow, 5);
-                    graphics.DrawRectangle(
-                        pen,
-                        new Rectangle(
-                            selectedTile.X * tileset.TilesetScaledWidth + 3,
-                            selectedTile.Y * tileset.TilesetScaledHeight + 3,
-                            tileset.TilesetScaledWidth - 5,
-                            tileset.TilesetScaledHeight - 5
-                        )
-                    );
-                }
-                */
             }
         }
 
