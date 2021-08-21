@@ -50,6 +50,7 @@
             this.mapPictureBox.MouseEnter += new System.EventHandler(this.mapPictureBox_MouseEnter);
             this.mapPictureBox.MouseLeave += new System.EventHandler(this.mapPictureBox_MouseLeave);
             this.mapPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapPictureBox_MouseMove);
+            this.mapPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapPictureBox_MouseUp);
             // 
             // mapPanel
             // 
