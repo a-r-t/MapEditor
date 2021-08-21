@@ -11,6 +11,10 @@ namespace MapEditor.src.MapBuilder
     {
         public int Index { get; set; }
         public Bitmap Image { get; set; }
+        public int X { get; set; }
+        public int Y { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
 
         public Tile(int index, Bitmap image)
         {
@@ -18,9 +22,26 @@ namespace MapEditor.src.MapBuilder
             Image = image;
         }
 
-        public void Paint(Graphics graphics, int x, int y, int width, int height)
+        public void SetLocation(int x, int y)
         {
-            graphics.DrawImage(Image, x, y, width, height);
+            X = x;
+            Y = y;
+        }
+
+        public void SetDimensions(int width, int height)
+        {
+            Width = width;
+            Height = height;
+        }
+
+        public void Paint(Graphics graphics)
+        {
+            graphics.DrawImage(Image, X, Y, Width, Height);
+        }
+
+        public bool IsPointInTile(Point point)
+        {
+            return point.X > X && point.X < X + Width && point.Y > Y && point.Y < Y + Height;
         }
     }
 }
