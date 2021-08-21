@@ -38,5 +38,10 @@ namespace MapEditor.src.MapBuilder
         {
             graphics.DrawImage(Image, X, Y, Width, Height);
         }
+
+        public bool IsPointInTile(Point point)
+        {
+            return point.X > X && point.X < X + Width && point.Y > Y && point.Y < Y + Height;
+        }
     }
 }

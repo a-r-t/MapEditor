@@ -16,7 +16,8 @@ namespace MapEditor.src.TilePicker
     {
         private Tileset tileset;
         public bool TilePickerRepaint { get; set; }
-        public bool isHoveringTile = false;
+        private bool isHoveringTile = false;
+        private Tile selectedTile = null;
 
         public TilePicker()
         {
@@ -28,8 +29,6 @@ namespace MapEditor.src.TilePicker
 
         public void SetupTilePicker()
         {
-            Console.WriteLine("setup: " + tilePickerPanel.Width);
-
             int tileSpacing = 5;
             int numberOfColumns = Math.Max((tilePickerPanel.ClientSize.Width - tileSpacing) / (tileset.TilesetScaledWidth + tileSpacing), 1);
             int numberOfRows = (int)Math.Ceiling(tileset.NumberOfTiles / (float)numberOfColumns);
@@ -62,6 +61,23 @@ namespace MapEditor.src.TilePicker
                     Tile tile = tileset.Tiles[i];
                     tile.Paint(graphics);
                 }
+
+                /*
+                if (selectedTile != null)
+                {
+                    Console.WriteLine("x: " + selectedTile.X + ", y: " + selectedTile.Y);
+                    Pen pen = new Pen(Color.Yellow, 5);
+                    graphics.DrawRectangle(
+                        pen,
+                        new Rectangle(
+                            selectedTile.X * tileset.TilesetScaledWidth + 3,
+                            selectedTile.Y * tileset.TilesetScaledHeight + 3,
+                            tileset.TilesetScaledWidth - 5,
+                            tileset.TilesetScaledHeight - 5
+                        )
+                    );
+                }
+                */
             }
         }
 
@@ -75,24 +91,75 @@ namespace MapEditor.src.TilePicker
                 Tile tile = tileset.Tiles[i];
                 tile.Paint(e.Graphics);
             }
+
+            if (selectedTile != null)
+            {
+                Pen pen = new Pen(Color.Yellow, 5);
+                e.Graphics.DrawRectangle(
+                    pen,
+                    new Rectangle(
+                        selectedTile.X - 2,
+                        selectedTile.Y - 2,
+                        selectedTile.Width + 5,
+                        selectedTile.Height + 5
+                    )
+                );
+            }
+
         }
 
         private void tilePickerPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-
+            foreach (Tile tile in tileset.Tiles)
+            {
+                if (tile.IsPointInTile(e.Location))
+                {
+                    Cursor = Cursors.Hand;
+                    return;
+                }
+            }
+            Cursor = Cursors.Arrow;
         }
 
         private void tilePickerPictureBox_MouseLeave(object sender, EventArgs e)
         {
-
+            Cursor = Cursors.Arrow;
         }
 
         private void tilePickerPanel_Resize(object sender, EventArgs e)
         {
-            Console.WriteLine("RESIZE: " + tilePickerPanel.Width);
-
             SetupTilePicker();
             tilePickerPictureBox.Invalidate();
+        }
+
+        private void tilePickerPictureBox_MouseClick(object sender, MouseEventArgs e)
+        {
+            foreach (Tile tile in tileset.Tiles)
+            {
+                if (tile.IsPointInTile(e.Location))
+                {
+                    Cursor = Cursors.Hand;
+                    selectedTile = tile;
+                    return;
+                }
+            }
+            Cursor = Cursors.Arrow;
+        }
+
+        private void tilePickerPictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                foreach (Tile tile in tileset.Tiles)
+                {
+                    if (tile.IsPointInTile(e.Location))
+                    {
+                        selectedTile = tile;
+                        tilePickerPictureBox.Invalidate();
+                        return;
+                    }
+                }
+            }
         }
     }
 }
