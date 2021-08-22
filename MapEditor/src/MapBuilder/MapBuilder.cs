@@ -24,7 +24,7 @@ namespace MapEditor.src.MapBuilder
             //mapPanel.DoubleBuffered(true);
             
             map = new Map();
-            map.LoadMap("./Resources/MapFiles/testmaps/test_map.txt");
+            map.LoadMap("./Resources/MapFiles/testmaps/test_map.map");
             DrawMap();
             widthLabel.Text = $"Width: {map.Width}";
             heightLabel.Text = $"Height: {map.Height}";

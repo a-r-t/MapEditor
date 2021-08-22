@@ -28,18 +28,31 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.mapTreeView = new System.Windows.Forms.TreeView();
             this.SuspendLayout();
+            // 
+            // mapTreeView
+            // 
+            this.mapTreeView.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapTreeView.Location = new System.Drawing.Point(0, 0);
+            this.mapTreeView.Name = "mapTreeView";
+            this.mapTreeView.Size = new System.Drawing.Size(150, 150);
+            this.mapTreeView.TabIndex = 0;
             // 
             // MapList
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.BackColor = System.Drawing.SystemColors.Control;
+            this.Controls.Add(this.mapTreeView);
             this.Name = "MapList";
+            this.Load += new System.EventHandler(this.MapList_Load);
             this.ResumeLayout(false);
 
         }
 
         #endregion
+
+        private System.Windows.Forms.TreeView mapTreeView;
     }
 }
