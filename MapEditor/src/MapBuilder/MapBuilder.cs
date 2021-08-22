@@ -15,10 +15,8 @@ namespace MapEditor.src.MapBuilder
     public partial class MapBuilder : ObservableUserControl<MapBuilderListener>, TilePickerListener
     {
         private Map map;
-        private bool mapRepaint = false;
         private Point hoveredTileIndex;
         private Tile selectedTile;
-        private Timer mouseDownTimer;
 
         public MapBuilder()
         {
@@ -26,7 +24,7 @@ namespace MapEditor.src.MapBuilder
             //mapPanel.DoubleBuffered(true);
             
             map = new Map();
-            map.LoadMap("./Resources/MapFiles/test_map.txt");
+            map.LoadMap("./Resources/MapFiles/testmaps/test_map.txt");
             DrawMap();
             widthLabel.Text = $"Width: {map.Width}";
             heightLabel.Text = $"Height: {map.Height}";
@@ -109,7 +107,6 @@ namespace MapEditor.src.MapBuilder
             selectedTileIndexLabel.Visible = false;
             hoveredTileIndex = new Point(-1, -1);
 
-            mapRepaint = true;
             mapPictureBox.Invalidate();
         }
 
