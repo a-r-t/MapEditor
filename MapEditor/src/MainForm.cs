@@ -34,6 +34,8 @@ namespace MapEditor
 
             tilePickerPanel.Controls.Add(tilePicker);
             tilePicker.Dock = DockStyle.Fill;
+
+            tilePicker.AddListener(mapBuilder);
         }
 
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)

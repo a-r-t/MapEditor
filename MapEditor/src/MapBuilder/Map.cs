@@ -98,7 +98,7 @@ namespace MapEditor.src.MapBuilder
             PrintMap();
         }
 
-        private int GetConvertedIndex(int x, int y)
+        public int GetConvertedIndex(int x, int y)
         {
             return x + Width * y;
         }

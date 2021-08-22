@@ -12,11 +12,11 @@ using MapEditor.src.ExtensionMethods;
 
 namespace MapEditor.src.MapBuilder
 {
-    public partial class MapBuilder : ObservableUserControl<MapBuilderListener>
+    public partial class MapBuilder : ObservableUserControl<MapBuilderListener>, TilePickerListener
     {
         private Map map;
-        private bool mapRepaint = false;
         private Point hoveredTileIndex;
+        private Tile selectedTile;
 
         public MapBuilder()
         {
@@ -24,7 +24,7 @@ namespace MapEditor.src.MapBuilder
             //mapPanel.DoubleBuffered(true);
             
             map = new Map();
-            map.LoadMap("./Resources/MapFiles/test_map.txt");
+            map.LoadMap("./Resources/MapFiles/testmaps/test_map.txt");
             DrawMap();
             widthLabel.Text = $"Width: {map.Width}";
             heightLabel.Text = $"Height: {map.Height}";
@@ -62,8 +62,6 @@ namespace MapEditor.src.MapBuilder
 
         private void mapPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            if (mapRepaint)
-            {
                 map.Paint(e.Graphics);
                 if (hoveredTileIndex.X != -1 && hoveredTileIndex.Y != -1)
                 {
@@ -78,10 +76,6 @@ namespace MapEditor.src.MapBuilder
                         )
                     );
                 }
-
-                mapRepaint = false;
-            }
-
         }
 
         private void mapPictureBox_MouseMove(object sender, MouseEventArgs e)
@@ -90,7 +84,21 @@ namespace MapEditor.src.MapBuilder
             selectedTileIndexLabel.Text = $"X: {hoveredTileIndex.X}, Y: {hoveredTileIndex.Y}";
             selectedTileIndexLabel.Location = new Point(heightLabel.Location.X + heightLabel.Width + 10, selectedTileIndexLabel.Location.Y);
 
-            mapRepaint = true;
+            if (e.Button == MouseButtons.Left)
+            {
+                if (selectedTile != null)
+                {
+                    Point selectedTileIndex = map.GetTileIndexByPosition(e.X - map.MapTileWidth / 2, e.Y - map.MapTileHeight / 2);
+                    int convertedTileIndex = map.GetConvertedIndex(selectedTileIndex.X, selectedTileIndex.Y);
+                    if (convertedTileIndex >= 0 && convertedTileIndex < map.Width * map.Height)
+                    {
+                        Tile tileToReplace = map.GetMapTile(selectedTileIndex.X, selectedTileIndex.Y);
+                        tileToReplace.Index = selectedTile.Index;
+                        tileToReplace.Image = (Bitmap)selectedTile.Image.Clone();
+                    }
+                }
+            }
+
             mapPictureBox.Invalidate();
         }
 
@@ -99,13 +107,43 @@ namespace MapEditor.src.MapBuilder
             selectedTileIndexLabel.Visible = false;
             hoveredTileIndex = new Point(-1, -1);
 
-            mapRepaint = true;
             mapPictureBox.Invalidate();
         }
 
         private void mapPictureBox_MouseEnter(object sender, EventArgs e)
         {
             selectedTileIndexLabel.Visible = true;
+        }
+
+        public void OnTileSelect(Tile tile)
+        {
+            selectedTile = tile;
+        }
+
+        private void mapPictureBox_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                if (selectedTile != null)
+                {
+                    Point selectedTileIndex = map.GetTileIndexByPosition(e.X - map.MapTileWidth / 2, e.Y - map.MapTileHeight / 2);
+                    int convertedTileIndex = map.GetConvertedIndex(selectedTileIndex.X, selectedTileIndex.Y);
+
+                    if (convertedTileIndex >= 0 && convertedTileIndex < map.Width * map.Height)
+                    {
+                        Tile tileToReplace = map.GetMapTile(selectedTileIndex.X, selectedTileIndex.Y);
+                        tileToReplace.Index = selectedTile.Index;
+                        tileToReplace.Image = selectedTile.Image;
+
+                        mapPictureBox.Invalidate();
+                    }
+                }
+            }
+        }
+
+        private void mapPictureBox_MouseUp(object sender, MouseEventArgs e)
+        {
+
         }
     }
 }

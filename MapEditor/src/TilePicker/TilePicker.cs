@@ -28,12 +28,17 @@ namespace MapEditor.src.TilePicker
 
         public void SetupTilePicker()
         {
+            // number of columns and rows needed to fit all tiles based on size of parent panel's width number of tiles
+            // the smaller the width of the parent panel, the less columns and more rows that will be needed
             int tileSpacing = 5;
             int numberOfColumns = Math.Max((tilePickerPanel.ClientSize.Width - tileSpacing) / (tileset.TilesetScaledWidth + tileSpacing), 1);
             int numberOfRows = (int)Math.Ceiling(tileset.NumberOfTiles / (float)numberOfColumns);
+
             tilePickerPictureBox.Location = new Point(0, 0);
             tilePickerPictureBox.Image = new Bitmap(tilePickerPanel.ClientSize.Width, numberOfRows * tileset.TilesetScaledHeight + (numberOfRows * tileSpacing) + tileSpacing);
             tilePickerPictureBox.Size = new Size(numberOfColumns * tileset.TilesetScaledWidth + (numberOfColumns * tileSpacing) + tileSpacing, tilePickerPictureBox.Image.Height);
+            
+            // set location of tiles in tile picker
             for (int i = 0; i < tileset.Tiles.Length; i++)
             {
                 Tile tile = tileset.Tiles[i];
@@ -42,12 +47,18 @@ namespace MapEditor.src.TilePicker
                 tile.SetLocation(column * tileset.TilesetScaledWidth + (column * tileSpacing) + tileSpacing, row * tileset.TilesetScaledHeight + (row * tileSpacing) + tileSpacing);
                 tile.SetDimensions(tileset.TilesetScaledWidth, tileset.TilesetScaledHeight);
             }
+
+            // hacky in order to get winforms panel to stop creating a stupid horizontal scroll bar when there is no need to.
+            // the picturebox is always set to be the same width as the parent panel's width, so there should never be a situation where the horizontal scroll bar is needed.
+            // somehow there is a random off by 1 pixel error that I'm pretty sure is a bug in winforms and not my fault, which makes the picturebox extend 1 pixel past the parent panel's width and pops up the horizontal scroll bar.
+            // so this just removes one pixel from the picturebox if the horizontal scroll bar is showing.
             if (tilePickerPanel.HorizontalScroll.Visible)
             {
                 tilePickerPictureBox.Size = new Size(tilePickerPictureBox.Width - 1, tilePickerPictureBox.Height);
             }
         }
 
+        /*
         private void DrawTiles()
         {
             using (Graphics graphics = Graphics.FromImage(tilePickerPictureBox.Image))
@@ -62,18 +73,21 @@ namespace MapEditor.src.TilePicker
                 }
             }
         }
+        */
 
         private void tilePickerPictureBox_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
             e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
+            // paint tile picker tiles
             for (int i = 0; i < tileset.Tiles.Length; i++)
             {
                 Tile tile = tileset.Tiles[i];
                 tile.Paint(e.Graphics);
             }
 
+            // paint yellow rectangle around selected tile
             if (selectedTile != null)
             {
                 Pen pen = new Pen(Color.Yellow, 5);
@@ -138,6 +152,11 @@ namespace MapEditor.src.TilePicker
                     {
                         selectedTile = tile;
                         tilePickerPictureBox.Invalidate();
+                        
+                        foreach (TilePickerListener listener in listeners)
+                        {
+                            listener.OnTileSelect(selectedTile);
+                        }
                         return;
                     }
                 }

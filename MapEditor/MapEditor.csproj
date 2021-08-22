@@ -46,9 +46,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="src\Components\PaintedPictureBox.cs">
-      <SubType>Component</SubType>
-    </Compile>
     <Compile Include="src\ExtensionMethods\ControlExtensions.cs" />
     <Compile Include="src\ExtensionMethods\FloatExtensions.cs" />
     <Compile Include="src\ExtensionMethods\SizeExtensions.cs" />
@@ -128,7 +125,10 @@
     <Folder Include="src\Listeners\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\MapFiles\test_map.txt">
+    <Content Include="Resources\MapFiles\testmaps\test_map2.txt">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\MapFiles\testmaps\test_map.txt">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Tilesets\CommonTileset.png">
