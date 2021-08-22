@@ -21,7 +21,12 @@ namespace MapEditor.src.MapList
 
         private void MapList_Load(object sender, EventArgs e)
         {
+            PopulateMapTreeView();
+            mapTreeView.ExpandAll();
+        }
 
+        private void PopulateMapTreeView()
+        {
             ImageList imageList = new ImageList();
             imageList.Images.Add("folder", Image.FromFile("./Resources/Images/folder-icon.png"));
             imageList.Images.Add("file", Image.FromFile("./Resources/Images/file-icon.png"));
@@ -37,6 +42,7 @@ namespace MapEditor.src.MapList
                 mapTreeView.Nodes.Add(dirName, dirName);
                 mapTreeView.Nodes[dirName].ImageKey = "folder";
                 mapTreeView.Nodes[dirName].SelectedImageKey = "folder";
+                mapTreeView.Nodes[dirName].Tag = "folder";
             }
             foreach (string filePath in GetFilesInDir(rootDir))
             {
@@ -45,6 +51,7 @@ namespace MapEditor.src.MapList
                 mapTreeView.Nodes.Add(fileName, fileName);
                 mapTreeView.Nodes[fileName].ImageKey = "file";
                 mapTreeView.Nodes[fileName].SelectedImageKey = "file";
+                mapTreeView.Nodes[fileName].Tag = "file";
             }
 
             while (paths.Count > 0)
@@ -67,6 +74,7 @@ namespace MapEditor.src.MapList
                         temp.Nodes.Add(subdirName, subdirName);
                         temp.Nodes[subdirName].ImageKey = "folder";
                         temp.Nodes[subdirName].SelectedImageKey = "folder";
+                        temp.Nodes[subdirName].Tag = "folder";
                     }
 
                     foreach (string filePath in GetFilesInDir(path))
@@ -80,10 +88,9 @@ namespace MapEditor.src.MapList
                     temp.Nodes.Add(fileName, fileName);
                     temp.Nodes[fileName].ImageKey = "file";
                     temp.Nodes[fileName].SelectedImageKey = "file";
+                    temp.Nodes[fileName].Tag = "file";
                 }
             }
-            mapTreeView.ExpandAll();
-            
         }
 
         private string[] GetSubdirsInDir(string dir)
@@ -94,6 +101,23 @@ namespace MapEditor.src.MapList
         private string[] GetFilesInDir(string dir)
         {
             return Directory.GetFiles(dir);
+        }
+
+        private bool IsMapNode(TreeNode node)
+        {
+            return (string)node.Tag == "file";
+        }
+
+        private void mapTreeView_DoubleClick(object sender, EventArgs e)
+        {
+            TreeNode selectedNode = mapTreeView.SelectedNode;
+            if (selectedNode != null && IsMapNode(selectedNode))
+            {
+                foreach (MapListListener listener in listeners)
+                {
+                    listener.OnMapSelected(selectedNode.Text);
+                }
+            }
         }
     }
 }

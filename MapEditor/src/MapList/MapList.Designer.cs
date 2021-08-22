@@ -38,6 +38,7 @@
             this.mapTreeView.Name = "mapTreeView";
             this.mapTreeView.Size = new System.Drawing.Size(150, 150);
             this.mapTreeView.TabIndex = 0;
+            this.mapTreeView.DoubleClick += new System.EventHandler(this.mapTreeView_DoubleClick);
             // 
             // MapList
             // 

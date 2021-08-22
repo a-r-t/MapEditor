@@ -50,9 +50,9 @@ namespace MapEditor.src.MapBuilder
             }
         }
 
-        public Map()
+        public Map(string mapFileName)
         {
-
+            LoadMap(mapFileName);
         }
 
         public void LoadMap(string mapFileName)
