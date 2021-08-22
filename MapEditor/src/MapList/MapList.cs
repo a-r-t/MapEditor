@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using MapEditor.src.ExtensionMethods;
 
 namespace MapEditor.src.MapList
 {
@@ -20,6 +21,12 @@ namespace MapEditor.src.MapList
 
         private void MapList_Load(object sender, EventArgs e)
         {
+
+            ImageList imageList = new ImageList();
+            imageList.Images.Add("folder", Image.FromFile("./Resources/Images/folder-icon.png"));
+            imageList.Images.Add("file", Image.FromFile("./Resources/Images/file-icon.png"));
+            mapTreeView.ImageList = imageList;
+
             Queue<string> paths = new Queue<string>();
             string rootDir = Path.Combine(".", "Resources", "MapFiles");
             foreach (string dirPath in GetSubdirsInDir(rootDir))
@@ -28,12 +35,16 @@ namespace MapEditor.src.MapList
                 string dirName = pathParts[pathParts.Length - 1];
                 paths.Enqueue(dirPath);
                 mapTreeView.Nodes.Add(dirName, dirName);
+                mapTreeView.Nodes[dirName].ImageKey = "folder";
+                mapTreeView.Nodes[dirName].SelectedImageKey = "folder";
             }
             foreach (string filePath in GetFilesInDir(rootDir))
             {
                 string[] pathParts = filePath.Split(Path.DirectorySeparatorChar);
                 string fileName = Path.GetFileNameWithoutExtension(pathParts[pathParts.Length - 1]);
                 mapTreeView.Nodes.Add(fileName, fileName);
+                mapTreeView.Nodes[fileName].ImageKey = "file";
+                mapTreeView.Nodes[fileName].SelectedImageKey = "file";
             }
 
             while (paths.Count > 0)
@@ -52,7 +63,10 @@ namespace MapEditor.src.MapList
                     {
                         string[] subdirPathParts = subdirPath.Split(Path.DirectorySeparatorChar);
                         paths.Enqueue(subdirPath);
-                        temp.Nodes.Add(subdirPathParts[subdirPathParts.Length - 1], subdirPathParts[subdirPathParts.Length - 1]);
+                        string subdirName = subdirPathParts[subdirPathParts.Length - 1];
+                        temp.Nodes.Add(subdirName, subdirName);
+                        temp.Nodes[subdirName].ImageKey = "folder";
+                        temp.Nodes[subdirName].SelectedImageKey = "folder";
                     }
 
                     foreach (string filePath in GetFilesInDir(path))
@@ -62,7 +76,10 @@ namespace MapEditor.src.MapList
                 }
                 else if (File.Exists(path))
                 {
-                    temp.Nodes.Add(Path.GetFileNameWithoutExtension(pathParts[pathParts.Length - 1]), Path.GetFileNameWithoutExtension(pathParts[pathParts.Length - 1]));
+                    string fileName = Path.GetFileNameWithoutExtension(pathParts[pathParts.Length - 1]);
+                    temp.Nodes.Add(fileName, fileName);
+                    temp.Nodes[fileName].ImageKey = "file";
+                    temp.Nodes[fileName].SelectedImageKey = "file";
                 }
             }
             mapTreeView.ExpandAll();
