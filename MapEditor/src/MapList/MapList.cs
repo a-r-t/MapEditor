@@ -118,7 +118,7 @@ namespace MapEditor.src.MapList
 
         private void mapTreeView_DoubleClick(object sender, EventArgs e)
         {
-            if (mapTreeView.SelectedNode != null && IsMapNode(mapTreeView.SelectedNode))
+            if (mapTreeView.SelectedNode != null && IsMapNode(mapTreeView.SelectedNode) && mapTreeView.SelectedNode != selectedNode)
             {
                 // set previous selected node back to the standard file icon
                 if (selectedNode != null)
