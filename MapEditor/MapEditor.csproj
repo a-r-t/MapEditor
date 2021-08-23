@@ -48,6 +48,7 @@
   <ItemGroup>
     <Compile Include="src\ExtensionMethods\ControlExtensions.cs" />
     <Compile Include="src\ExtensionMethods\FloatExtensions.cs" />
+    <Compile Include="src\ExtensionMethods\NativeWinApi.cs" />
     <Compile Include="src\ExtensionMethods\SizeExtensions.cs" />
     <Compile Include="src\MainForm.cs">
       <SubType>Form</SubType>
@@ -125,10 +126,19 @@
     <Folder Include="src\Listeners\" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\MapFiles\testmaps\test_map2.txt">
+    <Content Include="Resources\Tilesets\CommonTilesetBW.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
-    <Content Include="Resources\MapFiles\testmaps\test_map.txt">
+    <None Include="Resources\MapFiles\testmaps\test_map2.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\MapFiles\testmaps\test_map.map">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <Content Include="Resources\Images\file-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\folder-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <Content Include="Resources\Tilesets\CommonTileset.png">

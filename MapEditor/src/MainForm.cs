@@ -1,4 +1,5 @@
-﻿using MapEditor.src.MapBuilder;
+﻿using MapEditor.src.ExtensionMethods;
+using MapEditor.src.MapBuilder;
 using MapEditor.src.MapList;
 using MapEditor.src.TilePicker;
 using System;
@@ -13,7 +14,7 @@ using System.Windows.Forms;
 
 namespace MapEditor
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, MapListListener
     {
         private MapBuilder mapBuilder;
         private MapList mapList;
@@ -28,14 +29,21 @@ namespace MapEditor
 
             mapBuilderPanel.Controls.Add(mapBuilder);
             mapBuilder.Dock = DockStyle.Fill;
+            mapBuilder.Hide();
 
             mapListPanel.Controls.Add(mapList);
             mapList.Dock = DockStyle.Fill;
-
+            
             tilePickerPanel.Controls.Add(tilePicker);
             tilePicker.Dock = DockStyle.Fill;
+            tilePicker.Hide();
 
             tilePicker.AddListener(mapBuilder);
+
+            mapBuilder.AddListener(tilePicker);
+
+            mapList.AddListener(this);
+            mapList.AddListener(mapBuilder);
         }
 
         private void splitContainer2_SplitterMoved(object sender, SplitterEventArgs e)
@@ -43,6 +51,21 @@ namespace MapEditor
             //tilePicker.SetupTilePicker();
             //tilePicker.TilePickerRepaint = true;
             //tilePicker.Invalidate();
+        }
+
+        private void MainForm_Load(object sender, EventArgs e)
+        {
+            // eliminates flickering from inside split containers... https://stackoverflow.com/a/13941011
+            this.SetStyle(ControlStyles.DoubleBuffer, true);
+            int style = NativeWinApi.GetWindowLong(this.Handle, NativeWinApi.GWL_EXSTYLE);
+            style |= NativeWinApi.WS_EX_COMPOSITE;
+            NativeWinApi.SetWindowLong(this.Handle, NativeWinApi.GWL_EXSTYLE, style);
+        }
+
+        public void OnMapSelected(string mapName)
+        {
+            mapBuilder.Show();
+            tilePicker.Show();
         }
     }
 }

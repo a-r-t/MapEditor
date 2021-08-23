@@ -110,7 +110,7 @@
             this.Controls.Add(this.mapPanel);
             this.Name = "MapBuilder";
             this.Size = new System.Drawing.Size(181, 150);
-            this.Paint += new System.Windows.Forms.PaintEventHandler(this.MapBuilder_Paint);
+            this.Load += new System.EventHandler(this.MapBuilder_Load);
             ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).EndInit();
             this.mapPanel.ResumeLayout(false);
             this.ResumeLayout(false);
