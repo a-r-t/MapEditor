@@ -23,18 +23,22 @@ namespace MapEditor.src.MapList
 
         private void MapList_Load(object sender, EventArgs e)
         {
+            SetupMapTreeView();
             PopulateMapTreeView();
             mapTreeView.ExpandAll();
         }
 
-        private void PopulateMapTreeView()
+        private void SetupMapTreeView()
         {
             ImageList imageList = new ImageList();
             imageList.Images.Add("folder", Image.FromFile("./Resources/Images/folder-icon.png"));
             imageList.Images.Add("file", Image.FromFile("./Resources/Images/file-icon.png"));
             imageList.Images.Add("file-selected", Image.FromFile("./Resources/Images/file-icon-selected.png"));
             mapTreeView.ImageList = imageList;
+        }
 
+        private void PopulateMapTreeView()
+        {
             Queue<string> paths = new Queue<string>();
             string rootDir = Path.Combine(".", "Resources", "MapFiles");
             foreach (string dirPath in GetSubdirsInDir(rootDir))
