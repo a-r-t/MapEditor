@@ -18,14 +18,12 @@ namespace MapEditor
     {
         private MapBuilder mapBuilder;
         private MapList mapList;
-        private TilePicker tilePicker;
 
         public MainForm()
         {
             InitializeComponent();
             mapBuilder = new MapBuilder();
             mapList = new MapList();
-            tilePicker = new TilePicker();
 
             mapBuilderPanel.Controls.Add(mapBuilder);
             mapBuilder.Dock = DockStyle.Fill;
@@ -33,14 +31,6 @@ namespace MapEditor
 
             mapListPanel.Controls.Add(mapList);
             mapList.Dock = DockStyle.Fill;
-            
-            tilePickerPanel.Controls.Add(tilePicker);
-            tilePicker.Dock = DockStyle.Fill;
-            tilePicker.Hide();
-
-            tilePicker.AddListener(mapBuilder);
-
-            mapBuilder.AddListener(tilePicker);
 
             mapList.AddListener(this);
             mapList.AddListener(mapBuilder);
@@ -67,7 +57,6 @@ namespace MapEditor
         public void OnMapSelected(string mapName)
         {
             mapBuilder.Show();
-            tilePicker.Show();
         }
 
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)

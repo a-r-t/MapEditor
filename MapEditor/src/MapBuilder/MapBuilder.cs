@@ -18,10 +18,17 @@ namespace MapEditor.src.MapBuilder
         private Map map;
         private Point hoveredTileIndex;
         private Tile selectedTile;
+        private TilePicker.TilePicker tilePicker;
 
         public MapBuilder()
         {
-            InitializeComponent();        
+            InitializeComponent();
+            tilePicker = new TilePicker.TilePicker();
+            tilePickerPanel.Controls.Add(tilePicker);
+            tilePicker.Dock = DockStyle.Fill;
+
+            tilePicker.AddListener(this);
+            this.AddListener(tilePicker);
         }
 
         private void MapBuilder_Load(object sender, EventArgs e)
