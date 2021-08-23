@@ -141,5 +141,10 @@ namespace MapEditor.src.MapBuilder
                 listener.OnMapLoad(map);
             }
         }
+
+        public void SaveMap()
+        {
+            map.SaveMap();
+        }
     }
 }

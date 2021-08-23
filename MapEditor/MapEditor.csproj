@@ -126,6 +126,9 @@
     <Folder Include="src\Listeners\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Images\save-icon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Tilesets\CommonTilesetBW.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

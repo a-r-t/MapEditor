@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -39,6 +40,14 @@ namespace MapEditor.src.TilePicker
             get
             {
                 return numberOfRows * numberOfColumns;
+            }
+        }
+
+        public string Name
+        {
+            get
+            {
+                return Path.GetFileNameWithoutExtension(TilesetImageFile);
             }
         }
 

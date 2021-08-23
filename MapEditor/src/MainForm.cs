@@ -60,12 +60,29 @@ namespace MapEditor
             int style = NativeWinApi.GetWindowLong(this.Handle, NativeWinApi.GWL_EXSTYLE);
             style |= NativeWinApi.WS_EX_COMPOSITE;
             NativeWinApi.SetWindowLong(this.Handle, NativeWinApi.GWL_EXSTYLE, style);
+
+            saveButton.Image = Image.FromFile("./Resources/Images/save-icon.png");
         }
 
         public void OnMapSelected(string mapName)
         {
             mapBuilder.Show();
             tilePicker.Show();
+        }
+
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveMap();
+        }
+
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+            SaveMap();
+        }
+
+        private void SaveMap()
+        {
+            mapBuilder.SaveMap();
         }
     }
 }

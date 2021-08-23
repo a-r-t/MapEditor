@@ -15,6 +15,7 @@ namespace MapEditor.src.MapBuilder
         public Tile[] MapTiles { get; private set; }
         public int Width { get; private set; }
         public int Height { get; private set; }
+        public string MapFilePath { get; private set; }
         
         public int WidthInPixels
         {
@@ -50,14 +51,15 @@ namespace MapEditor.src.MapBuilder
             }
         }
 
-        public Map(string mapFileName)
+        public Map(string mapFilePath)
         {
-            LoadMap(mapFileName);
+            MapFilePath = mapFilePath;
+            LoadMap();
         }
 
-        public void LoadMap(string mapFileName)
+        public void LoadMap()
         {
-            using (StreamReader sr = File.OpenText(mapFileName))
+            using (StreamReader sr = File.OpenText(MapFilePath))
             {
                 string[] dimensions = sr.ReadLine().Split(' ');
                 Width = int.Parse(dimensions[0]);
@@ -144,6 +146,39 @@ namespace MapEditor.src.MapBuilder
             }
         }
 
-      
+        public void SaveMap()
+        {
+            try
+            {
+                StreamWriter sw = new StreamWriter(MapFilePath);
+                sw.WriteLine($"{Width} {Height}");
+                sw.WriteLine($"{Tileset.Name} {Tileset.TileWidth} {Tileset.TileHeight} {Tileset.TileScale}");
+                for (int i = 0; i < Height; i++)
+                {
+                    StringBuilder sb = new StringBuilder();
+                    for (int j = 0; j < Width; j++)
+                    {
+                        int mapTileIndex = GetConvertedIndex(j, i);
+                        sb.Append(MapTiles[mapTileIndex].Index);
+                        if (j != Width - 1)
+                        {
+                            sb.Append(" ");
+                        }
+                    }
+
+                    if (i < Height - 1)
+                    {
+                        sb.Append("\n");
+                    }
+
+                    sw.Write(sb.ToString());
+                }
+                sw.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error writing map to file:\n" + e.StackTrace);
+            }
+        }
     }
 }
