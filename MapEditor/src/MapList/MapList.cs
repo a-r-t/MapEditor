@@ -26,6 +26,7 @@ namespace MapEditor.src.MapList
             SetupMapTreeView();
             PopulateMapTreeView();
             mapTreeView.ExpandAll();
+            mapTreeView.Sort();
         }
 
         private void SetupMapTreeView()
