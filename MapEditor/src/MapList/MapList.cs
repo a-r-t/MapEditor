@@ -14,6 +14,8 @@ namespace MapEditor.src.MapList
 {
     public partial class MapList : ObservableUserControl<MapListListener>
     {
+        private TreeNode selectedNode;
+
         public MapList()
         {
             InitializeComponent();
@@ -30,6 +32,7 @@ namespace MapEditor.src.MapList
             ImageList imageList = new ImageList();
             imageList.Images.Add("folder", Image.FromFile("./Resources/Images/folder-icon.png"));
             imageList.Images.Add("file", Image.FromFile("./Resources/Images/file-icon.png"));
+            imageList.Images.Add("file-selected", Image.FromFile("./Resources/Images/file-icon-selected.png"));
             mapTreeView.ImageList = imageList;
 
             Queue<string> paths = new Queue<string>();
@@ -110,9 +113,22 @@ namespace MapEditor.src.MapList
 
         private void mapTreeView_DoubleClick(object sender, EventArgs e)
         {
-            TreeNode selectedNode = mapTreeView.SelectedNode;
-            if (selectedNode != null && IsMapNode(selectedNode))
+            if (mapTreeView.SelectedNode != null && IsMapNode(mapTreeView.SelectedNode))
             {
+                // set previous selected node back to the standard file icon
+                if (selectedNode != null)
+                {
+                    selectedNode.ImageKey = "file";
+                    selectedNode.SelectedImageKey = "file";
+                }
+
+                selectedNode = mapTreeView.SelectedNode;
+
+                // set newly selected node to the selected file icon
+                selectedNode.ImageKey = "file-selected";
+                selectedNode.SelectedImageKey = "file-selected";
+
+
                 foreach (MapListListener listener in listeners)
                 {
                     listener.OnMapSelected(selectedNode.Text);
