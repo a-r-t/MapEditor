@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapEditor.src.MapBuilder
+namespace MapEditor.src.TileEditor
 {
-    public interface MapBuilderListener
+    public interface TileEditorListener
     {
         void OnMapLoad(Map map);
     }

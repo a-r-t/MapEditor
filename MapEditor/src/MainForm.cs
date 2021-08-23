@@ -1,5 +1,5 @@
 ﻿using MapEditor.src.ExtensionMethods;
-using MapEditor.src.MapBuilder;
+using MapEditor.src.TileEditor;
 using MapEditor.src.MapList;
 using MapEditor.src.TilePicker;
 using System;
@@ -16,13 +16,13 @@ namespace MapEditor
 {
     public partial class MainForm : Form, MapListListener
     {
-        private MapBuilder mapBuilder;
+        private TileEditor mapBuilder;
         private MapList mapList;
 
         public MainForm()
         {
             InitializeComponent();
-            mapBuilder = new MapBuilder();
+            mapBuilder = new TileEditor();
             mapList = new MapList();
 
             mapBuilderPanel.Controls.Add(mapBuilder);

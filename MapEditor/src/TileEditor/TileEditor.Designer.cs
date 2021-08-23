@@ -1,6 +1,6 @@
-﻿namespace MapEditor.src.MapBuilder
+﻿namespace MapEditor.src.TileEditor
 {
-    partial class MapBuilder
+    partial class TileEditor
     {
         /// <summary> 
         /// Required designer variable.

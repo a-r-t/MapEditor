@@ -11,16 +11,16 @@ using MapEditor.src.TilePicker;
 using MapEditor.src.ExtensionMethods;
 using MapEditor.src.MapList;
 
-namespace MapEditor.src.MapBuilder
+namespace MapEditor.src.TileEditor
 {
-    public partial class MapBuilder : ObservableUserControl<MapBuilderListener>, TilePickerListener, MapListListener
+    public partial class TileEditor : ObservableUserControl<TileEditorListener>, TilePickerListener, MapListListener
     {
         private Map map;
-        private Point hoveredTileIndex;
+        private Point hoveredTileIndex = new Point(-1, -1);
         private Tile selectedTile;
         private TilePicker.TilePicker tilePicker;
 
-        public MapBuilder()
+        public TileEditor()
         {
             InitializeComponent();
             tilePicker = new TilePicker.TilePicker();
@@ -143,7 +143,7 @@ namespace MapEditor.src.MapBuilder
             heightLabel.Location = new Point(widthLabel.Location.X + widthLabel.Width + 10, heightLabel.Location.Y);
             mapPictureBox.Invalidate();
 
-            foreach (MapBuilderListener listener in listeners)
+            foreach (TileEditorListener listener in listeners)
             {
                 listener.OnMapLoad(map);
             }

@@ -58,15 +58,15 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="src\MapBuilder\Map.cs" />
-    <Compile Include="src\MapBuilder\MapBuilder.cs">
+    <Compile Include="src\TileEditor\Map.cs" />
+    <Compile Include="src\TileEditor\TileEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\MapBuilder\MapBuilder.Designer.cs">
-      <DependentUpon>MapBuilder.cs</DependentUpon>
+    <Compile Include="src\TileEditor\TileEditor.Designer.cs">
+      <DependentUpon>TileEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\MapBuilder\MapBuilderListener.cs" />
-    <Compile Include="src\MapBuilder\Tile.cs" />
+    <Compile Include="src\TileEditor\TileEditorListener.cs" />
+    <Compile Include="src\TileEditor\Tile.cs" />
     <Compile Include="src\MapList\MapList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -100,8 +100,8 @@
     <EmbeddedResource Include="src\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\MapBuilder\MapBuilder.resx">
-      <DependentUpon>MapBuilder.cs</DependentUpon>
+    <EmbeddedResource Include="src\TileEditor\TileEditor.resx">
+      <DependentUpon>TileEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\MapList\MapList.resx">
       <DependentUpon>MapList.cs</DependentUpon>
