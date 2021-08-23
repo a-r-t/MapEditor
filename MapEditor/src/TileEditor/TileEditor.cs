@@ -10,10 +10,11 @@ using System.Windows.Forms;
 using MapEditor.src.TilePicker;
 using MapEditor.src.ExtensionMethods;
 using MapEditor.src.MapList;
+using MapEditor.src.MapBuilder;
 
 namespace MapEditor.src.TileEditor
 {
-    public partial class TileEditor : ObservableUserControl<TileEditorListener>, TilePickerListener, MapListListener
+    public partial class TileEditor : ObservableUserControl<TileEditorListener>, TilePickerListener
     {
         private Map map;
         private Point hoveredTileIndex = new Point(-1, -1);
@@ -34,6 +35,7 @@ namespace MapEditor.src.TileEditor
         private void MapBuilder_Load(object sender, EventArgs e)
         {
             mapPictureBox.ClientSize = new Size(0, 0);
+            splitContainer1.SplitterDistance = 688;
         }
 
         private void mapPictureBox_Paint(object sender, PaintEventArgs e)
@@ -128,14 +130,9 @@ namespace MapEditor.src.TileEditor
 
         }
 
-        public void OnMapSelected(string mapName)
+        public void LoadMap(Map map)
         {
-            LoadMap(mapName);
-        }
-
-        private void LoadMap(string mapName)
-        {
-            map = new Map($"./Resources/MapFiles/testmaps/{mapName}.map");
+            this.map = map;
             mapPictureBox.Image = new Bitmap(map.WidthInPixels, map.HeightInPixels);
             mapPictureBox.ClientSize = mapPictureBox.Image.Size;
             widthLabel.Text = $"Width: {map.Width}";
@@ -145,13 +142,8 @@ namespace MapEditor.src.TileEditor
 
             foreach (TileEditorListener listener in listeners)
             {
-                listener.OnMapLoad(map);
+                listener.OnTileEditorLoad(map);
             }
-        }
-
-        public void SaveMap()
-        {
-            map.SaveMap();
         }
     }
 }

@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MapEditor.src.TileEditor;
 using MapEditor.src.ExtensionMethods;
+using MapEditor.src.MapBuilder;
 
 namespace MapEditor.src.TilePicker
 {
@@ -156,7 +157,7 @@ namespace MapEditor.src.TilePicker
             }
         }
         
-        public void OnMapLoad(Map map)
+        public void OnTileEditorLoad(Map map)
         {
             this.tileset = map.Tileset;
             SetupTilePicker();

@@ -1,4 +1,5 @@
 ﻿using MapEditor.src.ExtensionMethods;
+using MapEditor.src.TileEditor;
 using MapEditor.src.TilePicker;
 using System;
 using System.Collections.Generic;
@@ -8,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapEditor.src.TileEditor
+namespace MapEditor.src.MapBuilder
 {
     public class Map
     {

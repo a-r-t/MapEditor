@@ -11,18 +11,19 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using MapEditor.src.MapBuilder;
 
 namespace MapEditor
 {
     public partial class MainForm : Form, MapListListener
     {
-        private TileEditor mapBuilder;
+        private MapBuilder mapBuilder;
         private MapList mapList;
 
         public MainForm()
         {
             InitializeComponent();
-            mapBuilder = new TileEditor();
+            mapBuilder = new MapBuilder();
             mapList = new MapList();
 
             mapBuilderPanel.Controls.Add(mapBuilder);

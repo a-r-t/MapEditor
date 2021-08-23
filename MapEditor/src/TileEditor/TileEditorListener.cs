@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MapEditor.src.MapBuilder;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,6 @@ namespace MapEditor.src.TileEditor
 {
     public interface TileEditorListener
     {
-        void OnMapLoad(Map map);
+        void OnTileEditorLoad(Map map);
     }
 }
