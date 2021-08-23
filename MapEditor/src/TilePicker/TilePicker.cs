@@ -12,7 +12,7 @@ using MapEditor.src.ExtensionMethods;
 
 namespace MapEditor.src.TilePicker
 {
-    public partial class TilePicker : ObservableUserControl<TilePickerListener>
+    public partial class TilePicker : ObservableUserControl<TilePickerListener>, MapBuilderListener
     {
         private Tileset tileset;
         public bool TilePickerRepaint { get; set; }
@@ -21,13 +21,12 @@ namespace MapEditor.src.TilePicker
         public TilePicker()
         {
             InitializeComponent();
-            this.tileset = new Tileset($"./Resources/Tilesets/CommonTileset.png", 16, 16, 3);
-            SetupTilePicker();
-            tilePickerPictureBox.Invalidate();
         }
 
         public void SetupTilePicker()
         {
+            tilePickerPictureBox.Size = new Size(0, 0);
+
             // number of columns and rows needed to fit all tiles based on size of parent panel's width number of tiles
             // the smaller the width of the parent panel, the less columns and more rows that will be needed
             int tileSpacing = 5;
@@ -58,63 +57,51 @@ namespace MapEditor.src.TilePicker
             }
         }
 
-        /*
-        private void DrawTiles()
+        private void tilePickerPictureBox_Paint(object sender, PaintEventArgs e)
         {
-            using (Graphics graphics = Graphics.FromImage(tilePickerPictureBox.Image))
+            if (tileset != null)
             {
-                graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-                graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+                e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+                e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
 
+                // paint tile picker tiles
                 for (int i = 0; i < tileset.Tiles.Length; i++)
                 {
                     Tile tile = tileset.Tiles[i];
-                    tile.Paint(graphics);
+                    tile.Paint(e.Graphics);
                 }
-            }
-        }
-        */
 
-        private void tilePickerPictureBox_Paint(object sender, PaintEventArgs e)
-        {
-            e.Graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
-            e.Graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
-
-            // paint tile picker tiles
-            for (int i = 0; i < tileset.Tiles.Length; i++)
-            {
-                Tile tile = tileset.Tiles[i];
-                tile.Paint(e.Graphics);
-            }
-
-            // paint yellow rectangle around selected tile
-            if (selectedTile != null)
-            {
-                Pen pen = new Pen(Color.Yellow, 5);
-                e.Graphics.DrawRectangle(
-                    pen,
-                    new Rectangle(
-                        selectedTile.X - 2,
-                        selectedTile.Y - 2,
-                        selectedTile.Width + 5,
-                        selectedTile.Height + 5
-                    )
-                );
+                // paint yellow rectangle around selected tile
+                if (selectedTile != null)
+                {
+                    Pen pen = new Pen(Color.Yellow, 5);
+                    e.Graphics.DrawRectangle(
+                        pen,
+                        new Rectangle(
+                            selectedTile.X - 2,
+                            selectedTile.Y - 2,
+                            selectedTile.Width + 5,
+                            selectedTile.Height + 5
+                        )
+                    );
+                }
             }
 
         }
 
         private void tilePickerPictureBox_MouseMove(object sender, MouseEventArgs e)
         {
-            foreach (Tile tile in tileset.Tiles)
-            {
-                if (tile.IsPointInTile(e.Location))
+            if (tileset != null) { 
+                foreach (Tile tile in tileset.Tiles)
                 {
-                    Cursor = Cursors.Hand;
-                    return;
+                    if (tile.IsPointInTile(e.Location))
+                    {
+                        Cursor = Cursors.Hand;
+                        return;
+                    }
                 }
+                Cursor = Cursors.Arrow;
             }
-            Cursor = Cursors.Arrow;
         }
 
         private void tilePickerPictureBox_MouseLeave(object sender, EventArgs e)
@@ -124,22 +111,28 @@ namespace MapEditor.src.TilePicker
 
         private void tilePickerPanel_Resize(object sender, EventArgs e)
         {
-            SetupTilePicker();
-            tilePickerPictureBox.Invalidate();
+            if (tileset != null)
+            {
+                SetupTilePicker();
+                tilePickerPictureBox.Invalidate();
+            }
         }
 
         private void tilePickerPictureBox_MouseClick(object sender, MouseEventArgs e)
         {
-            foreach (Tile tile in tileset.Tiles)
+            if (tileset != null)
             {
-                if (tile.IsPointInTile(e.Location))
+                foreach (Tile tile in tileset.Tiles)
                 {
-                    Cursor = Cursors.Hand;
-                    selectedTile = tile;
-                    return;
+                    if (tile.IsPointInTile(e.Location))
+                    {
+                        Cursor = Cursors.Hand;
+                        selectedTile = tile;
+                        return;
+                    }
                 }
+                Cursor = Cursors.Arrow;
             }
-            Cursor = Cursors.Arrow;
         }
 
         private void tilePickerPictureBox_MouseDown(object sender, MouseEventArgs e)
@@ -161,6 +154,13 @@ namespace MapEditor.src.TilePicker
                     }
                 }
             }
+        }
+        
+        public void OnMapLoad(Map map)
+        {
+            this.tileset = map.Tileset;
+            SetupTilePicker();
+            tilePickerPictureBox.Invalidate();
         }
     }
 }

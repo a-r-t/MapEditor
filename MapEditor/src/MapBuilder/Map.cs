@@ -20,7 +20,7 @@ namespace MapEditor.src.MapBuilder
         {
             get
             {
-                return Width * tileset.TilesetScaledWidth;
+                return Width * Tileset.TilesetScaledWidth;
             }
         }
 
@@ -28,17 +28,17 @@ namespace MapEditor.src.MapBuilder
         {
             get
             {
-                return Height * tileset.TilesetScaledHeight;
+                return Height * Tileset.TilesetScaledHeight;
             }
         }
 
-        private Tileset tileset;
+        public Tileset Tileset { get; private set; }
 
         public int MapTileWidth
         {
             get
             {
-                return tileset.TilesetScaledWidth;
+                return Tileset.TilesetScaledWidth;
             }
         }
 
@@ -46,7 +46,7 @@ namespace MapEditor.src.MapBuilder
         {
             get
             {
-                return tileset.TilesetScaledHeight;
+                return Tileset.TilesetScaledHeight;
             }
         }
 
@@ -69,7 +69,7 @@ namespace MapEditor.src.MapBuilder
                 int tilesetTileHeight = int.Parse(tilesetInfo[2]);
                 int mapTileScale = int.Parse(tilesetInfo[3]);
 
-                this.tileset = new Tileset($"./Resources/Tilesets/{tilesetName}.png", tilesetTileWidth, tilesetTileHeight, mapTileScale);
+                this.Tileset = new Tileset($"./Resources/Tilesets/{tilesetName}.png", tilesetTileWidth, tilesetTileHeight, mapTileScale);
                 
                 MapTiles = new Tile[Width * Height];
                 string indexes = "";
@@ -82,12 +82,12 @@ namespace MapEditor.src.MapBuilder
                         int tileIndex = int.Parse(mapTileIndexes[i]);
                         int row = heightCounter;
                         int column = i % Width;
-                        int tileX = column * tileset.TilesetScaledWidth;
-                        int tileY = row * tileset.TilesetScaledHeight;
-                        int tileWidth = tileset.TilesetScaledWidth;
-                        int tileHeight = tileset.TilesetScaledHeight;
+                        int tileX = column * Tileset.TilesetScaledWidth;
+                        int tileY = row * Tileset.TilesetScaledHeight;
+                        int tileWidth = Tileset.TilesetScaledWidth;
+                        int tileHeight = Tileset.TilesetScaledHeight;
 
-                        Tile tile = new Tile(tileIndex, tileset.GetTileSubImage(tileIndex));
+                        Tile tile = new Tile(tileIndex, Tileset.GetTileSubImage(tileIndex));
                         tile.SetLocation(tileX, tileY);
                         tile.SetDimensions(tileWidth, tileHeight);
                         SetMapTile(i, heightCounter, tile);
@@ -110,8 +110,8 @@ namespace MapEditor.src.MapBuilder
 
         public Point GetTileIndexByPosition(float xPosition, float yPosition)
         {
-            int xIndex = (xPosition / (float)tileset.TilesetScaledWidth).Round();
-            int yIndex = (yPosition / (float)tileset.TilesetScaledHeight).Round();
+            int xIndex = (xPosition / (float)Tileset.TilesetScaledWidth).Round();
+            int yIndex = (yPosition / (float)Tileset.TilesetScaledHeight).Round();
             return new Point(xIndex, yIndex);
         }
 

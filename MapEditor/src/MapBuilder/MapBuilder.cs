@@ -123,7 +123,11 @@ namespace MapEditor.src.MapBuilder
 
         public void OnMapSelected(string mapName)
         {
-            Console.WriteLine(mapName);
+            LoadMap(mapName);
+        }
+
+        private void LoadMap(string mapName)
+        {
             map = new Map($"./Resources/MapFiles/testmaps/{mapName}.map");
             mapPictureBox.Image = new Bitmap(map.WidthInPixels, map.HeightInPixels);
             mapPictureBox.ClientSize = mapPictureBox.Image.Size;
@@ -131,6 +135,11 @@ namespace MapEditor.src.MapBuilder
             heightLabel.Text = $"Height: {map.Height}";
             heightLabel.Location = new Point(widthLabel.Location.X + widthLabel.Width + 10, heightLabel.Location.Y);
             mapPictureBox.Invalidate();
+
+            foreach (MapBuilderListener listener in listeners)
+            {
+                listener.OnMapLoad(map);
+            }
         }
     }
 }

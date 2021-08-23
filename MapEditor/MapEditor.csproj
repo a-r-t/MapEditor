@@ -126,6 +126,9 @@
     <Folder Include="src\Listeners\" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\Tilesets\CommonTilesetBW.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <None Include="Resources\MapFiles\testmaps\test_map2.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

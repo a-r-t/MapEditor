@@ -14,7 +14,7 @@ using System.Windows.Forms;
 
 namespace MapEditor
 {
-    public partial class MainForm : Form
+    public partial class MainForm : Form, MapListListener
     {
         private MapBuilder mapBuilder;
         private MapList mapList;
@@ -29,14 +29,20 @@ namespace MapEditor
 
             mapBuilderPanel.Controls.Add(mapBuilder);
             mapBuilder.Dock = DockStyle.Fill;
+            mapBuilder.Hide();
 
             mapListPanel.Controls.Add(mapList);
             mapList.Dock = DockStyle.Fill;
-
+            
             tilePickerPanel.Controls.Add(tilePicker);
             tilePicker.Dock = DockStyle.Fill;
+            tilePicker.Hide();
 
             tilePicker.AddListener(mapBuilder);
+
+            mapBuilder.AddListener(tilePicker);
+
+            mapList.AddListener(this);
             mapList.AddListener(mapBuilder);
         }
 
@@ -54,6 +60,12 @@ namespace MapEditor
             int style = NativeWinApi.GetWindowLong(this.Handle, NativeWinApi.GWL_EXSTYLE);
             style |= NativeWinApi.WS_EX_COMPOSITE;
             NativeWinApi.SetWindowLong(this.Handle, NativeWinApi.GWL_EXSTYLE, style);
+        }
+
+        public void OnMapSelected(string mapName)
+        {
+            mapBuilder.Show();
+            tilePicker.Show();
         }
     }
 }

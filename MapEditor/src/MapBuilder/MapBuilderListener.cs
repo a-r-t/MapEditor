@@ -8,5 +8,6 @@ namespace MapEditor.src.MapBuilder
 {
     public interface MapBuilderListener
     {
+        void OnMapLoad(Map map);
     }
 }
