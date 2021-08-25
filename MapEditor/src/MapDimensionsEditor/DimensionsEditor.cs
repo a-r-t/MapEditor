@@ -111,7 +111,41 @@ namespace MapEditor.src.MapDimensionsEditor
         {
             if (widthChangeLeftRadioButton.Checked)
             {
+                int difference = newWidth - Map.Width;
+                Tile[] tiles = new Tile[newWidth * Map.Height];
 
+                int widthCounter = 0;
+                int heightCounter = 0;
+                for (int i = 0; i < tiles.Length; i++)
+                {
+                    if (i > 0 && i % newWidth == 0)
+                    {
+                        heightCounter++;
+                        widthCounter = 0;
+                    }
+                    if (widthCounter >= difference)
+                    {
+                        tiles[i] = Map.MapTiles[i - ((heightCounter + 1) * difference)];
+                        int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
+                        int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
+                        tiles[i].SetLocation(tileX, tileY);
+                    }
+                    else
+                    {
+                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0));
+                        int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
+                        int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
+                        int tileWidth = Map.Tileset.TilesetScaledWidth;
+                        int tileHeight = Map.Tileset.TilesetScaledHeight;
+                        tile.SetLocation(tileX, tileY);
+                        tile.SetDimensions(tileWidth, tileHeight);
+                        tiles[i] = tile;
+                    }
+                    widthCounter++;
+                }
+
+                Map.MapTiles = tiles;
+                Map.Width = newWidth;
             }
             else if (widthChangeRightRadioButton.Checked)
             {
