@@ -107,6 +107,7 @@ namespace MapEditor.src.MapDimensionsEditor
             }
         }
 
+        // expand/shrink map width either left or right with new blank tiles
         private void UpdateWidth(int newWidth)
         {
             if (widthChangeLeftRadioButton.Checked)
@@ -184,7 +185,7 @@ namespace MapEditor.src.MapDimensionsEditor
             }
         }
 
-  
+        // expand/shrink map height either up or down with new blank tiles
         private void UpdateHeight(int newHeight)
         {
             if (heightChangeTopRadioButton.Checked)
@@ -203,7 +204,6 @@ namespace MapEditor.src.MapDimensionsEditor
                     }
                     if (heightCounter >= difference)
                     {
-                        Console.WriteLine($"mapping i: {i} to {((heightCounter - difference) * Map.Width + widthCounter)}");
                         tiles[i] = Map.MapTiles[(heightCounter - difference) * Map.Width + widthCounter];
                         int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
                         int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
