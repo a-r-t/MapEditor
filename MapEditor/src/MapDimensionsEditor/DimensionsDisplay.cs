@@ -33,10 +33,5 @@ namespace MapEditor.src.MapDimensionsEditor
             widthLabel.Text = $"Width: {Map.Width}";
             heightLabel.Text = $"Height: {Map.Height}";
         }
-
-        private void DimensionsDisplay_Load(object sender, EventArgs e)
-        {
-  
-        }
     }
 }
