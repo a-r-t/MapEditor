@@ -28,58 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.tabControl1 = new System.Windows.Forms.TabControl();
+            this.mapBuilderTabControl = new System.Windows.Forms.TabControl();
             this.tileEditorTab = new System.Windows.Forms.TabPage();
-            this.tabPage2 = new System.Windows.Forms.TabPage();
-            this.tabControl1.SuspendLayout();
+            this.dimensionsTab = new System.Windows.Forms.TabPage();
+            this.mapBuilderTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
-            // tabControl1
+            // mapBuilderTabControl
             // 
-            this.tabControl1.Controls.Add(this.tileEditorTab);
-            this.tabControl1.Controls.Add(this.tabPage2);
-            this.tabControl1.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.tabControl1.Location = new System.Drawing.Point(0, 0);
-            this.tabControl1.Name = "tabControl1";
-            this.tabControl1.SelectedIndex = 0;
-            this.tabControl1.Size = new System.Drawing.Size(150, 150);
-            this.tabControl1.TabIndex = 0;
+            this.mapBuilderTabControl.Controls.Add(this.tileEditorTab);
+            this.mapBuilderTabControl.Controls.Add(this.dimensionsTab);
+            this.mapBuilderTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapBuilderTabControl.Location = new System.Drawing.Point(0, 0);
+            this.mapBuilderTabControl.Name = "mapBuilderTabControl";
+            this.mapBuilderTabControl.SelectedIndex = 0;
+            this.mapBuilderTabControl.Size = new System.Drawing.Size(513, 384);
+            this.mapBuilderTabControl.TabIndex = 0;
             // 
             // tileEditorTab
             // 
             this.tileEditorTab.Location = new System.Drawing.Point(4, 22);
             this.tileEditorTab.Name = "tileEditorTab";
             this.tileEditorTab.Padding = new System.Windows.Forms.Padding(3);
-            this.tileEditorTab.Size = new System.Drawing.Size(142, 124);
+            this.tileEditorTab.Size = new System.Drawing.Size(505, 358);
             this.tileEditorTab.TabIndex = 0;
             this.tileEditorTab.Text = "Map";
             this.tileEditorTab.UseVisualStyleBackColor = true;
             // 
-            // tabPage2
+            // dimensionsTab
             // 
-            this.tabPage2.Location = new System.Drawing.Point(4, 22);
-            this.tabPage2.Name = "tabPage2";
-            this.tabPage2.Padding = new System.Windows.Forms.Padding(3);
-            this.tabPage2.Size = new System.Drawing.Size(142, 124);
-            this.tabPage2.TabIndex = 1;
-            this.tabPage2.Text = "tabPage2";
-            this.tabPage2.UseVisualStyleBackColor = true;
+            this.dimensionsTab.Location = new System.Drawing.Point(4, 22);
+            this.dimensionsTab.Name = "dimensionsTab";
+            this.dimensionsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.dimensionsTab.Size = new System.Drawing.Size(505, 358);
+            this.dimensionsTab.TabIndex = 1;
+            this.dimensionsTab.Text = "Dimensions";
+            this.dimensionsTab.UseVisualStyleBackColor = true;
             // 
-            // MapBuilderListener
+            // MapBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.tabControl1);
-            this.Name = "MapBuilderListener";
-            this.tabControl1.ResumeLayout(false);
+            this.Controls.Add(this.mapBuilderTabControl);
+            this.Name = "MapBuilder";
+            this.Size = new System.Drawing.Size(513, 384);
+            this.mapBuilderTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
 
-        private System.Windows.Forms.TabControl tabControl1;
+        private System.Windows.Forms.TabControl mapBuilderTabControl;
         private System.Windows.Forms.TabPage tileEditorTab;
-        private System.Windows.Forms.TabPage tabPage2;
+        private System.Windows.Forms.TabPage dimensionsTab;
     }
 }

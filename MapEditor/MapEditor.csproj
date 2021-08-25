@@ -66,6 +66,20 @@
     </Compile>
     <Compile Include="src\MapBuilder\MapBuilderListener.cs" />
     <Compile Include="src\MapBuilder\Map.cs" />
+    <Compile Include="src\MapDimensionsEditor\DimensionsDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\MapDimensionsEditor\DimensionsDisplay.Designer.cs">
+      <DependentUpon>DimensionsDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\MapDimensionsEditor\DimensionsDisplayListener.cs" />
+    <Compile Include="src\MapDimensionsEditor\DimensionsEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\MapDimensionsEditor\DimensionsEditor.Designer.cs">
+      <DependentUpon>DimensionsEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\MapDimensionsEditor\DimensionsEditorListener.cs" />
     <Compile Include="src\TileEditor\TileEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -110,6 +124,12 @@
     <EmbeddedResource Include="src\MapBuilder\MapBuilder.resx">
       <DependentUpon>MapBuilder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\MapDimensionsEditor\DimensionsDisplay.resx">
+      <DependentUpon>DimensionsDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\MapDimensionsEditor\DimensionsEditor.resx">
+      <DependentUpon>DimensionsEditor.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\TileEditor\TileEditor.resx">
       <DependentUpon>TileEditor.cs</DependentUpon>
     </EmbeddedResource>
@@ -145,6 +165,9 @@
     <Content Include="Resources\Tilesets\CommonTilesetBW.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <None Include="Resources\MapFiles\testmaps\test_map3.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\MapFiles\testmaps\test_map2.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

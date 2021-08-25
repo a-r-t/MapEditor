@@ -68,7 +68,7 @@
             this.mapPanel.Controls.Add(this.mapPictureBox);
             this.mapPanel.Location = new System.Drawing.Point(0, 0);
             this.mapPanel.Name = "mapPanel";
-            this.mapPanel.Size = new System.Drawing.Size(625, 378);
+            this.mapPanel.Size = new System.Drawing.Size(550, 378);
             this.mapPanel.TabIndex = 1;
             // 
             // widthLabel
