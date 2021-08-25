@@ -70,7 +70,6 @@
             this.Controls.Add(this.widthLabel);
             this.Name = "DimensionsDisplay";
             this.Size = new System.Drawing.Size(150, 100);
-            this.Load += new System.EventHandler(this.DimensionsDisplay_Load);
             this.ResumeLayout(false);
             this.PerformLayout();
 
