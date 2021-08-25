@@ -189,7 +189,42 @@ namespace MapEditor.src.MapDimensionsEditor
         {
             if (heightChangeTopRadioButton.Checked)
             {
+                int difference = newHeight - Map.Height;
+                Tile[] tiles = new Tile[Map.Width * newHeight];
 
+                int widthCounter = 0;
+                int heightCounter = 0;
+                for (int i = 0; i < tiles.Length; i++)
+                {
+                    if (i > 0 && i % Map.Width == 0)
+                    {
+                        heightCounter++;
+                        widthCounter = 0;
+                    }
+                    if (heightCounter >= difference)
+                    {
+                        Console.WriteLine($"mapping i: {i} to {((heightCounter - difference) * Map.Width + widthCounter)}");
+                        tiles[i] = Map.MapTiles[(heightCounter - difference) * Map.Width + widthCounter];
+                        int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
+                        int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
+                        tiles[i].SetLocation(tileX, tileY);
+                    }
+                    else
+                    {
+                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0));
+                        int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
+                        int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
+                        int tileWidth = Map.Tileset.TilesetScaledWidth;
+                        int tileHeight = Map.Tileset.TilesetScaledHeight;
+                        tile.SetLocation(tileX, tileY);
+                        tile.SetDimensions(tileWidth, tileHeight);
+                        tiles[i] = tile;
+                    }
+                    widthCounter++;
+                }
+
+                Map.MapTiles = tiles;
+                Map.Height = newHeight;
             }
             else if (heightChangeBottomRadioButton.Checked)
             {
