@@ -99,7 +99,7 @@ namespace MapEditor.src.MapDimensionsEditor
             }
             if (newHeight != Map.Height)
             {
-                UpdateHeight(newWidth);
+                UpdateHeight(newHeight);
             }
             foreach (DimensionsEditorListener listener in listeners)
             {
@@ -118,35 +118,32 @@ namespace MapEditor.src.MapDimensionsEditor
                 int difference = newWidth - Map.Width;
                 Tile[] tiles = new Tile[newWidth * Map.Height];
 
-               // if (difference > 0)
-               // {
-                    int widthCounter = 0;
-                    int heightCounter = 0;
-                    for (int i = 0; i < tiles.Length; i++)
+                int widthCounter = 0;
+                int heightCounter = 0;
+                for (int i = 0; i < tiles.Length; i++)
+                {
+                    if (i > 0 && i % newWidth == 0)
                     {
-                        if (i > 0 && i % newWidth == 0)
-                        {
-                            heightCounter++;
-                            widthCounter = 0;
-                        }
-                        if (widthCounter < Map.Width)
-                        {
-                            tiles[i] = Map.MapTiles[i - (heightCounter * difference)];
-                        }
-                        else
-                        {
-                            Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0));
-                            int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
-                            int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
-                            int tileWidth = Map.Tileset.TilesetScaledWidth;
-                            int tileHeight = Map.Tileset.TilesetScaledHeight;
-                            tile.SetLocation(tileX, tileY);
-                            tile.SetDimensions(tileWidth, tileHeight);
-                            tiles[i] = tile;
-                        }
-                        widthCounter++;
+                        heightCounter++;
+                        widthCounter = 0;
                     }
-               // }
+                    if (widthCounter < Map.Width)
+                    {
+                        tiles[i] = Map.MapTiles[i - (heightCounter * difference)];
+                    }
+                    else
+                    {
+                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0));
+                        int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
+                        int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
+                        int tileWidth = Map.Tileset.TilesetScaledWidth;
+                        int tileHeight = Map.Tileset.TilesetScaledHeight;
+                        tile.SetLocation(tileX, tileY);
+                        tile.SetDimensions(tileWidth, tileHeight);
+                        tiles[i] = tile;
+                    }
+                    widthCounter++;
+                }
                    
                 Map.MapTiles = tiles;
                 Map.Width = newWidth;
@@ -156,7 +153,44 @@ namespace MapEditor.src.MapDimensionsEditor
   
         private void UpdateHeight(int newHeight)
         {
+            if (heightChangeTopRadioButton.Checked)
+            {
 
+            }
+            else if (heightChangeBottomRadioButton.Checked)
+            {
+                Tile[] tiles = new Tile[Map.Width * newHeight];
+
+                int widthCounter = 0;
+                int heightCounter = 0;
+                for (int i = 0; i < tiles.Length; i++)
+                {
+                    if (i > 0 && i % Map.Width == 0)
+                    {
+                        heightCounter++;
+                        widthCounter = 0;
+                    }
+                    if (heightCounter < Map.Height)
+                    {
+                        tiles[i] = Map.MapTiles[i];
+                    }
+                    else
+                    {
+                        Tile tile = new Tile(0, Map.Tileset.GetTileSubImage(0));
+                        int tileX = widthCounter * Map.Tileset.TilesetScaledWidth;
+                        int tileY = heightCounter * Map.Tileset.TilesetScaledHeight;
+                        int tileWidth = Map.Tileset.TilesetScaledWidth;
+                        int tileHeight = Map.Tileset.TilesetScaledHeight;
+                        tile.SetLocation(tileX, tileY);
+                        tile.SetDimensions(tileWidth, tileHeight);
+                        tiles[i] = tile;
+                    }
+                    widthCounter++;
+                }
+
+                Map.MapTiles = tiles;
+                Map.Height = newHeight;
+            }
         }
 
         private void ShowChangeDimensionsError(string errorMessage)
