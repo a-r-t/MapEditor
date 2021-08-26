@@ -45,7 +45,7 @@
             // 
             // mapPictureBox
             // 
-            this.mapPictureBox.BackColor = System.Drawing.Color.Black;
+            this.mapPictureBox.BackColor = System.Drawing.SystemColors.Control;
             this.mapPictureBox.Location = new System.Drawing.Point(0, 0);
             this.mapPictureBox.Name = "mapPictureBox";
             this.mapPictureBox.Size = new System.Drawing.Size(571, 378);
@@ -64,7 +64,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.mapPanel.AutoScroll = true;
-            this.mapPanel.BackColor = System.Drawing.Color.Black;
+            this.mapPanel.BackColor = System.Drawing.SystemColors.Control;
             this.mapPanel.Controls.Add(this.mapPictureBox);
             this.mapPanel.Location = new System.Drawing.Point(0, 0);
             this.mapPanel.Name = "mapPanel";
