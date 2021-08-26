@@ -80,6 +80,13 @@
       <DependentUpon>DimensionsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="src\MapDimensionsEditor\DimensionsEditorListener.cs" />
+    <Compile Include="src\MapTilesetEditor\TilesetEditor.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\MapTilesetEditor\TilesetEditor.Designer.cs">
+      <DependentUpon>TilesetEditor.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\MapTilesetEditor\TilesetEditorListener.cs" />
     <Compile Include="src\TileEditor\TileEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>

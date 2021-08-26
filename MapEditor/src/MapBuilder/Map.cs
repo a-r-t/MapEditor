@@ -71,7 +71,7 @@ namespace MapEditor.src.MapBuilder
                 int mapTileScale = int.Parse(tilesetInfo[1]);
 
                 this.Tileset = new Tileset($"./Resources/TilesetFiles/{tilesetName}.tileset", mapTileScale);
-                
+
                 MapTiles = new Tile[Width * Height];
                 string indexes = "";
                 int heightCounter = 0;

@@ -77,7 +77,7 @@ namespace MapEditor.src.TilePicker
             }
         }
 
-        public Rectangle GetTileSubImageRectangle(int index)
+        private Rectangle GetTileSubImageRectangle(int index)
         {
             int row = index / numberOfColumns;
             int column = index % numberOfColumns;
@@ -88,6 +88,19 @@ namespace MapEditor.src.TilePicker
         {
             Rectangle tileSubImageRect = GetTileSubImageRectangle(index);
             return TilesetImage.Clone(tileSubImageRect, TilesetImage.PixelFormat);
+        }
+
+        public Bitmap GetDefaultTile()
+        {
+            Bitmap defaultTile = new Bitmap(TileWidth, TileHeight);
+            using (Graphics graphics = Graphics.FromImage(defaultTile))
+            {
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, 0)))
+                {
+                    graphics.FillRectangle(brush, 0, 0, TileWidth, TileHeight);
+                }
+            }
+            return defaultTile;
         }
     }
 }
