@@ -11,7 +11,8 @@ namespace MapEditor.src.TilePicker
 {
     public class Tileset
     {
-        public string TilesetImageFile { get; private set; }
+        public string TilesetFilePath { get; private set; }
+        public string TilesetImageFilePath { get; private set; }
         public Tile[] Tiles { get; private set; }
         public Bitmap TilesetImage { get; private set; }
         public int TilesetImageWidth { get; private set; }
@@ -35,31 +36,24 @@ namespace MapEditor.src.TilePicker
         }
         private int numberOfRows;
         private int numberOfColumns;
-        public int NumberOfTiles
-        {
-            get
-            {
-                return numberOfRows * numberOfColumns;
-            }
-        }
+        public int NumberOfTiles { get; private set; }
+
 
         public string Name
         {
             get
             {
-                return Path.GetFileNameWithoutExtension(TilesetImageFile);
+                return Path.GetFileNameWithoutExtension(TilesetFilePath);
             }
         }
 
-        public Tileset(string tilesetImageFile, int tileWidth, int tileHeight, int tileScale)
+        public Tileset(string tilesetFilePath, int tileScale)
         {
-            TilesetImageFile = tilesetImageFile;
-            TilesetImage = new Bitmap(tilesetImageFile);
+            TilesetFilePath = tilesetFilePath;
+            TileScale = tileScale;
+            LoadTileset();
             TilesetImageWidth = TilesetImage.Width;
             TilesetImageHeight = TilesetImage.Height;
-            TileWidth = tileWidth;
-            TileHeight = tileHeight;
-            TileScale = tileScale;
             numberOfRows = TilesetImageHeight / TileHeight;
             numberOfColumns = TilesetImageWidth / TileWidth;
 
@@ -67,6 +61,19 @@ namespace MapEditor.src.TilePicker
             for (int i = 0; i < NumberOfTiles; i++)
             {
                 Tiles[i] = new Tile(i, GetTileSubImage(i));
+            }
+        }
+
+        private void LoadTileset()
+        {
+            using (StreamReader sr = File.OpenText(TilesetFilePath))
+            {
+                string[] tilesetInfo = sr.ReadLine().Split(' ');
+                TilesetImageFilePath = $"./Resources/Tilesets/{Name}.png";
+                TilesetImage = new Bitmap(TilesetImageFilePath);
+                TileWidth = int.Parse(tilesetInfo[0]);
+                TileHeight = int.Parse(tilesetInfo[1]);
+                NumberOfTiles = int.Parse(tilesetInfo[2]);
             }
         }
 

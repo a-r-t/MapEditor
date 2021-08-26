@@ -68,11 +68,9 @@ namespace MapEditor.src.MapBuilder
 
                 string[] tilesetInfo = sr.ReadLine().Split(' ');
                 string tilesetName = tilesetInfo[0];
-                int tilesetTileWidth = int.Parse(tilesetInfo[1]);
-                int tilesetTileHeight = int.Parse(tilesetInfo[2]);
-                int mapTileScale = int.Parse(tilesetInfo[3]);
+                int mapTileScale = int.Parse(tilesetInfo[1]);
 
-                this.Tileset = new Tileset($"./Resources/Tilesets/{tilesetName}.png", tilesetTileWidth, tilesetTileHeight, mapTileScale);
+                this.Tileset = new Tileset($"./Resources/TilesetFiles/{tilesetName}.tileset", mapTileScale);
                 
                 MapTiles = new Tile[Width * Height];
                 string indexes = "";
