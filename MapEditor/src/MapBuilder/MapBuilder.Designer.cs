@@ -28,102 +28,59 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mapPictureBox = new System.Windows.Forms.PictureBox();
-            this.mapPanel = new System.Windows.Forms.Panel();
-            this.widthLabel = new System.Windows.Forms.Label();
-            this.heightLabel = new System.Windows.Forms.Label();
-            this.selectedTileIndexLabel = new System.Windows.Forms.Label();
-            ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).BeginInit();
-            this.mapPanel.SuspendLayout();
+            this.mapBuilderTabControl = new System.Windows.Forms.TabControl();
+            this.tileEditorTab = new System.Windows.Forms.TabPage();
+            this.dimensionsTab = new System.Windows.Forms.TabPage();
+            this.mapBuilderTabControl.SuspendLayout();
             this.SuspendLayout();
             // 
-            // mapPictureBox
+            // mapBuilderTabControl
             // 
-            this.mapPictureBox.BackColor = System.Drawing.Color.Black;
-            this.mapPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.mapPictureBox.Name = "mapPictureBox";
-            this.mapPictureBox.Size = new System.Drawing.Size(150, 150);
-            this.mapPictureBox.TabIndex = 0;
-            this.mapPictureBox.TabStop = false;
-            this.mapPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.mapPictureBox_Paint);
-            this.mapPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mapPictureBox_MouseDown);
-            this.mapPictureBox.MouseEnter += new System.EventHandler(this.mapPictureBox_MouseEnter);
-            this.mapPictureBox.MouseLeave += new System.EventHandler(this.mapPictureBox_MouseLeave);
-            this.mapPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapPictureBox_MouseMove);
-            this.mapPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapPictureBox_MouseUp);
+            this.mapBuilderTabControl.Controls.Add(this.tileEditorTab);
+            this.mapBuilderTabControl.Controls.Add(this.dimensionsTab);
+            this.mapBuilderTabControl.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.mapBuilderTabControl.Location = new System.Drawing.Point(0, 0);
+            this.mapBuilderTabControl.Name = "mapBuilderTabControl";
+            this.mapBuilderTabControl.SelectedIndex = 0;
+            this.mapBuilderTabControl.Size = new System.Drawing.Size(513, 384);
+            this.mapBuilderTabControl.TabIndex = 0;
             // 
-            // mapPanel
+            // tileEditorTab
             // 
-            this.mapPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapPanel.AutoScroll = true;
-            this.mapPanel.BackColor = System.Drawing.Color.Black;
-            this.mapPanel.Controls.Add(this.mapPictureBox);
-            this.mapPanel.Location = new System.Drawing.Point(0, 0);
-            this.mapPanel.Name = "mapPanel";
-            this.mapPanel.Size = new System.Drawing.Size(181, 128);
-            this.mapPanel.TabIndex = 1;
+            this.tileEditorTab.Location = new System.Drawing.Point(4, 22);
+            this.tileEditorTab.Name = "tileEditorTab";
+            this.tileEditorTab.Padding = new System.Windows.Forms.Padding(3);
+            this.tileEditorTab.Size = new System.Drawing.Size(505, 358);
+            this.tileEditorTab.TabIndex = 0;
+            this.tileEditorTab.Text = "Map";
+            this.tileEditorTab.UseVisualStyleBackColor = true;
             // 
-            // widthLabel
+            // dimensionsTab
             // 
-            this.widthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.widthLabel.AutoSize = true;
-            this.widthLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.widthLabel.Location = new System.Drawing.Point(3, 131);
-            this.widthLabel.Name = "widthLabel";
-            this.widthLabel.Size = new System.Drawing.Size(41, 14);
-            this.widthLabel.TabIndex = 2;
-            this.widthLabel.Text = "Width:";
-            // 
-            // heightLabel
-            // 
-            this.heightLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.heightLabel.AutoSize = true;
-            this.heightLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightLabel.Location = new System.Drawing.Point(50, 131);
-            this.heightLabel.Name = "heightLabel";
-            this.heightLabel.Size = new System.Drawing.Size(45, 14);
-            this.heightLabel.TabIndex = 3;
-            this.heightLabel.Text = "Height:";
-            // 
-            // selectedTileIndexLabel
-            // 
-            this.selectedTileIndexLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.selectedTileIndexLabel.AutoSize = true;
-            this.selectedTileIndexLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectedTileIndexLabel.Location = new System.Drawing.Point(105, 131);
-            this.selectedTileIndexLabel.Name = "selectedTileIndexLabel";
-            this.selectedTileIndexLabel.Size = new System.Drawing.Size(35, 14);
-            this.selectedTileIndexLabel.TabIndex = 4;
-            this.selectedTileIndexLabel.Text = "X: , Y:";
-            this.selectedTileIndexLabel.Visible = false;
+            this.dimensionsTab.Location = new System.Drawing.Point(4, 22);
+            this.dimensionsTab.Name = "dimensionsTab";
+            this.dimensionsTab.Padding = new System.Windows.Forms.Padding(3);
+            this.dimensionsTab.Size = new System.Drawing.Size(505, 358);
+            this.dimensionsTab.TabIndex = 1;
+            this.dimensionsTab.Text = "Dimensions";
+            this.dimensionsTab.UseVisualStyleBackColor = true;
             // 
             // MapBuilder
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.SystemColors.Control;
-            this.Controls.Add(this.selectedTileIndexLabel);
-            this.Controls.Add(this.heightLabel);
-            this.Controls.Add(this.widthLabel);
-            this.Controls.Add(this.mapPanel);
+            this.Controls.Add(this.mapBuilderTabControl);
             this.Name = "MapBuilder";
-            this.Size = new System.Drawing.Size(181, 150);
-            this.Load += new System.EventHandler(this.MapBuilder_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).EndInit();
-            this.mapPanel.ResumeLayout(false);
+            this.Size = new System.Drawing.Size(513, 384);
+            this.mapBuilderTabControl.ResumeLayout(false);
             this.ResumeLayout(false);
-            this.PerformLayout();
 
         }
 
         #endregion
 
-        private System.Windows.Forms.PictureBox mapPictureBox;
-        private System.Windows.Forms.Panel mapPanel;
-        private System.Windows.Forms.Label widthLabel;
-        private System.Windows.Forms.Label heightLabel;
-        private System.Windows.Forms.Label selectedTileIndexLabel;
+        private System.Windows.Forms.TabControl mapBuilderTabControl;
+        private System.Windows.Forms.TabPage tileEditorTab;
+        private System.Windows.Forms.TabPage dimensionsTab;
     }
 }

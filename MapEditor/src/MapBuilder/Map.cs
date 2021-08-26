@@ -1,4 +1,5 @@
 ﻿using MapEditor.src.ExtensionMethods;
+using MapEditor.src.TileEditor;
 using MapEditor.src.TilePicker;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,9 @@ namespace MapEditor.src.MapBuilder
 {
     public class Map
     {
-        public Tile[] MapTiles { get; private set; }
-        public int Width { get; private set; }
-        public int Height { get; private set; }
+        public Tile[] MapTiles { get; set; }
+        public int Width { get; set; }
+        public int Height { get; set; }
         public string MapFilePath { get; private set; }
         
         public int WidthInPixels

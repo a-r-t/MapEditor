@@ -23,18 +23,23 @@ namespace MapEditor.src.MapList
 
         private void MapList_Load(object sender, EventArgs e)
         {
+            SetupMapTreeView();
             PopulateMapTreeView();
             mapTreeView.ExpandAll();
+            mapTreeView.Sort();
         }
 
-        private void PopulateMapTreeView()
+        private void SetupMapTreeView()
         {
             ImageList imageList = new ImageList();
             imageList.Images.Add("folder", Image.FromFile("./Resources/Images/folder-icon.png"));
             imageList.Images.Add("file", Image.FromFile("./Resources/Images/file-icon.png"));
             imageList.Images.Add("file-selected", Image.FromFile("./Resources/Images/file-icon-selected.png"));
             mapTreeView.ImageList = imageList;
+        }
 
+        private void PopulateMapTreeView()
+        {
             Queue<string> paths = new Queue<string>();
             string rootDir = Path.Combine(".", "Resources", "MapFiles");
             foreach (string dirPath in GetSubdirsInDir(rootDir))
@@ -113,7 +118,7 @@ namespace MapEditor.src.MapList
 
         private void mapTreeView_DoubleClick(object sender, EventArgs e)
         {
-            if (mapTreeView.SelectedNode != null && IsMapNode(mapTreeView.SelectedNode))
+            if (mapTreeView.SelectedNode != null && IsMapNode(mapTreeView.SelectedNode) && mapTreeView.SelectedNode != selectedNode)
             {
                 // set previous selected node back to the standard file icon
                 if (selectedNode != null)

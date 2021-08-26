@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapEditor.src.MapBuilder
+namespace MapEditor.src.MapDimensionsEditor
 {
-    public interface MapBuilderListener
+    public interface DimensionsDisplayListener
     {
+        void OnChangeDimensionsRequested();
     }
 }

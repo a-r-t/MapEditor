@@ -7,139 +7,76 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MapEditor.src.TilePicker;
-using MapEditor.src.ExtensionMethods;
 using MapEditor.src.MapList;
+using MapEditor.src.MapDimensionsEditor;
 
 namespace MapEditor.src.MapBuilder
 {
-    public partial class MapBuilder : ObservableUserControl<MapBuilderListener>, TilePickerListener, MapListListener
+    public partial class MapBuilder : ObservableUserControl<MapBuilderListener>, 
+        MapListListener, 
+        DimensionsDisplayListener,
+        DimensionsEditorListener
     {
         private Map map;
-        private Point hoveredTileIndex;
-        private Tile selectedTile;
+        private TileEditor.TileEditor tileEditor;
+        private DimensionsDisplay dimensionsDisplay;
+        private DimensionsEditor dimensionsEditor;
 
         public MapBuilder()
         {
-            InitializeComponent();        
+            InitializeComponent();
+
+            tileEditor = new TileEditor.TileEditor();
+            tileEditorTab.Controls.Add(tileEditor);
+            tileEditor.Dock = DockStyle.Fill;
+
+            dimensionsDisplay = new DimensionsDisplay();
+            dimensionsTab.Controls.Add(dimensionsDisplay);
+            dimensionsDisplay.Dock = DockStyle.Fill;
+            dimensionsDisplay.AddListener(this);
+
+            dimensionsEditor = new DimensionsEditor();
+            dimensionsTab.Controls.Add(dimensionsEditor);
+            dimensionsEditor.Dock = DockStyle.Fill;
+            dimensionsEditor.Hide();
+            dimensionsEditor.AddListener(this);
         }
 
-        private void MapBuilder_Load(object sender, EventArgs e)
+        public void OnChangeDimensionsRequested()
         {
-            mapPictureBox.ClientSize = new Size(0, 0);
+            dimensionsEditor.Reset();
+            dimensionsDisplay.Hide();
+            dimensionsEditor.Show();
         }
 
-        private void mapPictureBox_Paint(object sender, PaintEventArgs e)
+        public void OnDimensionsUpdateCanceled()
         {
-            if (map != null)
-            {
-                map.Paint(e.Graphics);
-                if (hoveredTileIndex.X != -1 && hoveredTileIndex.Y != -1)
-                {
-                    Pen pen = new Pen(Color.Yellow, 5);
-                    e.Graphics.DrawRectangle(
-                        pen,
-                        new Rectangle(
-                            hoveredTileIndex.X * map.MapTileWidth + 3,
-                            hoveredTileIndex.Y * map.MapTileHeight + 3,
-                            map.MapTileWidth - 5,
-                            map.MapTileHeight - 5
-                        )
-                    );
-                }
-            }
+            dimensionsDisplay.Show();
+            dimensionsEditor.Hide();
+            dimensionsEditor.Reset();
         }
 
-        private void mapPictureBox_MouseMove(object sender, MouseEventArgs e)
+        public void OnDimensionsUpdated(int width, int height)
         {
-            if (map != null)
-            {
-                hoveredTileIndex = map.GetTileIndexByPosition(e.X - map.MapTileWidth / 2, e.Y - map.MapTileHeight / 2);
-                selectedTileIndexLabel.Text = $"X: {hoveredTileIndex.X}, Y: {hoveredTileIndex.Y}";
-                selectedTileIndexLabel.Location = new Point(heightLabel.Location.X + heightLabel.Width + 10, selectedTileIndexLabel.Location.Y);
-
-                if (e.Button == MouseButtons.Left)
-                {
-                    if (selectedTile != null)
-                    {
-                        Point selectedTileIndex = map.GetTileIndexByPosition(e.X - map.MapTileWidth / 2, e.Y - map.MapTileHeight / 2);
-                        int convertedTileIndex = map.GetConvertedIndex(selectedTileIndex.X, selectedTileIndex.Y);
-                        if (convertedTileIndex >= 0 && convertedTileIndex < map.Width * map.Height)
-                        {
-                            Tile tileToReplace = map.GetMapTile(selectedTileIndex.X, selectedTileIndex.Y);
-                            tileToReplace.Index = selectedTile.Index;
-                            tileToReplace.Image = (Bitmap)selectedTile.Image.Clone();
-                        }
-                    }
-                }
-
-                mapPictureBox.Invalidate();
-            }
-        }
-
-        private void mapPictureBox_MouseLeave(object sender, EventArgs e)
-        {
-            selectedTileIndexLabel.Visible = false;
-            hoveredTileIndex = new Point(-1, -1);
-
-            mapPictureBox.Invalidate();
-        }
-
-        private void mapPictureBox_MouseEnter(object sender, EventArgs e)
-        {
-            selectedTileIndexLabel.Visible = true;
-        }
-
-        public void OnTileSelect(Tile tile)
-        {
-            selectedTile = tile;
-        }
-
-        private void mapPictureBox_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                if (selectedTile != null)
-                {
-                    Point selectedTileIndex = map.GetTileIndexByPosition(e.X - map.MapTileWidth / 2, e.Y - map.MapTileHeight / 2);
-                    int convertedTileIndex = map.GetConvertedIndex(selectedTileIndex.X, selectedTileIndex.Y);
-
-                    if (convertedTileIndex >= 0 && convertedTileIndex < map.Width * map.Height)
-                    {
-                        Tile tileToReplace = map.GetMapTile(selectedTileIndex.X, selectedTileIndex.Y);
-                        tileToReplace.Index = selectedTile.Index;
-                        tileToReplace.Image = selectedTile.Image;
-
-                        mapPictureBox.Invalidate();
-                    }
-                }
-            }
-        }
-
-        private void mapPictureBox_MouseUp(object sender, MouseEventArgs e)
-        {
-
+            map.SaveMap();
+            tileEditor.LoadMap(map);
+            tileEditor.Invalidate();
+            dimensionsDisplay.Show();
+            dimensionsEditor.Hide();
+            dimensionsDisplay.Reset();
+            dimensionsEditor.Reset();
         }
 
         public void OnMapSelected(string mapName)
         {
-            LoadMap(mapName);
-        }
-
-        private void LoadMap(string mapName)
-        {
             map = new Map($"./Resources/MapFiles/testmaps/{mapName}.map");
-            mapPictureBox.Image = new Bitmap(map.WidthInPixels, map.HeightInPixels);
-            mapPictureBox.ClientSize = mapPictureBox.Image.Size;
-            widthLabel.Text = $"Width: {map.Width}";
-            heightLabel.Text = $"Height: {map.Height}";
-            heightLabel.Location = new Point(widthLabel.Location.X + widthLabel.Width + 10, heightLabel.Location.Y);
-            mapPictureBox.Invalidate();
+            tileEditor.LoadMap(map);
+            
+            dimensionsDisplay.Map = map;
+            dimensionsDisplay.Reset();
 
-            foreach (MapBuilderListener listener in listeners)
-            {
-                listener.OnMapLoad(map);
-            }
+            dimensionsEditor.Map = map;
+            dimensionsEditor.Reset();
         }
 
         public void SaveMap()

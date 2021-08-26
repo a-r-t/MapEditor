@@ -7,12 +7,13 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MapEditor.src.MapBuilder;
+using MapEditor.src.TileEditor;
 using MapEditor.src.ExtensionMethods;
+using MapEditor.src.MapBuilder;
 
 namespace MapEditor.src.TilePicker
 {
-    public partial class TilePicker : ObservableUserControl<TilePickerListener>, MapBuilderListener
+    public partial class TilePicker : ObservableUserControl<TilePickerListener>, TileEditorListener
     {
         private Tileset tileset;
         public bool TilePickerRepaint { get; set; }
@@ -156,7 +157,7 @@ namespace MapEditor.src.TilePicker
             }
         }
         
-        public void OnMapLoad(Map map)
+        public void OnTileEditorLoad(Map map)
         {
             this.tileset = map.Tileset;
             SetupTilePicker();
