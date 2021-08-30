@@ -71,6 +71,7 @@
             // 
             this.tilesetTab.Location = new System.Drawing.Point(4, 22);
             this.tilesetTab.Name = "tilesetTab";
+            this.tilesetTab.Padding = new System.Windows.Forms.Padding(3);
             this.tilesetTab.Size = new System.Drawing.Size(505, 358);
             this.tilesetTab.TabIndex = 2;
             this.tilesetTab.Text = "Tileset";
