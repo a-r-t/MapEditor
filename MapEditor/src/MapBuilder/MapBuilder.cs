@@ -9,18 +9,23 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MapEditor.src.MapList;
 using MapEditor.src.MapDimensionsEditor;
+using MapEditor.src.MapTilesetEditor;
 
 namespace MapEditor.src.MapBuilder
 {
     public partial class MapBuilder : ObservableUserControl<MapBuilderListener>, 
         MapListListener, 
         DimensionsDisplayListener,
-        DimensionsEditorListener
+        DimensionsEditorListener,
+        TilesetDisplayListener,
+        TilesetEditorListener
     {
         private Map map;
         private TileEditor.TileEditor tileEditor;
         private DimensionsDisplay dimensionsDisplay;
         private DimensionsEditor dimensionsEditor;
+        private TilesetDisplay tilesetDisplay;
+        private TilesetEditor tilesetEditor;
 
         public MapBuilder()
         {
@@ -40,6 +45,17 @@ namespace MapEditor.src.MapBuilder
             dimensionsEditor.Dock = DockStyle.Fill;
             dimensionsEditor.Hide();
             dimensionsEditor.AddListener(this);
+
+            tilesetDisplay = new TilesetDisplay();
+            tilesetTab.Controls.Add(tilesetDisplay);
+            tilesetDisplay.Dock = DockStyle.Fill;
+            tilesetDisplay.AddListener(this);
+
+            tilesetEditor = new TilesetEditor();
+            tilesetTab.Controls.Add(tilesetEditor);
+            tilesetEditor.Dock = DockStyle.Fill;
+            tilesetEditor.Hide();
+            tilesetEditor.AddListener(this);
         }
 
         public void OnChangeDimensionsRequested()
@@ -77,6 +93,12 @@ namespace MapEditor.src.MapBuilder
 
             dimensionsEditor.Map = map;
             dimensionsEditor.Reset();
+
+            tilesetDisplay.Map = map;
+            tilesetDisplay.Reset();
+
+            tilesetEditor.Map = map;
+            tilesetEditor.Reset();
         }
 
         public void SaveMap()

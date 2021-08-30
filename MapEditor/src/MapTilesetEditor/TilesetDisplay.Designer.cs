@@ -1,7 +1,6 @@
-﻿
-namespace MapEditor.src.MapTilesetEditor
+﻿namespace MapEditor.src.MapTilesetEditor
 {
-    partial class TilesetEditor
+    partial class TilesetDisplay
     {
         /// <summary> 
         /// Required designer variable.
@@ -29,18 +28,9 @@ namespace MapEditor.src.MapTilesetEditor
         /// </summary>
         private void InitializeComponent()
         {
-            this.tilesetLabel = new System.Windows.Forms.Label();
             this.scaleLabel = new System.Windows.Forms.Label();
+            this.tilesetLabel = new System.Windows.Forms.Label();
             this.SuspendLayout();
-            // 
-            // tilesetLabel
-            // 
-            this.tilesetLabel.AutoSize = true;
-            this.tilesetLabel.Location = new System.Drawing.Point(3, 7);
-            this.tilesetLabel.Name = "tilesetLabel";
-            this.tilesetLabel.Size = new System.Drawing.Size(41, 13);
-            this.tilesetLabel.TabIndex = 0;
-            this.tilesetLabel.Text = "Tileset:";
             // 
             // scaleLabel
             // 
@@ -48,16 +38,25 @@ namespace MapEditor.src.MapTilesetEditor
             this.scaleLabel.Location = new System.Drawing.Point(3, 29);
             this.scaleLabel.Name = "scaleLabel";
             this.scaleLabel.Size = new System.Drawing.Size(37, 13);
-            this.scaleLabel.TabIndex = 1;
+            this.scaleLabel.TabIndex = 3;
             this.scaleLabel.Text = "Scale:";
             // 
-            // TilesetEditor
+            // tilesetLabel
+            // 
+            this.tilesetLabel.AutoSize = true;
+            this.tilesetLabel.Location = new System.Drawing.Point(3, 7);
+            this.tilesetLabel.Name = "tilesetLabel";
+            this.tilesetLabel.Size = new System.Drawing.Size(41, 13);
+            this.tilesetLabel.TabIndex = 2;
+            this.tilesetLabel.Text = "Tileset:";
+            // 
+            // TilesetDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.scaleLabel);
             this.Controls.Add(this.tilesetLabel);
-            this.Name = "TilesetEditor";
+            this.Name = "TilesetDisplay";
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -65,7 +64,7 @@ namespace MapEditor.src.MapTilesetEditor
 
         #endregion
 
-        private System.Windows.Forms.Label tilesetLabel;
         private System.Windows.Forms.Label scaleLabel;
+        private System.Windows.Forms.Label tilesetLabel;
     }
 }

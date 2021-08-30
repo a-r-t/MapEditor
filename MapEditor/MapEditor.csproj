@@ -80,6 +80,13 @@
       <DependentUpon>DimensionsEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="src\MapDimensionsEditor\DimensionsEditorListener.cs" />
+    <Compile Include="src\MapTilesetEditor\TilesetDisplay.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\MapTilesetEditor\TilesetDisplay.Designer.cs">
+      <DependentUpon>TilesetDisplay.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\MapTilesetEditor\TilesetDisplayListener.cs" />
     <Compile Include="src\MapTilesetEditor\TilesetEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -136,6 +143,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\MapDimensionsEditor\DimensionsEditor.resx">
       <DependentUpon>DimensionsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\MapTilesetEditor\TilesetDisplay.resx">
+      <DependentUpon>TilesetDisplay.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\MapTilesetEditor\TilesetEditor.resx">
+      <DependentUpon>TilesetEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\TileEditor\TileEditor.resx">
       <DependentUpon>TileEditor.cs</DependentUpon>
