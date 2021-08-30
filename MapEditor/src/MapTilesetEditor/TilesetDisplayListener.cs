@@ -8,5 +8,6 @@ namespace MapEditor.src.MapTilesetEditor
 {
     public interface TilesetDisplayListener
     {
+        void OnChangeTilesetInfoRequested();
     }
 }

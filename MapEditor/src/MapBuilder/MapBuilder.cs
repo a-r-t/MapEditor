@@ -58,6 +58,24 @@ namespace MapEditor.src.MapBuilder
             tilesetEditor.AddListener(this);
         }
 
+        public void OnMapSelected(string mapName)
+        {
+            map = new Map($"./Resources/MapFiles/testmaps/{mapName}.map");
+            tileEditor.LoadMap(map);
+
+            dimensionsDisplay.Map = map;
+            dimensionsDisplay.Reset();
+
+            dimensionsEditor.Map = map;
+            dimensionsEditor.Reset();
+
+            tilesetDisplay.Map = map;
+            tilesetDisplay.Reset();
+
+            tilesetEditor.Map = map;
+            tilesetEditor.Reset();
+        }
+
         public void OnChangeDimensionsRequested()
         {
             dimensionsEditor.Reset();
@@ -83,22 +101,20 @@ namespace MapEditor.src.MapBuilder
             dimensionsEditor.Reset();
         }
 
-        public void OnMapSelected(string mapName)
+
+        public void OnChangeTilesetInfoRequested()
         {
-            map = new Map($"./Resources/MapFiles/testmaps/{mapName}.map");
-            tileEditor.LoadMap(map);
-            
-            dimensionsDisplay.Map = map;
-            dimensionsDisplay.Reset();
+            throw new NotImplementedException();
+        }
 
-            dimensionsEditor.Map = map;
-            dimensionsEditor.Reset();
+        public void OnTilesetInfoUpdated(string tilesetName, int scale)
+        {
+            throw new NotImplementedException();
+        }
 
-            tilesetDisplay.Map = map;
-            tilesetDisplay.Reset();
-
-            tilesetEditor.Map = map;
-            tilesetEditor.Reset();
+        public void OnTilesetInfoUpdateCanceled()
+        {
+            throw new NotImplementedException();
         }
 
         public void SaveMap()

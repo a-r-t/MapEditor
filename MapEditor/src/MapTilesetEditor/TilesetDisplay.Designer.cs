@@ -30,12 +30,13 @@
         {
             this.scaleLabel = new System.Windows.Forms.Label();
             this.tilesetLabel = new System.Windows.Forms.Label();
+            this.changeTilesetInfoButton = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // scaleLabel
             // 
             this.scaleLabel.AutoSize = true;
-            this.scaleLabel.Location = new System.Drawing.Point(3, 29);
+            this.scaleLabel.Location = new System.Drawing.Point(9, 34);
             this.scaleLabel.Name = "scaleLabel";
             this.scaleLabel.Size = new System.Drawing.Size(37, 13);
             this.scaleLabel.TabIndex = 3;
@@ -44,19 +45,30 @@
             // tilesetLabel
             // 
             this.tilesetLabel.AutoSize = true;
-            this.tilesetLabel.Location = new System.Drawing.Point(3, 7);
+            this.tilesetLabel.Location = new System.Drawing.Point(5, 9);
             this.tilesetLabel.Name = "tilesetLabel";
             this.tilesetLabel.Size = new System.Drawing.Size(41, 13);
             this.tilesetLabel.TabIndex = 2;
             this.tilesetLabel.Text = "Tileset:";
             // 
+            // changeTilesetInfoButton
+            // 
+            this.changeTilesetInfoButton.Location = new System.Drawing.Point(2, 60);
+            this.changeTilesetInfoButton.Name = "changeTilesetInfoButton";
+            this.changeTilesetInfoButton.Size = new System.Drawing.Size(145, 35);
+            this.changeTilesetInfoButton.TabIndex = 11;
+            this.changeTilesetInfoButton.Text = "Change Tileset Info";
+            this.changeTilesetInfoButton.UseVisualStyleBackColor = true;
+            // 
             // TilesetDisplay
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.changeTilesetInfoButton);
             this.Controls.Add(this.scaleLabel);
             this.Controls.Add(this.tilesetLabel);
             this.Name = "TilesetDisplay";
+            this.Size = new System.Drawing.Size(150, 100);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -66,5 +78,6 @@
 
         private System.Windows.Forms.Label scaleLabel;
         private System.Windows.Forms.Label tilesetLabel;
+        private System.Windows.Forms.Button changeTilesetInfoButton;
     }
 }
