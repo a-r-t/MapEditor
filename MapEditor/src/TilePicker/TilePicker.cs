@@ -30,7 +30,7 @@ namespace MapEditor.src.TilePicker
 
             // number of columns and rows needed to fit all tiles based on size of parent panel's width number of tiles
             // the smaller the width of the parent panel, the less columns and more rows that will be needed
-            int tileSpacing = 5;
+            int tileSpacing = tileset.TileScale + 2;
             int numberOfColumns = Math.Max((tilePickerPanel.ClientSize.Width - tileSpacing) / (tileset.TilesetScaledWidth + tileSpacing), 1);
             int numberOfRows = (int)Math.Ceiling(tileset.NumberOfTiles / (float)numberOfColumns);
 
@@ -75,16 +75,17 @@ namespace MapEditor.src.TilePicker
                 // paint yellow rectangle around selected tile
                 if (selectedTile != null)
                 {
-                    Pen pen = new Pen(Color.Yellow, 5);
+                    int borderSize = tileset.TileScale + 2;
+                    Pen pen = new Pen(Color.Yellow, tileset.TileScale + 2);
                     e.Graphics.DrawRectangle(
                         pen,
                         new Rectangle(
-                            selectedTile.X - 2,
-                            selectedTile.Y - 2,
-                            selectedTile.Width + 5,
-                            selectedTile.Height + 5
+                            selectedTile.X - borderSize / 2,
+                            selectedTile.Y - borderSize / 2,
+                            selectedTile.Width + borderSize,
+                            selectedTile.Height + borderSize
                         )
-                    );
+                    );// ... 2, 3 ... 2, 2 ... 1, 1
                 }
             }
 
