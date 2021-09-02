@@ -76,7 +76,7 @@ namespace MapEditor.src.TilePicker
                 if (selectedTile != null)
                 {
                     int borderSize = tileset.TileScale + 2;
-                    Pen pen = new Pen(Color.Yellow, tileset.TileScale + 2);
+                    Pen pen = new Pen(Color.Yellow, borderSize);
                     e.Graphics.DrawRectangle(
                         pen,
                         new Rectangle(
@@ -85,7 +85,7 @@ namespace MapEditor.src.TilePicker
                             selectedTile.Width + borderSize,
                             selectedTile.Height + borderSize
                         )
-                    );// ... 2, 3 ... 2, 2 ... 1, 1
+                    );
                 }
             }
 
