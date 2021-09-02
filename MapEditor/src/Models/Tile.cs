@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapEditor.src.TileEditor
+namespace MapEditor.src.Models
 {
     public class Tile
     {

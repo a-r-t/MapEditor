@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapEditor.src.TilePicker
+namespace MapEditor.src.Models
 {
     public class Tileset
     {
-        public string TilesetFilePath { get; private set; }
+        public string TilesetFilePath { get; set; }
         public string TilesetImageFilePath { get; private set; }
         public Tile[] Tiles { get; private set; }
         public Bitmap TilesetImage { get; private set; }
@@ -19,7 +19,7 @@ namespace MapEditor.src.TilePicker
         public int TilesetImageHeight { get; private set; }
         public int TileWidth { get; private set; }
         public int TileHeight { get; private set; }
-        public int TileScale { get; private set; }
+        public int TileScale { get; set; }
         public int TilesetScaledWidth
         {
             get
@@ -64,7 +64,7 @@ namespace MapEditor.src.TilePicker
             }
         }
 
-        private void LoadTileset()
+        public void LoadTileset()
         {
             using (StreamReader sr = File.OpenText(TilesetFilePath))
             {
@@ -102,5 +102,19 @@ namespace MapEditor.src.TilePicker
             }
             return defaultTile;
         }
+
+        /*
+        public void SaveTileset()
+        {
+            try
+            {
+                StreamWriter sw = new StreamWriter(TilesetFilePath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error writing map to file:\n" + e.StackTrace);
+            }
+        }
+        */
     }
 }

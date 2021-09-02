@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MapEditor.src.MapBuilder;
+using MapEditor.src.Models;
 
 namespace MapEditor.src.MapTilesetEditor
 {
@@ -24,6 +24,14 @@ namespace MapEditor.src.MapTilesetEditor
         {
             tilesetLabel.Text = $"Tileset: {Map.Tileset.Name}";
             scaleLabel.Text = $"Scale: {Map.Tileset.TileScale}";
+        }
+
+        private void changeTilesetInfoButton_Click(object sender, EventArgs e)
+        {
+            foreach (TilesetDisplayListener listener in listeners)
+            {
+                listener.OnChangeTilesetInfoRequested();
+            }
         }
     }
 }

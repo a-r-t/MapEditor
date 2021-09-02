@@ -10,6 +10,7 @@ using System.Windows.Forms;
 using MapEditor.src.MapList;
 using MapEditor.src.MapDimensionsEditor;
 using MapEditor.src.MapTilesetEditor;
+using MapEditor.src.Models;
 
 namespace MapEditor.src.MapBuilder
 {
@@ -83,13 +84,6 @@ namespace MapEditor.src.MapBuilder
             dimensionsEditor.Show();
         }
 
-        public void OnDimensionsUpdateCanceled()
-        {
-            dimensionsDisplay.Show();
-            dimensionsEditor.Hide();
-            dimensionsEditor.Reset();
-        }
-
         public void OnDimensionsUpdated(int width, int height)
         {
             map.SaveMap();
@@ -101,20 +95,37 @@ namespace MapEditor.src.MapBuilder
             dimensionsEditor.Reset();
         }
 
+        public void OnDimensionsUpdateCanceled()
+        {
+            dimensionsDisplay.Show();
+            dimensionsEditor.Hide();
+            dimensionsEditor.Reset();
+        }
 
         public void OnChangeTilesetInfoRequested()
         {
-            throw new NotImplementedException();
+            tilesetEditor.Reset();
+            tilesetDisplay.Hide();
+            tilesetEditor.Show();
         }
 
         public void OnTilesetInfoUpdated(string tilesetName, int scale)
         {
-            throw new NotImplementedException();
+            map.SaveMap();
+            map.LoadMap();
+            tileEditor.LoadMap(map);
+            tileEditor.Invalidate();
+            tilesetDisplay.Show();
+            tilesetEditor.Hide();
+            tilesetDisplay.Reset();
+            tilesetEditor.Reset();
         }
 
         public void OnTilesetInfoUpdateCanceled()
         {
-            throw new NotImplementedException();
+            tilesetDisplay.Show();
+            tilesetEditor.Hide();
+            tilesetEditor.Reset();
         }
 
         public void SaveMap()

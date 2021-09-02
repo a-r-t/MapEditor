@@ -59,6 +59,7 @@
             this.changeTilesetInfoButton.TabIndex = 11;
             this.changeTilesetInfoButton.Text = "Change Tileset Info";
             this.changeTilesetInfoButton.UseVisualStyleBackColor = true;
+            this.changeTilesetInfoButton.Click += new System.EventHandler(this.changeTilesetInfoButton_Click);
             // 
             // TilesetDisplay
             // 

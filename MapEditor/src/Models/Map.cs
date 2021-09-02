@@ -9,7 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapEditor.src.MapBuilder
+namespace MapEditor.src.Models
 {
     public class Map
     {
@@ -151,7 +151,7 @@ namespace MapEditor.src.MapBuilder
             {
                 StreamWriter sw = new StreamWriter(MapFilePath);
                 sw.WriteLine($"{Width} {Height}");
-                sw.WriteLine($"{Tileset.Name} {Tileset.TileWidth} {Tileset.TileHeight} {Tileset.TileScale}");
+                sw.WriteLine($"{Tileset.Name} {Tileset.TileScale}");
                 for (int i = 0; i < Height; i++)
                 {
                     StringBuilder sb = new StringBuilder();

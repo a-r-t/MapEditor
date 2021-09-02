@@ -7,8 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MapEditor.src.MapBuilder;
-using MapEditor.src.TileEditor;
+using MapEditor.src.Models;
 
 namespace MapEditor.src.MapDimensionsEditor
 {
@@ -19,7 +18,6 @@ namespace MapEditor.src.MapDimensionsEditor
         public DimensionsEditor()
         {
             InitializeComponent();
-            errorMessageLabel.Visible = false;
         }
 
         public void Reset()
@@ -30,6 +28,7 @@ namespace MapEditor.src.MapDimensionsEditor
             widthChangeRightRadioButton.Checked = true;
             heightChangeTopRadioButton.Checked = false;
             heightChangeBottomRadioButton.Checked = true;
+            errorMessageLabel.Visible = false;
         }
 
         private void okButton_Click(object sender, EventArgs e)

@@ -65,7 +65,7 @@
       <DependentUpon>MapBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="src\MapBuilder\MapBuilderListener.cs" />
-    <Compile Include="src\MapBuilder\Map.cs" />
+    <Compile Include="src\Models\Map.cs" />
     <Compile Include="src\MapDimensionsEditor\DimensionsDisplay.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -101,7 +101,7 @@
       <DependentUpon>TileEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="src\TileEditor\TileEditorListener.cs" />
-    <Compile Include="src\TileEditor\Tile.cs" />
+    <Compile Include="src\Models\Tile.cs" />
     <Compile Include="src\MapList\MapList.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -122,7 +122,7 @@
       <DependentUpon>TilePicker.cs</DependentUpon>
     </Compile>
     <Compile Include="src\TilePicker\TilePickerListener.cs" />
-    <Compile Include="src\TilePicker\Tileset.cs" />
+    <Compile Include="src\Models\Tileset.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

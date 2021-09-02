@@ -10,7 +10,7 @@ using System.Windows.Forms;
 using MapEditor.src.TilePicker;
 using MapEditor.src.ExtensionMethods;
 using MapEditor.src.MapList;
-using MapEditor.src.MapBuilder;
+using MapEditor.src.Models;
 
 namespace MapEditor.src.TileEditor
 {
