@@ -161,6 +161,7 @@ namespace MapEditor.src.TilePicker
         {
             this.tileset = map.Tileset;
             SetupTilePicker();
+            this.selectedTile = null;
             tilePickerPictureBox.Invalidate();
         }
     }
