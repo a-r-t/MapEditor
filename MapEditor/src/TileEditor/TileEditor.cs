@@ -17,6 +17,19 @@ namespace MapEditor.src.TileEditor
     public partial class TileEditor : ObservableUserControl<TileEditorListener>, TilePickerListener
     {
         private Map map;
+        public Map Map
+        {
+            get
+            {
+                return map;
+            }
+            set
+            {
+                map = value;
+                LoadMap();
+            }
+        }
+
         private Point hoveredTileIndex = new Point(-1, -1);
         private Tile selectedTile;
         private TilePicker.TilePicker tilePicker;
@@ -131,9 +144,8 @@ namespace MapEditor.src.TileEditor
 
         }
 
-        public void LoadMap(Map map)
+        private void LoadMap()
         {
-            this.map = map;
             mapPictureBox.Image = new Bitmap(map.WidthInPixels, map.HeightInPixels);
             mapPictureBox.ClientSize = mapPictureBox.Image.Size;
             widthLabel.Text = $"Width: {map.Width}";

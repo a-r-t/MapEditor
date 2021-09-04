@@ -46,21 +46,20 @@ namespace MapEditor.src.MapBuilder
         public void OnMapSelected(string mapName)
         {
             map = new Map($"./Resources/MapFiles/testmaps/{mapName}.map");
-            tileEditor.LoadMap(map);
-
+            tileEditor.Map = map;
             dimensionsEditorHandler.Map = map;
             tilesetEditorHandler.Map = map;
         }
 
         public void OnDimensionsUpdated(int width, int height)
         {
-            tileEditor.LoadMap(map);
+            tileEditor.Map = map;
             tileEditor.Invalidate();
         }
 
         public void OnTilesetInfoUpdated(string tilesetName, int scale)
         {
-            tileEditor.LoadMap(map);
+            tileEditor.Map = map;
             tileEditor.Invalidate();
         }
 
