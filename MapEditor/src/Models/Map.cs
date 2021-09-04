@@ -134,6 +134,31 @@ namespace MapEditor.src.Models
             }
         }
 
+        public void ReloadMapTiles()
+        {
+            int heightCounter = 0;
+            for (int i = 0; i < MapTiles.Length; i++)
+            {
+                int tileIndex = MapTiles[i].Index;
+                int column = i % Width;
+                if (i != 0 && i % Width == 0)
+                {
+                    heightCounter++;
+                }
+                int row = heightCounter;
+
+                int tileX = column * Tileset.TilesetScaledWidth;
+                int tileY = row * Tileset.TilesetScaledHeight;
+                int tileWidth = Tileset.TilesetScaledWidth;
+                int tileHeight = Tileset.TilesetScaledHeight;
+
+                Tile tile = new Tile(tileIndex, Tileset.GetTileSubImage(tileIndex));
+                tile.SetLocation(tileX, tileY);
+                tile.SetDimensions(tileWidth, tileHeight);
+                MapTiles[i] = tile;
+            }
+        }
+
         public void Paint(Graphics graphics)
         {    
             graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
