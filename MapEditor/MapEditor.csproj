@@ -65,6 +65,13 @@
       <DependentUpon>MapBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="src\MapBuilder\MapBuilderListener.cs" />
+    <Compile Include="src\MapDimensionsEditor\DimensionsEditorHandler.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\MapDimensionsEditor\DimensionsEditorHandler.Designer.cs">
+      <DependentUpon>DimensionsEditorHandler.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\MapDimensionsEditor\DimensionsEditorHandlerListener.cs" />
     <Compile Include="src\MapTilesetEditor\TilesetEditorHandler.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -151,6 +158,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\MapDimensionsEditor\DimensionsEditor.resx">
       <DependentUpon>DimensionsEditor.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\MapDimensionsEditor\DimensionsEditorHandler.resx">
+      <DependentUpon>DimensionsEditorHandler.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\MapTilesetEditor\TilesetDisplay.resx">
       <DependentUpon>TilesetDisplay.cs</DependentUpon>
