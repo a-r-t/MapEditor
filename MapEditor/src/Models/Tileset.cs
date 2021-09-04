@@ -86,8 +86,15 @@ namespace MapEditor.src.Models
 
         public Bitmap GetTileSubImage(int index)
         {
-            Rectangle tileSubImageRect = GetTileSubImageRectangle(index);
-            return TilesetImage.Clone(tileSubImageRect, TilesetImage.PixelFormat);
+            if (index < NumberOfTiles)
+            {
+                Rectangle tileSubImageRect = GetTileSubImageRectangle(index);
+                return TilesetImage.Clone(tileSubImageRect, TilesetImage.PixelFormat);
+            }
+            else
+            {
+                return GetDefaultTile();
+            }
         }
 
         public Bitmap GetDefaultTile()
