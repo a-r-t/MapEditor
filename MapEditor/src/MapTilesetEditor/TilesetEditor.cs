@@ -60,10 +60,10 @@ namespace MapEditor.src.MapTilesetEditor
                     ShowChangeDimensionsError(ex.Message);
                 }
             }
-            if (newScale < 0)
+            if (newScale < 1)
             {
                 isValid = false;
-                ShowChangeDimensionsError("Scale must be >= 0");
+                ShowChangeDimensionsError("Scale must be >= 1");
             }
 
             if (isValid)
@@ -74,23 +74,14 @@ namespace MapEditor.src.MapTilesetEditor
 
         private void UpdateTilesetInfo(string newTilesetName, int newTilesetScale)
         {
-            bool isChanged = false;
             if (newTilesetName != Map.Tileset.Name)
             {
                 Map.Tileset.TilesetFilePath = $"./Resources/TilesetFiles/{newTilesetName}.tileset";
-                isChanged = true;
             }
             if (newTilesetScale != Map.Tileset.TileScale)
             {
                 Map.Tileset.TileScale = newTilesetScale;
-                isChanged = true;
             }
-
-            /*
-            if (isChanged) {
-                Map.Tileset.LoadTileset();
-            }
-            */
 
             foreach (TilesetEditorListener listener in listeners)
             {
