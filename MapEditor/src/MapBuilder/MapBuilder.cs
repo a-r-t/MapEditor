@@ -9,18 +9,20 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using MapEditor.src.MapList;
 using MapEditor.src.MapDimensionsEditor;
+using MapEditor.src.MapTilesetEditor;
+using MapEditor.src.Models;
 
 namespace MapEditor.src.MapBuilder
 {
     public partial class MapBuilder : ObservableUserControl<MapBuilderListener>, 
         MapListListener, 
-        DimensionsDisplayListener,
-        DimensionsEditorListener
+        DimensionsEditorHandlerListener,
+        TilesetEditorHandlerListener
     {
         private Map map;
         private TileEditor.TileEditor tileEditor;
-        private DimensionsDisplay dimensionsDisplay;
-        private DimensionsEditor dimensionsEditor;
+        private DimensionsEditorHandler dimensionsEditorHandler;
+        private TilesetEditorHandler tilesetEditorHandler;
 
         public MapBuilder()
         {
@@ -30,53 +32,35 @@ namespace MapEditor.src.MapBuilder
             tileEditorTab.Controls.Add(tileEditor);
             tileEditor.Dock = DockStyle.Fill;
 
-            dimensionsDisplay = new DimensionsDisplay();
-            dimensionsTab.Controls.Add(dimensionsDisplay);
-            dimensionsDisplay.Dock = DockStyle.Fill;
-            dimensionsDisplay.AddListener(this);
+            dimensionsEditorHandler = new DimensionsEditorHandler();
+            dimensionsTab.Controls.Add(dimensionsEditorHandler);
+            dimensionsEditorHandler.Dock = DockStyle.Fill;
+            dimensionsEditorHandler.AddListener(this);
 
-            dimensionsEditor = new DimensionsEditor();
-            dimensionsTab.Controls.Add(dimensionsEditor);
-            dimensionsEditor.Dock = DockStyle.Fill;
-            dimensionsEditor.Hide();
-            dimensionsEditor.AddListener(this);
-        }
-
-        public void OnChangeDimensionsRequested()
-        {
-            dimensionsEditor.Reset();
-            dimensionsDisplay.Hide();
-            dimensionsEditor.Show();
-        }
-
-        public void OnDimensionsUpdateCanceled()
-        {
-            dimensionsDisplay.Show();
-            dimensionsEditor.Hide();
-            dimensionsEditor.Reset();
-        }
-
-        public void OnDimensionsUpdated(int width, int height)
-        {
-            map.SaveMap();
-            tileEditor.LoadMap(map);
-            tileEditor.Invalidate();
-            dimensionsDisplay.Show();
-            dimensionsEditor.Hide();
-            dimensionsDisplay.Reset();
-            dimensionsEditor.Reset();
+            tilesetEditorHandler = new TilesetEditorHandler();
+            tilesetTab.Controls.Add(tilesetEditorHandler);
+            tilesetEditorHandler.Dock = DockStyle.Fill;
+            tilesetEditorHandler.AddListener(this);
         }
 
         public void OnMapSelected(string mapName)
         {
             map = new Map($"./Resources/MapFiles/testmaps/{mapName}.map");
-            tileEditor.LoadMap(map);
-            
-            dimensionsDisplay.Map = map;
-            dimensionsDisplay.Reset();
+            tileEditor.Map = map;
+            dimensionsEditorHandler.Map = map;
+            tilesetEditorHandler.Map = map;
+        }
 
-            dimensionsEditor.Map = map;
-            dimensionsEditor.Reset();
+        public void OnDimensionsUpdated(int width, int height)
+        {
+            tileEditor.Map = map;
+            tileEditor.Invalidate();
+        }
+
+        public void OnTilesetInfoUpdated(string tilesetName, int scale)
+        {
+            tileEditor.Map = map;
+            tileEditor.Invalidate();
         }
 
         public void SaveMap()

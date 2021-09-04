@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MapEditor.src.MapBuilder;
+using MapEditor.src.Models;
 
 namespace MapEditor.src.MapDimensionsEditor
 {

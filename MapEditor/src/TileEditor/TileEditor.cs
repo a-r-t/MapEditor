@@ -10,13 +10,26 @@ using System.Windows.Forms;
 using MapEditor.src.TilePicker;
 using MapEditor.src.ExtensionMethods;
 using MapEditor.src.MapList;
-using MapEditor.src.MapBuilder;
+using MapEditor.src.Models;
 
 namespace MapEditor.src.TileEditor
 {
     public partial class TileEditor : ObservableUserControl<TileEditorListener>, TilePickerListener
     {
         private Map map;
+        public Map Map
+        {
+            get
+            {
+                return map;
+            }
+            set
+            {
+                map = value;
+                LoadMap();
+            }
+        }
+
         private Point hoveredTileIndex = new Point(-1, -1);
         private Tile selectedTile;
         private TilePicker.TilePicker tilePicker;
@@ -45,14 +58,15 @@ namespace MapEditor.src.TileEditor
                 map.Paint(e.Graphics);
                 if (hoveredTileIndex.X != -1 && hoveredTileIndex.Y != -1)
                 {
-                    Pen pen = new Pen(Color.Yellow, 5);
+                    int borderSize = map.Tileset.TileScale + 1;
+                    Pen pen = new Pen(Color.Yellow, borderSize);
                     e.Graphics.DrawRectangle(
                         pen,
                         new Rectangle(
-                            hoveredTileIndex.X * map.MapTileWidth + 3,
-                            hoveredTileIndex.Y * map.MapTileHeight + 3,
-                            map.MapTileWidth - 5,
-                            map.MapTileHeight - 5
+                            (hoveredTileIndex.X * map.MapTileWidth) + (borderSize / 2.0f).Round(),
+                            (hoveredTileIndex.Y * map.MapTileHeight) + (borderSize / 2.0f).Round(),
+                            map.MapTileWidth - borderSize,
+                            map.MapTileHeight - borderSize
                         )
                     );
                 }
@@ -130,9 +144,8 @@ namespace MapEditor.src.TileEditor
 
         }
 
-        public void LoadMap(Map map)
+        private void LoadMap()
         {
-            this.map = map;
             mapPictureBox.Image = new Bitmap(map.WidthInPixels, map.HeightInPixels);
             mapPictureBox.ClientSize = mapPictureBox.Image.Size;
             widthLabel.Text = $"Width: {map.Width}";

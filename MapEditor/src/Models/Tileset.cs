@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapEditor.src.TilePicker
+namespace MapEditor.src.Models
 {
     public class Tileset
     {
-        public string TilesetFilePath { get; private set; }
+        public string TilesetFilePath { get; set; }
         public string TilesetImageFilePath { get; private set; }
         public Tile[] Tiles { get; private set; }
         public Bitmap TilesetImage { get; private set; }
@@ -19,7 +19,7 @@ namespace MapEditor.src.TilePicker
         public int TilesetImageHeight { get; private set; }
         public int TileWidth { get; private set; }
         public int TileHeight { get; private set; }
-        public int TileScale { get; private set; }
+        public int TileScale { get; set; }
         public int TilesetScaledWidth
         {
             get
@@ -64,7 +64,7 @@ namespace MapEditor.src.TilePicker
             }
         }
 
-        private void LoadTileset()
+        public void LoadTileset()
         {
             using (StreamReader sr = File.OpenText(TilesetFilePath))
             {
@@ -77,7 +77,7 @@ namespace MapEditor.src.TilePicker
             }
         }
 
-        public Rectangle GetTileSubImageRectangle(int index)
+        private Rectangle GetTileSubImageRectangle(int index)
         {
             int row = index / numberOfColumns;
             int column = index % numberOfColumns;
@@ -86,8 +86,42 @@ namespace MapEditor.src.TilePicker
 
         public Bitmap GetTileSubImage(int index)
         {
-            Rectangle tileSubImageRect = GetTileSubImageRectangle(index);
-            return TilesetImage.Clone(tileSubImageRect, TilesetImage.PixelFormat);
+            if (index >= 0 && index < NumberOfTiles)
+            {
+                Rectangle tileSubImageRect = GetTileSubImageRectangle(index);
+                return TilesetImage.Clone(tileSubImageRect, TilesetImage.PixelFormat);
+            }
+            else
+            {
+                return GetDefaultTile();
+            }
         }
+
+        public Bitmap GetDefaultTile()
+        {
+            Bitmap defaultTile = new Bitmap(TileWidth, TileHeight);
+            using (Graphics graphics = Graphics.FromImage(defaultTile))
+            {
+                using (SolidBrush brush = new SolidBrush(Color.FromArgb(0, 0, 0)))
+                {
+                    graphics.FillRectangle(brush, 0, 0, TileWidth, TileHeight);
+                }
+            }
+            return defaultTile;
+        }
+
+        /*
+        public void SaveTileset()
+        {
+            try
+            {
+                StreamWriter sw = new StreamWriter(TilesetFilePath);
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error writing map to file:\n" + e.StackTrace);
+            }
+        }
+        */
     }
 }
