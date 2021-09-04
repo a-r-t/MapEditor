@@ -83,6 +83,8 @@ namespace MapEditor.src.MapTilesetEditor
                 Map.Tileset.TileScale = newTilesetScale;
             }
 
+            Map.Tileset.LoadTileset();
+
             foreach (TilesetEditorListener listener in listeners)
             {
                 listener.OnTilesetInfoUpdated(newTilesetName, newTilesetScale);

@@ -79,8 +79,6 @@ namespace MapEditor.src.MapTilesetEditor
 
         public void OnTilesetInfoUpdated(string tilesetName, int scale)
         {
-            Map.SaveMap();
-            Map.LoadMap();
             EditMode = EditMode.DISPLAY;
 
             foreach (TilesetEditorHandlerListener listener in listeners)

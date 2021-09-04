@@ -52,16 +52,6 @@ namespace MapEditor.src.Models
             TilesetFilePath = tilesetFilePath;
             TileScale = tileScale;
             LoadTileset();
-            TilesetImageWidth = TilesetImage.Width;
-            TilesetImageHeight = TilesetImage.Height;
-            numberOfRows = TilesetImageHeight / TileHeight;
-            numberOfColumns = TilesetImageWidth / TileWidth;
-
-            Tiles = new Tile[NumberOfTiles];
-            for (int i = 0; i < NumberOfTiles; i++)
-            {
-                Tiles[i] = new Tile(i, GetTileSubImage(i));
-            }
         }
 
         public void LoadTileset()
@@ -74,6 +64,16 @@ namespace MapEditor.src.Models
                 TileWidth = int.Parse(tilesetInfo[0]);
                 TileHeight = int.Parse(tilesetInfo[1]);
                 NumberOfTiles = int.Parse(tilesetInfo[2]);
+            }
+            TilesetImageWidth = TilesetImage.Width;
+            TilesetImageHeight = TilesetImage.Height;
+            numberOfRows = TilesetImageHeight / TileHeight;
+            numberOfColumns = TilesetImageWidth / TileWidth;
+
+            Tiles = new Tile[NumberOfTiles];
+            for (int i = 0; i < NumberOfTiles; i++)
+            {
+                Tiles[i] = new Tile(i, GetTileSubImage(i));
             }
         }
 

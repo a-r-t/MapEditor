@@ -53,14 +53,41 @@ namespace MapEditor.src.MapBuilder
 
         public void OnDimensionsUpdated(int width, int height)
         {
+            ReloadMapTiles();
             tileEditor.Map = map;
             tileEditor.Invalidate();
         }
 
         public void OnTilesetInfoUpdated(string tilesetName, int scale)
         {
+            ReloadMapTiles();
             tileEditor.Map = map;
             tileEditor.Invalidate();
+        }
+
+        public void ReloadMapTiles()
+        {
+            int heightCounter = 0;
+            for (int i = 0; i < map.MapTiles.Length; i++)
+            {
+                int tileIndex = map.MapTiles[i].Index;
+                int column = i % map.Width;
+                if (i != 0 && i % map.Width == 0)
+                {
+                    heightCounter++;
+                }
+                int row = heightCounter;
+
+                int tileX = column * map.Tileset.TilesetScaledWidth;
+                int tileY = row * map.Tileset.TilesetScaledHeight;
+                int tileWidth = map.Tileset.TilesetScaledWidth;
+                int tileHeight = map.Tileset.TilesetScaledHeight;
+
+                Tile tile = new Tile(tileIndex, map.Tileset.GetTileSubImage(tileIndex));
+                tile.SetLocation(tileX, tileY);
+                tile.SetDimensions(tileWidth, tileHeight);
+                map.MapTiles[i] = tile;
+            }
         }
 
         public void SaveMap()

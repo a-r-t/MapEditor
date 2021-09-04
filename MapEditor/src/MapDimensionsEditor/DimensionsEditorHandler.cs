@@ -80,8 +80,6 @@ namespace MapEditor.src.MapDimensionsEditor
 
         public void OnDimensionsUpdated(int width, int height)
         {
-            Map.SaveMap();
-            Map.LoadMap();
             EditMode = EditMode.DISPLAY;
 
             foreach (DimensionsEditorHandlerListener listener in listeners)

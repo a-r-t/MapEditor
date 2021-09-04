@@ -99,6 +99,7 @@ namespace MapEditor.src.Models
             PrintMap();
         }
 
+
         public int GetConvertedIndex(int x, int y)
         {
             return x + Width * y;
