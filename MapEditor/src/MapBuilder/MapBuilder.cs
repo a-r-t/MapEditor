@@ -18,15 +18,13 @@ namespace MapEditor.src.MapBuilder
         MapListListener, 
         DimensionsDisplayListener,
         DimensionsEditorListener,
-        TilesetDisplayListener,
-        TilesetEditorListener
+        TilesetEditorHandlerListener
     {
         private Map map;
         private TileEditor.TileEditor tileEditor;
         private DimensionsDisplay dimensionsDisplay;
         private DimensionsEditor dimensionsEditor;
-        private TilesetDisplay tilesetDisplay;
-        private TilesetEditor tilesetEditor;
+        private TilesetEditorHandler tilesetEditorHandler;
 
         public MapBuilder()
         {
@@ -47,16 +45,10 @@ namespace MapEditor.src.MapBuilder
             dimensionsEditor.Hide();
             dimensionsEditor.AddListener(this);
 
-            tilesetDisplay = new TilesetDisplay();
-            tilesetTab.Controls.Add(tilesetDisplay);
-            tilesetDisplay.Dock = DockStyle.Fill;
-            tilesetDisplay.AddListener(this);
-
-            tilesetEditor = new TilesetEditor();
-            tilesetTab.Controls.Add(tilesetEditor);
-            tilesetEditor.Dock = DockStyle.Fill;
-            tilesetEditor.Hide();
-            tilesetEditor.AddListener(this);
+            tilesetEditorHandler = new TilesetEditorHandler();
+            tilesetTab.Controls.Add(tilesetEditorHandler);
+            tilesetEditorHandler.Dock = DockStyle.Fill;
+            tilesetEditorHandler.AddListener(this);
         }
 
         public void OnMapSelected(string mapName)
@@ -70,11 +62,7 @@ namespace MapEditor.src.MapBuilder
             dimensionsEditor.Map = map;
             dimensionsEditor.Reset();
 
-            tilesetDisplay.Map = map;
-            tilesetDisplay.Reset();
-
-            tilesetEditor.Map = map;
-            tilesetEditor.Reset();
+            tilesetEditorHandler.Map = map;
         }
 
         public void OnChangeDimensionsRequested()
@@ -102,30 +90,10 @@ namespace MapEditor.src.MapBuilder
             dimensionsEditor.Reset();
         }
 
-        public void OnChangeTilesetInfoRequested()
-        {
-            tilesetEditor.Reset();
-            tilesetDisplay.Hide();
-            tilesetEditor.Show();
-        }
-
         public void OnTilesetInfoUpdated(string tilesetName, int scale)
         {
-            map.SaveMap();
-            map.LoadMap();
             tileEditor.LoadMap(map);
             tileEditor.Invalidate();
-            tilesetDisplay.Show();
-            tilesetEditor.Hide();
-            tilesetDisplay.Reset();
-            tilesetEditor.Reset();
-        }
-
-        public void OnTilesetInfoUpdateCanceled()
-        {
-            tilesetDisplay.Show();
-            tilesetEditor.Hide();
-            tilesetEditor.Reset();
         }
 
         public void SaveMap()
