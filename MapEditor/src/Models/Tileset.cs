@@ -1,4 +1,4 @@
-﻿using MapEditor.src.TileEditor;
+﻿using MapEditor.src.MapTileEditor;
 using System;
 using System.Collections.Generic;
 using System.Drawing;

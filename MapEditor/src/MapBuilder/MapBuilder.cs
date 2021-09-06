@@ -11,6 +11,7 @@ using MapEditor.src.MapList;
 using MapEditor.src.MapDimensionsEditor;
 using MapEditor.src.MapTilesetEditor;
 using MapEditor.src.Models;
+using MapEditor.src.MapTileEditor;
 
 namespace MapEditor.src.MapBuilder
 {
@@ -20,7 +21,7 @@ namespace MapEditor.src.MapBuilder
         TilesetEditorHandlerListener
     {
         private Map map;
-        private TileEditor.TileEditor tileEditor;
+        private TileEditor tileEditor;
         private DimensionsEditorHandler dimensionsEditorHandler;
         private TilesetEditorHandler tilesetEditorHandler;
 
@@ -28,7 +29,7 @@ namespace MapEditor.src.MapBuilder
         {
             InitializeComponent();
 
-            tileEditor = new TileEditor.TileEditor();
+            tileEditor = new TileEditor();
             tileEditorTab.Controls.Add(tileEditor);
             tileEditor.Dock = DockStyle.Fill;
 

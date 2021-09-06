@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MapEditor.src.TileEditor;
+using MapEditor.src.MapTileEditor;
 using MapEditor.src.ExtensionMethods;
 using MapEditor.src.Models;
 

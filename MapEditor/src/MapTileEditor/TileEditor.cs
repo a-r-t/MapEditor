@@ -12,7 +12,7 @@ using MapEditor.src.ExtensionMethods;
 using MapEditor.src.MapList;
 using MapEditor.src.Models;
 
-namespace MapEditor.src.TileEditor
+namespace MapEditor.src.MapTileEditor
 {
     public partial class TileEditor : ObservableUserControl<TileEditorListener>, TilePickerListener
     {

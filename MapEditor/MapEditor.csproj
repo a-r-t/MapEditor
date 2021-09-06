@@ -109,13 +109,13 @@
       <DependentUpon>TilesetEditor.cs</DependentUpon>
     </Compile>
     <Compile Include="src\MapTilesetEditor\TilesetEditorListener.cs" />
-    <Compile Include="src\TileEditor\TileEditor.cs">
+    <Compile Include="src\MapTileEditor\TileEditor.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\TileEditor\TileEditor.Designer.cs">
+    <Compile Include="src\MapTileEditor\TileEditor.Designer.cs">
       <DependentUpon>TileEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\TileEditor\TileEditorListener.cs" />
+    <Compile Include="src\MapTileEditor\TileEditorListener.cs" />
     <Compile Include="src\Models\Tile.cs" />
     <Compile Include="src\MapList\MapList.cs">
       <SubType>UserControl</SubType>
@@ -171,7 +171,7 @@
     <EmbeddedResource Include="src\MapTilesetEditor\TilesetEditorHandler.resx">
       <DependentUpon>TilesetEditorHandler.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\TileEditor\TileEditor.resx">
+    <EmbeddedResource Include="src\MapTileEditor\TileEditor.resx">
       <DependentUpon>TileEditor.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\MapList\MapList.resx">
