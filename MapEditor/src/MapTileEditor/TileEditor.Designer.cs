@@ -28,48 +28,32 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.mapPictureBox = new System.Windows.Forms.PictureBox();
             this.mapPanel = new System.Windows.Forms.Panel();
             this.widthLabel = new System.Windows.Forms.Label();
             this.heightLabel = new System.Windows.Forms.Label();
             this.selectedTileIndexLabel = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.mapPanelScroll = new System.Windows.Forms.Panel();
             this.tilePickerPanel = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).BeginInit();
-            this.mapPanel.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
             this.splitContainer1.Panel1.SuspendLayout();
             this.splitContainer1.Panel2.SuspendLayout();
             this.splitContainer1.SuspendLayout();
+            this.mapPanelScroll.SuspendLayout();
             this.SuspendLayout();
-            // 
-            // mapPictureBox
-            // 
-            this.mapPictureBox.BackColor = System.Drawing.SystemColors.Control;
-            this.mapPictureBox.Location = new System.Drawing.Point(0, 0);
-            this.mapPictureBox.Name = "mapPictureBox";
-            this.mapPictureBox.Size = new System.Drawing.Size(571, 378);
-            this.mapPictureBox.TabIndex = 0;
-            this.mapPictureBox.TabStop = false;
-            this.mapPictureBox.Paint += new System.Windows.Forms.PaintEventHandler(this.mapPictureBox_Paint);
-            this.mapPictureBox.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mapPictureBox_MouseDown);
-            this.mapPictureBox.MouseEnter += new System.EventHandler(this.mapPictureBox_MouseEnter);
-            this.mapPictureBox.MouseLeave += new System.EventHandler(this.mapPictureBox_MouseLeave);
-            this.mapPictureBox.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapPictureBox_MouseMove);
-            this.mapPictureBox.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapPictureBox_MouseUp);
             // 
             // mapPanel
             // 
-            this.mapPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.mapPanel.AutoScroll = true;
             this.mapPanel.BackColor = System.Drawing.SystemColors.Control;
-            this.mapPanel.Controls.Add(this.mapPictureBox);
             this.mapPanel.Location = new System.Drawing.Point(0, 0);
             this.mapPanel.Name = "mapPanel";
-            this.mapPanel.Size = new System.Drawing.Size(550, 378);
+            this.mapPanel.Size = new System.Drawing.Size(546, 394);
             this.mapPanel.TabIndex = 1;
+            this.mapPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.mapPanel_Paint);
+            this.mapPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.mapPanel_MouseDown);
+            this.mapPanel.MouseEnter += new System.EventHandler(this.mapPanel_MouseEnter);
+            this.mapPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapPanel_MouseMove);
+            this.mapPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapPanel_MouseUp);
             // 
             // widthLabel
             // 
@@ -114,10 +98,10 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.mapPanelScroll);
             this.splitContainer1.Panel1.Controls.Add(this.selectedTileIndexLabel);
             this.splitContainer1.Panel1.Controls.Add(this.widthLabel);
             this.splitContainer1.Panel1.Controls.Add(this.heightLabel);
-            this.splitContainer1.Panel1.Controls.Add(this.mapPanel);
             // 
             // splitContainer1.Panel2
             // 
@@ -125,6 +109,18 @@
             this.splitContainer1.Size = new System.Drawing.Size(728, 400);
             this.splitContainer1.SplitterDistance = 552;
             this.splitContainer1.TabIndex = 5;
+            // 
+            // mapPanelScroll
+            // 
+            this.mapPanelScroll.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.mapPanelScroll.AutoScroll = true;
+            this.mapPanelScroll.Controls.Add(this.mapPanel);
+            this.mapPanelScroll.Location = new System.Drawing.Point(3, 3);
+            this.mapPanelScroll.Name = "mapPanelScroll";
+            this.mapPanelScroll.Size = new System.Drawing.Size(547, 394);
+            this.mapPanelScroll.TabIndex = 5;
             // 
             // tilePickerPanel
             // 
@@ -143,25 +139,23 @@
             this.Name = "TileEditor";
             this.Size = new System.Drawing.Size(728, 400);
             this.Load += new System.EventHandler(this.MapBuilder_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.mapPictureBox)).EndInit();
-            this.mapPanel.ResumeLayout(false);
             this.splitContainer1.Panel1.ResumeLayout(false);
             this.splitContainer1.Panel1.PerformLayout();
             this.splitContainer1.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
             this.splitContainer1.ResumeLayout(false);
+            this.mapPanelScroll.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.PictureBox mapPictureBox;
         private System.Windows.Forms.Panel mapPanel;
         private System.Windows.Forms.Label widthLabel;
         private System.Windows.Forms.Label heightLabel;
         private System.Windows.Forms.Label selectedTileIndexLabel;
         private System.Windows.Forms.SplitContainer splitContainer1;
         private System.Windows.Forms.Panel tilePickerPanel;
+        private System.Windows.Forms.Panel mapPanelScroll;
     }
 }

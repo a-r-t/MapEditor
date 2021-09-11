@@ -43,15 +43,16 @@ namespace MapEditor.src.MapTileEditor
 
             tilePicker.AddListener(this);
             this.AddListener(tilePicker);
+            mapPanel.DoubleBuffered(true);
         }
 
         private void MapBuilder_Load(object sender, EventArgs e)
         {
-            mapPictureBox.ClientSize = new Size(0, 0);
+            mapPanel.ClientSize = new Size(0, 0);
             splitContainer1.SplitterDistance = 688;
         }
 
-        private void mapPictureBox_Paint(object sender, PaintEventArgs e)
+        private void mapPanel_Paint(object sender, PaintEventArgs e)
         {
             if (map != null)
             {
@@ -73,7 +74,7 @@ namespace MapEditor.src.MapTileEditor
             }
         }
 
-        private void mapPictureBox_MouseMove(object sender, MouseEventArgs e)
+        private void mapPanel_MouseMove(object sender, MouseEventArgs e)
         {
             if (map != null)
             {
@@ -96,19 +97,19 @@ namespace MapEditor.src.MapTileEditor
                     }
                 }
 
-                mapPictureBox.Invalidate();
+                mapPanel.Invalidate();
             }
         }
 
-        private void mapPictureBox_MouseLeave(object sender, EventArgs e)
+        private void mapPanelBox_MouseLeave(object sender, EventArgs e)
         {
             selectedTileIndexLabel.Visible = false;
             hoveredTileIndex = new Point(-1, -1);
 
-            mapPictureBox.Invalidate();
+            mapPanel.Invalidate();
         }
 
-        private void mapPictureBox_MouseEnter(object sender, EventArgs e)
+        private void mapPanel_MouseEnter(object sender, EventArgs e)
         {
             selectedTileIndexLabel.Visible = true;
         }
@@ -118,7 +119,7 @@ namespace MapEditor.src.MapTileEditor
             selectedTile = tile;
         }
 
-        private void mapPictureBox_MouseDown(object sender, MouseEventArgs e)
+        private void mapPanel_MouseDown(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Left)
             {
@@ -133,7 +134,7 @@ namespace MapEditor.src.MapTileEditor
                         tileToReplace.Index = selectedTile.Index;
                         tileToReplace.Image = selectedTile.Image;
 
-                        mapPictureBox.Invalidate();
+                        mapPanel.Invalidate();
 
                         foreach (TileEditorListener listener in listeners)
                         {
@@ -144,19 +145,20 @@ namespace MapEditor.src.MapTileEditor
             }
         }
 
-        private void mapPictureBox_MouseUp(object sender, MouseEventArgs e)
+        private void mapPanel_MouseUp(object sender, MouseEventArgs e)
         {
 
         }
 
         private void LoadMap()
         {
-            mapPictureBox.Image = new Bitmap(map.WidthInPixels, map.HeightInPixels);
-            mapPictureBox.ClientSize = mapPictureBox.Image.Size;
+            //mapPictureBox.Image = new Bitmap(map.WidthInPixels, map.HeightInPixels);
+            //mapPictureBox.ClientSize = mapPictureBox.Image.Size;
+            mapPanel.ClientSize = new Size(map.WidthInPixels, map.HeightInPixels);
             widthLabel.Text = $"Width: {map.Width}";
             heightLabel.Text = $"Height: {map.Height}";
             heightLabel.Location = new Point(widthLabel.Location.X + widthLabel.Width + 10, heightLabel.Location.Y);
-            mapPictureBox.Invalidate();
+            mapPanel.Invalidate();
 
             foreach (TileEditorListener listener in listeners)
             {
