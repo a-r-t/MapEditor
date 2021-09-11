@@ -14,6 +14,7 @@ namespace MapEditor.src.MapBuilder
     {
         private MapBuilder mapBuilder;
 
+        // for designer purposes only
         public MapSaveDialog()
         {
             InitializeComponent();
