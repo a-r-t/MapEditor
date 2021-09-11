@@ -165,5 +165,10 @@ namespace MapEditor.src.TilePicker
             this.selectedTile = null;
             tilePickerPictureBox.Invalidate();
         }
+
+        public void OnTileEdited(int index, Tile tile)
+        {
+            return;
+        }
     }
 }

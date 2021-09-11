@@ -65,6 +65,12 @@
       <DependentUpon>MapBuilder.cs</DependentUpon>
     </Compile>
     <Compile Include="src\MapBuilder\MapBuilderListener.cs" />
+    <Compile Include="src\MapBuilder\MapSaveDialog.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\MapBuilder\MapSaveDialog.Designer.cs">
+      <DependentUpon>MapSaveDialog.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\MapDimensionsEditor\DimensionsEditorHandler.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -153,6 +159,9 @@
     <EmbeddedResource Include="src\MapBuilder\MapBuilder.resx">
       <DependentUpon>MapBuilder.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\MapBuilder\MapSaveDialog.resx">
+      <DependentUpon>MapSaveDialog.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\MapDimensionsEditor\DimensionsDisplay.resx">
       <DependentUpon>DimensionsDisplay.cs</DependentUpon>
     </EmbeddedResource>
@@ -199,9 +208,7 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="src\Listeners\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="Resources\Images\file-icon-selected.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>

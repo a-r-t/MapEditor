@@ -74,5 +74,10 @@ namespace MapEditor
         {
             mapBuilder.SaveMap();
         }
+
+        private void MainForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            mapBuilder.CheckDirty();
+        }
     }
 }

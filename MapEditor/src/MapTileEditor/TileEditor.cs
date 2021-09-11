@@ -134,6 +134,11 @@ namespace MapEditor.src.MapTileEditor
                         tileToReplace.Image = selectedTile.Image;
 
                         mapPictureBox.Invalidate();
+
+                        foreach (TileEditorListener listener in listeners)
+                        {
+                            listener.OnTileEdited(convertedTileIndex, tileToReplace);
+                        }
                     }
                 }
             }

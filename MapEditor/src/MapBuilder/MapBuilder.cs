@@ -17,6 +17,7 @@ namespace MapEditor.src.MapBuilder
 {
     public partial class MapBuilder : ObservableUserControl<MapBuilderListener>, 
         MapListListener, 
+        TileEditorListener,
         DimensionsEditorHandlerListener,
         TilesetEditorHandlerListener
     {
@@ -24,6 +25,7 @@ namespace MapEditor.src.MapBuilder
         private TileEditor tileEditor;
         private DimensionsEditorHandler dimensionsEditorHandler;
         private TilesetEditorHandler tilesetEditorHandler;
+        public bool IsDirty { get; set; }
 
         public MapBuilder()
         {
@@ -32,6 +34,7 @@ namespace MapEditor.src.MapBuilder
             tileEditor = new TileEditor();
             tileEditorTab.Controls.Add(tileEditor);
             tileEditor.Dock = DockStyle.Fill;
+            tileEditor.AddListener(this);
 
             dimensionsEditorHandler = new DimensionsEditorHandler();
             dimensionsTab.Controls.Add(dimensionsEditorHandler);
@@ -46,10 +49,30 @@ namespace MapEditor.src.MapBuilder
 
         public void OnMapSelected(string mapName)
         {
+            CheckDirty();
             map = new Map($"./Resources/MapFiles/testmaps/{mapName}.map");
             tileEditor.Map = map;
             dimensionsEditorHandler.Map = map;
             tilesetEditorHandler.Map = map;
+        }
+
+        public void CheckDirty()
+        {
+            if (IsDirty)
+            {
+                MapSaveDialog.Show(this);
+            }
+            IsDirty = false;
+        }
+
+        public void OnTileEditorLoad(Map map)
+        {
+            return;
+        }
+
+        public void OnTileEdited(int index, Tile tile)
+        {
+            IsDirty = true;
         }
 
         public void OnDimensionsUpdated(int width, int height)
@@ -57,6 +80,7 @@ namespace MapEditor.src.MapBuilder
             map.ReloadMapTiles();
             tileEditor.Map = map;
             tileEditor.Invalidate();
+            IsDirty = true;
         }
 
         public void OnTilesetInfoUpdated(string tilesetName, int scale)
@@ -64,11 +88,13 @@ namespace MapEditor.src.MapBuilder
             map.ReloadMapTiles();
             tileEditor.Map = map;
             tileEditor.Invalidate();
+            IsDirty = true;
         }
 
         public void SaveMap()
         {
             map.SaveMap();
+            IsDirty = false;
         }
     }
 }

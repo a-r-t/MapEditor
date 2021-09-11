@@ -10,5 +10,6 @@ namespace MapEditor.src.MapTileEditor
     public interface TileEditorListener
     {
         void OnTileEditorLoad(Map map);
+        void OnTileEdited(int index, Tile tile);
     }
 }
