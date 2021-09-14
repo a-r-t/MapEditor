@@ -54,6 +54,7 @@
             this.mapPanel.MouseEnter += new System.EventHandler(this.mapPanel_MouseEnter);
             this.mapPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.mapPanel_MouseMove);
             this.mapPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.mapPanel_MouseUp);
+            this.mapPanel.MouseLeave += new System.EventHandler(this.mapPanel_MouseLeave);
             // 
             // widthLabel
             // 

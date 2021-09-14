@@ -34,6 +34,7 @@ namespace MapEditor.src.MapTileEditor
         private Point previousHoveredTileIndex = new Point(-1, -1);
         private Tile selectedTile;
         private TilePicker.TilePicker tilePicker;
+        private bool isPastEditLimitIndex = false;
 
         public TileEditor()
         {
@@ -67,7 +68,8 @@ namespace MapEditor.src.MapTileEditor
                 if (hoveredTileIndex.X != -1 && hoveredTileIndex.Y != -1)
                 {
                     int borderSize = map.Tileset.TileScale + 1;
-                    Pen pen = new Pen(Color.Yellow, borderSize);
+                    Color penColor = !isPastEditLimitIndex ? Color.Yellow : Color.Red;
+                    Pen pen = new Pen(penColor, borderSize);
                     e.Graphics.DrawRectangle(
                         pen,
                         new Rectangle(
@@ -83,6 +85,7 @@ namespace MapEditor.src.MapTileEditor
 
         private void mapPanel_MouseMove(object sender, MouseEventArgs e)
         {
+            isPastEditLimitIndex = false;
             if (map != null)
             {
                 previousHoveredTileIndex = hoveredTileIndex;
@@ -93,17 +96,19 @@ namespace MapEditor.src.MapTileEditor
                 // so this will prevent the user from attempting to go past that mouse coordinate, since they can't edit it anyway
                 if (mouseCoordX < 0)
                 {
-                    mouseCoordX = 32767;
+                    mouseCoordX = 32767 + (32767 - Math.Abs(e.X));
+                    isPastEditLimitIndex = true;
                 }
                 if (mouseCoordY < 0)
                 {
-                    mouseCoordY = 32767;
+                    mouseCoordY = 32767 + (32767 - Math.Abs(e.Y));
+                    isPastEditLimitIndex = true;
                 }
                 hoveredTileIndex = map.GetTileIndexByPosition(mouseCoordX - map.MapTileWidth / 2, mouseCoordY - map.MapTileHeight / 2);
                 selectedTileIndexLabel.Text = $"X: {hoveredTileIndex.X}, Y: {hoveredTileIndex.Y}";
                 selectedTileIndexLabel.Location = new Point(heightLabel.Location.X + heightLabel.Width + 10, selectedTileIndexLabel.Location.Y);
                 bool mapChanged = false;
-                if (e.Button == MouseButtons.Left)
+                if (e.Button == MouseButtons.Left && !isPastEditLimitIndex)
                 {
                     if (selectedTile != null)
                     {

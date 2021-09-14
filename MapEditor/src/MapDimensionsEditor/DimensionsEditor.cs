@@ -34,6 +34,7 @@ namespace MapEditor.src.MapDimensionsEditor
         private void okButton_Click(object sender, EventArgs e)
         {
             errorMessageLabel.Visible = false;
+            this.Refresh();
             bool isValid = true;
 
             // validate width
