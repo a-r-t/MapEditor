@@ -60,7 +60,7 @@
             this.widthLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.widthLabel.AutoSize = true;
             this.widthLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.widthLabel.Location = new System.Drawing.Point(3, 383);
+            this.widthLabel.Location = new System.Drawing.Point(3, 386);
             this.widthLabel.Name = "widthLabel";
             this.widthLabel.Size = new System.Drawing.Size(41, 14);
             this.widthLabel.TabIndex = 2;
@@ -71,7 +71,7 @@
             this.heightLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.heightLabel.AutoSize = true;
             this.heightLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.heightLabel.Location = new System.Drawing.Point(47, 383);
+            this.heightLabel.Location = new System.Drawing.Point(47, 386);
             this.heightLabel.Name = "heightLabel";
             this.heightLabel.Size = new System.Drawing.Size(45, 14);
             this.heightLabel.TabIndex = 3;
@@ -82,7 +82,7 @@
             this.selectedTileIndexLabel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.selectedTileIndexLabel.AutoSize = true;
             this.selectedTileIndexLabel.Font = new System.Drawing.Font("Arial", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.selectedTileIndexLabel.Location = new System.Drawing.Point(98, 383);
+            this.selectedTileIndexLabel.Location = new System.Drawing.Point(98, 386);
             this.selectedTileIndexLabel.Name = "selectedTileIndexLabel";
             this.selectedTileIndexLabel.Size = new System.Drawing.Size(35, 14);
             this.selectedTileIndexLabel.TabIndex = 4;
@@ -98,6 +98,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.BackColor = System.Drawing.Color.White;
             this.splitContainer1.Panel1.Controls.Add(this.mapPanelScroll);
             this.splitContainer1.Panel1.Controls.Add(this.selectedTileIndexLabel);
             this.splitContainer1.Panel1.Controls.Add(this.widthLabel);
@@ -119,7 +120,7 @@
             this.mapPanelScroll.Controls.Add(this.mapPanel);
             this.mapPanelScroll.Location = new System.Drawing.Point(3, 3);
             this.mapPanelScroll.Name = "mapPanelScroll";
-            this.mapPanelScroll.Size = new System.Drawing.Size(547, 394);
+            this.mapPanelScroll.Size = new System.Drawing.Size(547, 377);
             this.mapPanelScroll.TabIndex = 5;
             // 
             // tilePickerPanel

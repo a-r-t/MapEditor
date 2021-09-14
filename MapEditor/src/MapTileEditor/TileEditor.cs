@@ -31,6 +31,7 @@ namespace MapEditor.src.MapTileEditor
         }
 
         private Point hoveredTileIndex = new Point(-1, -1);
+        private Point previousHoveredTileIndex = new Point(-1, -1);
         private Tile selectedTile;
         private TilePicker.TilePicker tilePicker;
 
@@ -44,6 +45,7 @@ namespace MapEditor.src.MapTileEditor
             tilePicker.AddListener(this);
             this.AddListener(tilePicker);
             mapPanel.DoubleBuffered(true);
+            mapPanelScroll.DoubleBuffered(true);
         }
 
         private void MapBuilder_Load(object sender, EventArgs e)
@@ -56,7 +58,12 @@ namespace MapEditor.src.MapTileEditor
         {
             if (map != null)
             {
-                map.Paint(e.Graphics);
+                int hScroll = mapPanelScroll.HorizontalScroll.Value / map.Tileset.TilesetScaledWidth;
+                int vScroll = mapPanelScroll.VerticalScroll.Value / map.Tileset.TilesetScaledHeight;
+                int w = mapPanelScroll.Size.Width / map.Tileset.TilesetScaledWidth;
+                int h = mapPanelScroll.Size.Height / map.Tileset.TilesetScaledHeight;
+                map.Paint(e.Graphics, hScroll - 1, vScroll - 1, w + 1, h + 1);
+
                 if (hoveredTileIndex.X != -1 && hoveredTileIndex.Y != -1)
                 {
                     int borderSize = map.Tileset.TileScale + 1;
@@ -78,30 +85,36 @@ namespace MapEditor.src.MapTileEditor
         {
             if (map != null)
             {
-                hoveredTileIndex = map.GetTileIndexByPosition(e.X - map.MapTileWidth / 2, e.Y - map.MapTileHeight / 2);
+                previousHoveredTileIndex = hoveredTileIndex;
+                int mouseCoordX = e.X;
+                int mouseCoordY = e.Y;
+                hoveredTileIndex = map.GetTileIndexByPosition(mouseCoordX - map.MapTileWidth / 2, mouseCoordY - map.MapTileHeight / 2);
                 selectedTileIndexLabel.Text = $"X: {hoveredTileIndex.X}, Y: {hoveredTileIndex.Y}";
                 selectedTileIndexLabel.Location = new Point(heightLabel.Location.X + heightLabel.Width + 10, selectedTileIndexLabel.Location.Y);
-
+                bool mapChanged = false;
                 if (e.Button == MouseButtons.Left)
                 {
                     if (selectedTile != null)
                     {
-                        Point selectedTileIndex = map.GetTileIndexByPosition(e.X - map.MapTileWidth / 2, e.Y - map.MapTileHeight / 2);
+                        Point selectedTileIndex = map.GetTileIndexByPosition(mouseCoordX - map.MapTileWidth / 2, mouseCoordY - map.MapTileHeight / 2);
                         int convertedTileIndex = map.GetConvertedIndex(selectedTileIndex.X, selectedTileIndex.Y);
                         if (convertedTileIndex >= 0 && convertedTileIndex < map.Width * map.Height)
                         {
                             Tile tileToReplace = map.GetMapTile(selectedTileIndex.X, selectedTileIndex.Y);
                             tileToReplace.Index = selectedTile.Index;
                             tileToReplace.Image = (Bitmap)selectedTile.Image.Clone();
+                            mapChanged = true;
                         }
                     }
                 }
-
-                mapPanel.Invalidate();
+                if (previousHoveredTileIndex != hoveredTileIndex || mapChanged)
+                {
+                    mapPanel.Invalidate();
+                }
             }
         }
 
-        private void mapPanelBox_MouseLeave(object sender, EventArgs e)
+        private void mapPanel_MouseLeave(object sender, EventArgs e)
         {
             selectedTileIndexLabel.Visible = false;
             hoveredTileIndex = new Point(-1, -1);

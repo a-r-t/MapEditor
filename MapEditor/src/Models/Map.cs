@@ -122,6 +122,12 @@ namespace MapEditor.src.Models
             MapTiles[GetConvertedIndex(x, y)] = tile;
         }
 
+        public bool IsInBounds(int x, int y)
+        {
+            int convertedIndex = GetConvertedIndex(x, y);
+            return convertedIndex >= 0 && convertedIndex < MapTiles.Length;
+        }
+
         public void PrintMap()
         {
             for (int i = 0; i < Height; i++)
@@ -168,6 +174,27 @@ namespace MapEditor.src.Models
             {
                 Tile tile = MapTiles[i];
                 tile.Paint(graphics);
+            }
+        }
+
+        public void Paint(Graphics graphics, int x, int y, int width, int height)
+        {
+            graphics.PixelOffsetMode = System.Drawing.Drawing2D.PixelOffsetMode.HighQuality;
+            graphics.InterpolationMode = System.Drawing.Drawing2D.InterpolationMode.NearestNeighbor;
+            int startX = Math.Max(x, 0);
+            int startY = Math.Max(y, 0);
+            int endX = startX + width;
+            int endY = startY + height;
+            for (int i = startY; i <= endY; i++)
+            {
+                for (int j = startX; j <= endX; j++)
+                {
+                    if (IsInBounds(j, i))
+                    {
+                        Tile tile = MapTiles[GetConvertedIndex(j, i)];
+                        tile.Paint(graphics);
+                    }
+                }
             }
         }
 
