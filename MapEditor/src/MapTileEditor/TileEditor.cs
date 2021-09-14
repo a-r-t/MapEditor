@@ -88,6 +88,17 @@ namespace MapEditor.src.MapTileEditor
                 previousHoveredTileIndex = hoveredTileIndex;
                 int mouseCoordX = e.X;
                 int mouseCoordY = e.Y;
+                // there's a windows limitation where mouse coords are stored in a 16 bit signed int,
+                // meaning after 32767, the mouse coordinates overflow to negative AND mouse clicks can no longer be detected
+                // so this will prevent the user from attempting to go past that mouse coordinate, since they can't edit it anyway
+                if (mouseCoordX < 0)
+                {
+                    mouseCoordX = 32767;
+                }
+                if (mouseCoordY < 0)
+                {
+                    mouseCoordY = 32767;
+                }
                 hoveredTileIndex = map.GetTileIndexByPosition(mouseCoordX - map.MapTileWidth / 2, mouseCoordY - map.MapTileHeight / 2);
                 selectedTileIndexLabel.Text = $"X: {hoveredTileIndex.X}, Y: {hoveredTileIndex.Y}";
                 selectedTileIndexLabel.Location = new Point(heightLabel.Location.X + heightLabel.Width + 10, selectedTileIndexLabel.Location.Y);
