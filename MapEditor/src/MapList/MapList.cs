@@ -17,6 +17,8 @@ namespace MapEditor.src.MapList
     {
         private TreeNode selectedNode;
         private ContextMenu folderContextMenu;
+        private string oldName = "";
+        private string oldPath = "";
 
         public MapList()
         {
@@ -40,7 +42,13 @@ namespace MapEditor.src.MapList
             imageList.Images.Add("file-selected", Image.FromFile("./Resources/Images/file-icon-selected.png"));
             mapTreeView.ImageList = imageList;
 
+            SetupNodeContextMenu();
+        }
+
+        private void SetupNodeContextMenu()
+        {
             folderContextMenu = new ContextMenu();
+
             folderContextMenu.MenuItems.Add("Add New Folder");
             folderContextMenu.MenuItems[0].Click += (sender, e) => {
                 TreeNode selectedNode = mapTreeView.SelectedNode;
@@ -49,7 +57,6 @@ namespace MapEditor.src.MapList
                 string newFolderName = newFolderIndex == 0 ? "New folder" : $"New folder ({newFolderIndex})";
                 string newFolderDirectory = $"./Resources/{path}/{newFolderName}";
                 Directory.CreateDirectory(newFolderDirectory);
-                Console.WriteLine(newFolderDirectory);
                 if (Directory.Exists(newFolderDirectory))
                 {
                     selectedNode.Nodes.Add(newFolderName);
@@ -59,6 +66,14 @@ namespace MapEditor.src.MapList
                 {
                     MessageBox.Show("Unknown error creating folder");
                 }
+            };
+
+            folderContextMenu.MenuItems.Add("Rename");
+            folderContextMenu.MenuItems[1].Click += (sender, e) => {
+                mapTreeView.LabelEdit = true;
+                oldName = mapTreeView.SelectedNode.Name;
+                oldPath = mapTreeView.SelectedNode.FullPath;
+                mapTreeView.SelectedNode.BeginEdit();
             };
         }
 
@@ -180,6 +195,29 @@ namespace MapEditor.src.MapList
         private void mapTreeView_AfterSelect(object sender, TreeViewEventArgs e)
         {
 
+        }
+
+        // this method is triggered after node label is edited but before it is actually committed
+        // so it triggers the "afterAfterNodeLabelEdit" so the node label edit can be reacted on AFTER it has been committed
+        private void mapTreeView_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            mapTreeView.LabelEdit = false;
+            BeginInvoke(new Action(() => afterAfterNodeLabelEdit(e.Node)));
+        }
+
+
+        private void afterAfterNodeLabelEdit(TreeNode node)
+        {
+            string newName = node.Text;
+            if (newName != "" && newName != mapTreeView.SelectedNode.Name) // no name change occurred
+            {
+                Directory.Move($"./Resources/{oldPath}", $"./Resources/{mapTreeView.SelectedNode.FullPath}");
+            }
+            else
+            {
+                mapTreeView.SelectedNode.Name = oldName;
+                mapTreeView.SelectedNode.Text = oldName;
+            }
         }
     }
 }
