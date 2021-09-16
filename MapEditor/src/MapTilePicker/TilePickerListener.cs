@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace MapEditor.src.TilePicker
+namespace MapEditor.src.MapTilePicker
 {
     public interface TilePickerListener
     {

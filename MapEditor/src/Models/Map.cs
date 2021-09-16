@@ -1,6 +1,6 @@
 ﻿using MapEditor.src.ExtensionMethods;
 using MapEditor.src.MapTileEditor;
-using MapEditor.src.TilePicker;
+using MapEditor.src.MapTilePicker;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
