@@ -17,6 +17,7 @@ namespace MapEditor.src.MapList
     {
         private TreeNode selectedNode;
         private ContextMenu folderContextMenu;
+        private ContextMenu fileContextMenu;
         private string oldName = "";
         private string oldPath = "";
 
@@ -53,7 +54,7 @@ namespace MapEditor.src.MapList
             folderContextMenu.MenuItems[0].Click += (sender, e) => {
                 TreeNode selectedNode = mapTreeView.SelectedNode;
                 string path = selectedNode.FullPath;
-                int newFolderIndex = getNewFolderIndex($"./Resources/{path}");
+                int newFolderIndex = GetNewFolderIndex($"./Resources/{path}");
                 string newFolderName = newFolderIndex == 0 ? "New folder" : $"New folder ({newFolderIndex})";
                 string newFolderDirectory = $"./Resources/{path}/{newFolderName}";
                 Directory.CreateDirectory(newFolderDirectory);
@@ -75,9 +76,19 @@ namespace MapEditor.src.MapList
                 oldPath = mapTreeView.SelectedNode.FullPath;
                 mapTreeView.SelectedNode.BeginEdit();
             };
+
+            fileContextMenu = new ContextMenu();
+
+            fileContextMenu.MenuItems.Add("Rename");
+            fileContextMenu.MenuItems[0].Click += (sender, e) => {
+                mapTreeView.LabelEdit = true;
+                oldName = mapTreeView.SelectedNode.Name;
+                oldPath = mapTreeView.SelectedNode.FullPath;
+                mapTreeView.SelectedNode.BeginEdit();
+            };
         }
 
-        private int getNewFolderIndex(string path)
+        private int GetNewFolderIndex(string path)
         {
             string name = "/New folder";
             string current = name;
@@ -172,10 +183,9 @@ namespace MapEditor.src.MapList
                 selectedNode.ImageKey = "file-selected";
                 selectedNode.SelectedImageKey = "file-selected";
 
-
                 foreach (MapListListener listener in listeners)
                 {
-                    listener.OnMapSelected(selectedNode.Text);
+                    listener.OnMapSelected(selectedNode.FullPath);
                 }
             }
         }
@@ -186,8 +196,13 @@ namespace MapEditor.src.MapList
             {
                 TreeNode selectedNode = e.Node;
                 mapTreeView.SelectedNode = e.Node;
-                if ((string)selectedNode.Tag == "folder") {
+                if ((string)selectedNode.Tag == "folder") 
+                {
                     folderContextMenu.Show(mapTreeView, e.Location);
+                }
+                else if ((string)selectedNode.Tag == "file")
+                {
+                    fileContextMenu.Show(mapTreeView, e.Location);
                 }
             }
         }
@@ -202,16 +217,23 @@ namespace MapEditor.src.MapList
         private void mapTreeView_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
         {
             mapTreeView.LabelEdit = false;
-            BeginInvoke(new Action(() => afterAfterNodeLabelEdit(e.Node)));
+            BeginInvoke(new Action(() => AfterAfterNodeLabelEdit(e.Node)));
         }
 
 
-        private void afterAfterNodeLabelEdit(TreeNode node)
+        private void AfterAfterNodeLabelEdit(TreeNode node)
         {
             string newName = node.Text;
             if (newName != "" && newName != mapTreeView.SelectedNode.Name) // no name change occurred
             {
-                Directory.Move($"./Resources/{oldPath}", $"./Resources/{mapTreeView.SelectedNode.FullPath}");
+                if ((string)node.Tag == "folder")
+                {
+                    Directory.Move($"./Resources/{oldPath}", $"./Resources/{mapTreeView.SelectedNode.FullPath}");
+                }
+                else if ((string)node.Tag == "file")
+                {
+                    Directory.Move($"./Resources/{oldPath}.map", $"./Resources/{mapTreeView.SelectedNode.FullPath}.map");
+                }
             }
             else
             {

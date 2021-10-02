@@ -47,10 +47,10 @@ namespace MapEditor.src.MapBuilder
             tilesetEditorHandler.AddListener(this);
         }
 
-        public void OnMapSelected(string mapName)
+        public void OnMapSelected(string mapPath)
         {
             CheckDirty();
-            map = new Map($"./Resources/MapFiles/testmaps/{mapName}.map");
+            map = new Map($"./Resources/{mapPath}.map");
             tileEditor.Map = map;
             dimensionsEditorHandler.Map = map;
             tilesetEditorHandler.Map = map;
