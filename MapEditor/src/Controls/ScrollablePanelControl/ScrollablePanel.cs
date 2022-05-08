@@ -11,7 +11,7 @@ using MapEditor.src.ExtensionMethods;
 
 namespace MapEditor.src.Controls.ScrollablePanelControl
 {
-    public partial class ScrollablePanel : UserControl, VScrollBarListener
+    public partial class ScrollablePanel : UserControl, VScrollBarListener, HScrollBarListener
     {
         private VScrollBar vScrollBar;
         private HScrollBar hScrollBar;
@@ -33,10 +33,15 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             hScrollBarContainer.Controls.Add(hScrollBar);
             hScrollBar.Location = new Point(0, 0);
             hScrollBar.Dock = DockStyle.Fill;
-
+            hScrollBar.AddListener(this);
         }
 
         public void onVScroll(int scrollAmount)
+        {
+            // Console.WriteLine("You scrolled : " + scrollAmount); 
+        }
+
+        public void onHScroll(int scrollAmount)
         {
             // Console.WriteLine("You scrolled : " + scrollAmount); 
         }
