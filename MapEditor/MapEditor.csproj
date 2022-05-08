@@ -46,6 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanel.Designer.cs">
+      <DependentUpon>ScrollablePanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanelTest.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanelTest.Designer.cs">
+      <DependentUpon>ScrollablePanelTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\ExtensionMethods\ControlExtensions.cs" />
     <Compile Include="src\ExtensionMethods\FloatExtensions.cs" />
     <Compile Include="src\ExtensionMethods\NativeWinApi.cs" />
@@ -153,6 +165,12 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="src\Controls\ScrollablePanelControl\ScrollablePanel.resx">
+      <DependentUpon>ScrollablePanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\ScrollablePanelControl\ScrollablePanelTest.resx">
+      <DependentUpon>ScrollablePanelTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -219,8 +237,56 @@
     <Content Include="Resources\Images\save-icon.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\DownScrollButtonHovered.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\DownScrollButtonSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\LeftScrollButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\LeftScrollButtonDisabled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\LeftScrollButtonHovered.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\LeftScrollButtonSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\RightScrollButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\RightScrollButtonDisabled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\RightScrollButtonHovered.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\RightScrollButtonSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\UpScrollButtonHovered.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\UpScrollButtonSelected.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\Tilesets\CommonTilesetBW.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\DownScrollButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\DownScrollButtonDisabled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\UpScrollButton.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Resources\Images\ScrollablePanelControl\UpScrollButtonDisabled.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
     <None Include="Resources\MapFiles\testmaps\test_map3.map">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
