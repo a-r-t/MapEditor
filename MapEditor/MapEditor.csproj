@@ -136,13 +136,13 @@
     <Compile Include="src\ObservableUserControl.Designer.cs">
       <DependentUpon>ObservableUserControl.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\TilePicker\TilePicker.cs">
+    <Compile Include="src\MapTilePicker\TilePicker.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="src\TilePicker\TilePicker.Designer.cs">
+    <Compile Include="src\MapTilePicker\TilePicker.Designer.cs">
       <DependentUpon>TilePicker.cs</DependentUpon>
     </Compile>
-    <Compile Include="src\TilePicker\TilePickerListener.cs" />
+    <Compile Include="src\MapTilePicker\TilePickerListener.cs" />
     <Compile Include="src\Models\Tileset.cs" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -186,7 +186,7 @@
     <EmbeddedResource Include="src\MapList\MapList.resx">
       <DependentUpon>MapList.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="src\TilePicker\TilePicker.resx">
+    <EmbeddedResource Include="src\MapTilePicker\TilePicker.resx">
       <DependentUpon>TilePicker.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
@@ -198,6 +198,9 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\MapFiles\testmaps\testfolder\test_map3.map">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\TilesetFiles\CommonTileset.tileset">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

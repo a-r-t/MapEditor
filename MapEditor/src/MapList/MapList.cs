@@ -9,12 +9,17 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
 using MapEditor.src.ExtensionMethods;
+using System.Text.RegularExpressions;
 
 namespace MapEditor.src.MapList
 {
     public partial class MapList : ObservableUserControl<MapListListener>
     {
         private TreeNode selectedNode;
+        private ContextMenu folderContextMenu;
+        private ContextMenu fileContextMenu;
+        private string oldName = "";
+        private string oldPath = "";
 
         public MapList()
         {
@@ -24,6 +29,7 @@ namespace MapEditor.src.MapList
         private void MapList_Load(object sender, EventArgs e)
         {
             SetupMapTreeView();
+            mapTreeView.Nodes.Clear();
             PopulateMapTreeView();
             mapTreeView.ExpandAll();
             mapTreeView.Sort();
@@ -36,39 +42,115 @@ namespace MapEditor.src.MapList
             imageList.Images.Add("file", Image.FromFile("./Resources/Images/file-icon.png"));
             imageList.Images.Add("file-selected", Image.FromFile("./Resources/Images/file-icon-selected.png"));
             mapTreeView.ImageList = imageList;
+
+            SetupNodeContextMenu();
+        }
+
+        private void SetupNodeContextMenu()
+        {
+            folderContextMenu = new ContextMenu();
+
+            folderContextMenu.MenuItems.Add("Add New Folder");
+            folderContextMenu.MenuItems[0].Click += (sender, e) => {
+                TreeNode selectedNode = mapTreeView.SelectedNode;
+                string path = selectedNode.FullPath;
+                int newFolderIndex = GetNewFolderIndex($"./Resources/{path}");
+                string newFolderName = newFolderIndex == 0 ? "New folder" : $"New folder ({newFolderIndex})";
+                string newFolderDirectory = $"./Resources/{path}/{newFolderName}";
+                Directory.CreateDirectory(newFolderDirectory);
+                if (Directory.Exists(newFolderDirectory))
+                {
+                    selectedNode.Nodes.Add(newFolderName);
+                    mapTreeView.Sort();
+                }
+                else
+                {
+                    MessageBox.Show("Unknown error creating folder");
+                }
+            };
+
+            folderContextMenu.MenuItems.Add("Add New Map");
+            folderContextMenu.MenuItems[1].Click += (sender, e) => {
+                TreeNode selectedNode = mapTreeView.SelectedNode;
+                string path = selectedNode.FullPath;
+                int newMapIndex = GetNewMapIndex($"./Resources/{path}");
+                string newMapName = newMapIndex == 0 ? "New map" : $"New map ({newMapIndex})";
+                string newMapFilePath = $"./Resources/{path}/{newMapName}.map";
+                File.Create(newMapFilePath);
+                if (File.Exists(newMapFilePath))
+                {
+                    selectedNode.Nodes.Add(newMapName);
+                    mapTreeView.Sort();
+                }
+                else
+                {
+                    MessageBox.Show("Unknown error creating map");
+                }
+            };
+
+            folderContextMenu.MenuItems.Add("Rename");
+            folderContextMenu.MenuItems[2].Click += (sender, e) => {
+                mapTreeView.LabelEdit = true;
+                oldName = mapTreeView.SelectedNode.Name;
+                oldPath = mapTreeView.SelectedNode.FullPath;
+                mapTreeView.SelectedNode.BeginEdit();
+            };
+
+            fileContextMenu = new ContextMenu();
+
+            fileContextMenu.MenuItems.Add("Rename");
+            fileContextMenu.MenuItems[0].Click += (sender, e) => {
+                mapTreeView.LabelEdit = true;
+                oldName = mapTreeView.SelectedNode.Name;
+                oldPath = mapTreeView.SelectedNode.FullPath;
+                mapTreeView.SelectedNode.BeginEdit();
+            };
+        }
+
+        private int GetNewFolderIndex(string path)
+        {
+            string name = "/New folder";
+            string current = name;
+            int i = 0;
+            while (Directory.Exists($"{path}/{current}")) {
+                i++;
+                current = $"{name} ({i})";
+            }
+            return i;
+        }
+
+        private int GetNewMapIndex(string path)
+        {
+            string name = "/New map";
+            string current = name;
+            int i = 0;
+            while (Directory.Exists($"{path}/{current}"))
+            {
+                i++;
+                current = $"{name} ({i})";
+            }
+            return i;
         }
 
         private void PopulateMapTreeView()
         {
             Queue<string> paths = new Queue<string>();
             string rootDir = Path.Combine(".", "Resources", "MapFiles");
-            foreach (string dirPath in GetSubdirsInDir(rootDir))
-            {
-                string[] pathParts = dirPath.Split(Path.DirectorySeparatorChar);
-                string dirName = pathParts[pathParts.Length - 1];
-                paths.Enqueue(dirPath);
-                mapTreeView.Nodes.Add(dirName, dirName);
-                mapTreeView.Nodes[dirName].ImageKey = "folder";
-                mapTreeView.Nodes[dirName].SelectedImageKey = "folder";
-                mapTreeView.Nodes[dirName].Tag = "folder";
-            }
-            foreach (string filePath in GetFilesInDir(rootDir))
-            {
-                string[] pathParts = filePath.Split(Path.DirectorySeparatorChar);
-                string fileName = Path.GetFileNameWithoutExtension(pathParts[pathParts.Length - 1]);
-                mapTreeView.Nodes.Add(fileName, fileName);
-                mapTreeView.Nodes[fileName].ImageKey = "file";
-                mapTreeView.Nodes[fileName].SelectedImageKey = "file";
-                mapTreeView.Nodes[fileName].Tag = "file";
-            }
-
+            mapTreeView.Nodes.Add("MapFiles", "MapFiles");
+            TreeNode rootFolderNode = mapTreeView.Nodes["MapFiles"];
+            rootFolderNode.ImageKey = "folder";
+            rootFolderNode.SelectedImageKey = "folder";
+            rootFolderNode.Tag = "folder";
+            paths.Enqueue(rootDir);
+           
             while (paths.Count > 0)
             {
                 string path = paths.Dequeue();
                 string[] pathParts = path.Split(Path.DirectorySeparatorChar);
 
-                TreeNode temp = mapTreeView.Nodes[pathParts[3]];
-                for (int i = 4; i < pathParts.Length - 1; i++)
+                TreeNode temp = mapTreeView.Nodes[pathParts[2]];
+                int traversalDepth = File.Exists(path) ? pathParts.Length - 1 : pathParts.Length;
+                for (int i = 3; i < traversalDepth; i++)
                 {
                     temp = temp.Nodes[pathParts[i]];
                 }
@@ -116,6 +198,7 @@ namespace MapEditor.src.MapList
             return (string)node.Tag == "file";
         }
 
+        // node double click
         private void mapTreeView_DoubleClick(object sender, EventArgs e)
         {
             if (mapTreeView.SelectedNode != null && IsMapNode(mapTreeView.SelectedNode) && mapTreeView.SelectedNode != selectedNode)
@@ -133,11 +216,63 @@ namespace MapEditor.src.MapList
                 selectedNode.ImageKey = "file-selected";
                 selectedNode.SelectedImageKey = "file-selected";
 
-
                 foreach (MapListListener listener in listeners)
                 {
-                    listener.OnMapSelected(selectedNode.Text);
+                    listener.OnMapSelected(selectedNode.FullPath);
                 }
+            }
+        }
+
+        // node single click
+        private void mapTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
+        {
+            if (e.Button == MouseButtons.Right)
+            {
+                TreeNode selectedNode = e.Node;
+                mapTreeView.SelectedNode = e.Node;
+                if ((string)selectedNode.Tag == "folder") 
+                {
+                    folderContextMenu.Show(mapTreeView, e.Location);
+                }
+                else if ((string)selectedNode.Tag == "file")
+                {
+                    fileContextMenu.Show(mapTreeView, e.Location);
+                }
+            }
+        }
+
+        private void mapTreeView_AfterSelect(object sender, TreeViewEventArgs e)
+        {
+
+        }
+
+        // this method is triggered after node label is edited but before it is actually committed
+        // so it triggers the "afterAfterNodeLabelEdit" so the node label edit can be reacted on AFTER it has been committed
+        private void mapTreeView_AfterLabelEdit(object sender, NodeLabelEditEventArgs e)
+        {
+            mapTreeView.LabelEdit = false;
+            BeginInvoke(new Action(() => AfterAfterNodeLabelEdit(e.Node)));
+        }
+
+
+        private void AfterAfterNodeLabelEdit(TreeNode node)
+        {
+            string newName = node.Text;
+            if (newName != "" && newName != mapTreeView.SelectedNode.Name) // no name change occurred
+            {
+                if ((string)node.Tag == "folder")
+                {
+                    Directory.Move($"./Resources/{oldPath}", $"./Resources/{mapTreeView.SelectedNode.FullPath}");
+                }
+                else if ((string)node.Tag == "file")
+                {
+                    Directory.Move($"./Resources/{oldPath}.map", $"./Resources/{mapTreeView.SelectedNode.FullPath}.map");
+                }
+            }
+            else
+            {
+                mapTreeView.SelectedNode.Name = oldName;
+                mapTreeView.SelectedNode.Text = oldName;
             }
         }
     }

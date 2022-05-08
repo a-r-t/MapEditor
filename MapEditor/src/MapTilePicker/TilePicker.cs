@@ -11,7 +11,7 @@ using MapEditor.src.MapTileEditor;
 using MapEditor.src.ExtensionMethods;
 using MapEditor.src.Models;
 
-namespace MapEditor.src.TilePicker
+namespace MapEditor.src.MapTilePicker
 {
     public partial class TilePicker : ObservableUserControl<TilePickerListener>, TileEditorListener
     {

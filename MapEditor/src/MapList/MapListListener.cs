@@ -8,6 +8,6 @@ namespace MapEditor.src.MapList
 {
     public interface MapListListener
     {
-        void OnMapSelected(string mapName);
+        void OnMapSelected(string mapPath);
     }
 }

@@ -1,6 +1,6 @@
 ﻿using MapEditor.src.ExtensionMethods;
 using MapEditor.src.MapTileEditor;
-using MapEditor.src.TilePicker;
+using MapEditor.src.MapTilePicker;
 using System;
 using System.Collections.Generic;
 using System.Drawing;
@@ -230,6 +230,21 @@ namespace MapEditor.src.Models
             catch (Exception e)
             {
                 Console.WriteLine("Error writing map to file:\n" + e.StackTrace);
+            }
+        }
+
+        public static void CreateNewMapFile(string filePath)
+        {
+            try
+            {
+                StreamWriter sw = new StreamWriter(filePath);
+                sw.WriteLine($"0 0");
+                sw.WriteLine($"UnknownTileset 1");
+                sw.Close();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine("Error creating new map:\n" + e.StackTrace);
             }
         }
     }

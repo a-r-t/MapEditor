@@ -7,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using MapEditor.src.TilePicker;
+using MapEditor.src.MapTilePicker;
 using MapEditor.src.ExtensionMethods;
 using MapEditor.src.MapList;
 using MapEditor.src.Models;
@@ -33,13 +33,13 @@ namespace MapEditor.src.MapTileEditor
         private Point hoveredTileIndex = new Point(-1, -1);
         private Point previousHoveredTileIndex = new Point(-1, -1);
         private Tile selectedTile;
-        private TilePicker.TilePicker tilePicker;
+        private TilePicker tilePicker;
         private bool isPastEditLimitIndex = false;
 
         public TileEditor()
         {
             InitializeComponent();
-            tilePicker = new TilePicker.TilePicker();
+            tilePicker = new TilePicker();
             tilePickerPanel.Controls.Add(tilePicker);
             tilePicker.Dock = DockStyle.Fill;
 

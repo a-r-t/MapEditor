@@ -1,4 +1,4 @@
-﻿namespace MapEditor.src.TilePicker
+﻿namespace MapEditor.src.MapTilePicker
 {
     partial class TilePicker
     {
