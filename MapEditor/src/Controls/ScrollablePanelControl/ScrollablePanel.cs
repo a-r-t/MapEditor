@@ -27,12 +27,18 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             vScrollBarContainer.Controls.Add(vScrollBar);
             vScrollBar.Location = new Point(0, 0);
             vScrollBar.Dock = DockStyle.Fill;
+            vScrollBar.AddListener(this);
 
             hScrollBar = new HScrollBar();
             hScrollBarContainer.Controls.Add(hScrollBar);
             hScrollBar.Location = new Point(0, 0);
             hScrollBar.Dock = DockStyle.Fill;
 
+        }
+
+        public void onVScroll(int scrollAmount)
+        {
+            // Console.WriteLine("You scrolled : " + scrollAmount); 
         }
 
         protected virtual void imagePanel_Paint(object sender, PaintEventArgs e)

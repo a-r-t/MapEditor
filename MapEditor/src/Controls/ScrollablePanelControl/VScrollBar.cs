@@ -32,6 +32,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             }
             set
             {
+                int oldVScrollOffset = vScrollOffset;
                 if (value < MinVScrollOffset)
                 {
                     vScrollOffset = MinVScrollOffset;
@@ -45,6 +46,15 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                     vScrollOffset = value;
                 }
                 VScrollBarYLocation = vScrollOffset + (upScrollButtonImage.Height + 1);
+
+                int scrollDifference = vScrollOffset - oldVScrollOffset;
+                if (scrollDifference != 0)
+                {
+                    foreach (VScrollBarListener listener in listeners)
+                    {
+                        listener.onVScroll(scrollDifference);
+                    }
+                }
             }
         }
 
