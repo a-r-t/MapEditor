@@ -109,6 +109,12 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         private bool vScrollBarHovered;
         private bool vScrollBarSelected;
 
+        private int previousMouseX = 0;
+        private int previousMouseY = 0;
+        private bool scrollMouseDown = false;
+
+        private Timer scrollTimer;
+
         public VScrollBar()
         {
             InitializeComponent();
@@ -123,6 +129,37 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             vScrollBarWidth = 13;
             vScrollBarHeight = 70; // temp for testing
 
+            scrollTimer = new Timer();
+            scrollTimer.Interval = 1;
+            scrollTimer.Tick += new EventHandler(ScrollTimer_Tick);
+        }
+
+        private void ScrollTimer_Tick(object sender, EventArgs e)
+        {
+            if (scrollMouseDown)
+            {
+                Point mouseCoords = vScrollBarPanel.PointToClient(new Point(Cursor.Position.X, Cursor.Position.Y));
+                int differenceY = mouseCoords.Y - previousMouseY;
+
+                VScrollBarYLocation += differenceY;
+
+                if (VScrollBarYLocation < 18)
+                {
+                    VScrollBarYLocation = 18;
+                }
+                else if (VScrollBarYLocation + VScrollBarHeight > vScrollBarPanel.Height - 18)
+                {
+                    VScrollBarYLocation = vScrollBarPanel.Height - VScrollBarHeight - 18;
+                }
+
+                previousMouseX = mouseCoords.X;
+                previousMouseY = mouseCoords.Y;
+
+                if (differenceY != 0)
+                {
+                    vScrollBarPanel.Invalidate();
+                }
+            }
         }
 
         private void vScrollBarPanel_Paint(object sender, PaintEventArgs e)
@@ -188,20 +225,18 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 
         private Color getVScrollBarColor()
         {
-            if (!vScrollBarHovered)
+           
+            if (vScrollBarSelected)
             {
-                return Color.FromArgb(193, 193, 193);
+                return Color.FromArgb(120, 120, 120);
+            }
+            else if (vScrollBarHovered)
+            {
+                return Color.FromArgb(168, 168, 168);
             }
             else
             {
-                if (!vScrollBarSelected)
-                {
-                    return Color.FromArgb(168, 168, 168);
-                }
-                else
-                {
-                    return Color.FromArgb(120, 120, 120);
-                }
+                return Color.FromArgb(193, 193, 193);
             }
         }
 
@@ -273,6 +308,14 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                     vScrollBarSelected = false;
                 }
 
+                if (vScrollBarSelected && !scrollMouseDown)
+                {
+                    scrollMouseDown = true;
+                    previousMouseX = e.X;
+                    previousMouseY = e.Y;
+                    scrollTimer.Start();
+                }
+
                 if (oldUpScrollButtonSelected != upScrollButtonSelected
                     || oldDownScrollButtonSelected != downScrollButtonSelected
                     || oldVScrollBarSelected != vScrollBarSelected)
@@ -284,10 +327,15 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 
         private void vScrollBarPanel_MouseUp(object sender, MouseEventArgs e)
         {
-            upScrollButtonSelected = false;
-            downScrollButtonSelected = false;
-            vScrollBarSelected = false;
-            vScrollBarPanel.Invalidate();
+            if (e.Button == MouseButtons.Left)
+            {
+                scrollMouseDown = false;
+                upScrollButtonSelected = false;
+                downScrollButtonSelected = false;
+                vScrollBarSelected = false;
+                scrollTimer.Stop();
+                vScrollBarPanel.Invalidate();
+            }
         }
     }
 }
