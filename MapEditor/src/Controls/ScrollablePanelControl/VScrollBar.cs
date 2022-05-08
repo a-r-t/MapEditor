@@ -49,7 +49,21 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         }
 
         public int MinVScrollOffset { get; set; }
-        public int MaxVScrollOffset { get; set; }
+        private int maxVScrollOffset;
+        public int MaxVScrollOffset { 
+            get
+            {
+                return maxVScrollOffset;
+            }
+            set
+            {
+                maxVScrollOffset = value;
+                if (VScrollOffset > MaxVScrollOffset)
+                {
+                    VScrollOffset = MaxVScrollOffset;
+                }
+            }
+        }
 
         public bool IsVScrollUpDisabled
         {
@@ -140,7 +154,6 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             InitializeComponent();
             vScrollBarPanel.DoubleBuffered(true);
             vScrollBarPanel.BackColor = Color.FromArgb(241, 241, 241);
-            vScrollBarPanel.Resize += (s, e) => vScrollBarPanel.Refresh();
             vScrollBarPanel.MouseWheel += new MouseEventHandler(vScrollBarPanel_MouseWheel);
             VScrollOffset = 0;
 
@@ -440,6 +453,12 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         {
             MinVScrollOffset = 0;
             MaxVScrollOffset = vScrollBarPanel.Height - VScrollBarHeight - 36;
+        }
+
+        private void vScrollBarPanel_Resize(object sender, EventArgs e)
+        {
+            MaxVScrollOffset = vScrollBarPanel.Height - VScrollBarHeight - 36;
+            vScrollBarPanel.Refresh();
         }
     }
 }

@@ -44,6 +44,7 @@
             this.vScrollBarPanel.MouseLeave += new System.EventHandler(this.vScrollBarPanel_MouseLeave);
             this.vScrollBarPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.vScrollBarPanel_MouseMove);
             this.vScrollBarPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.vScrollBarPanel_MouseUp);
+            this.vScrollBarPanel.Resize += new System.EventHandler(this.vScrollBarPanel_Resize);
             // 
             // VScrollBar
             // 
