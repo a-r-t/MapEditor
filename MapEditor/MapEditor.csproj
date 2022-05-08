@@ -46,6 +46,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="src\Controls\ScrollablePanelControl\HScrollBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\HScrollBar.Designer.cs">
+      <DependentUpon>HScrollBar.cs</DependentUpon>
+    </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\HScrollBarListener.cs" />
     <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -64,6 +71,7 @@
     <Compile Include="src\Controls\ScrollablePanelControl\VScrollBar.Designer.cs">
       <DependentUpon>VScrollBar.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\VScrollBarListener.cs" />
     <Compile Include="src\ExtensionMethods\ControlExtensions.cs" />
     <Compile Include="src\ExtensionMethods\FloatExtensions.cs" />
     <Compile Include="src\ExtensionMethods\NativeWinApi.cs" />
@@ -171,6 +179,9 @@
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="src\Controls\ScrollablePanelControl\HScrollBar.resx">
+      <DependentUpon>HScrollBar.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Controls\ScrollablePanelControl\ScrollablePanel.resx">
       <DependentUpon>ScrollablePanel.cs</DependentUpon>
     </EmbeddedResource>

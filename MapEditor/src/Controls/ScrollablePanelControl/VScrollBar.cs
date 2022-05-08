@@ -11,7 +11,7 @@ using MapEditor.src.ExtensionMethods;
 
 namespace MapEditor.src.Controls.ScrollablePanelControl
 {
-    public partial class VScrollBar : UserControl
+    public partial class VScrollBar : ObservableUserControl<VScrollBarListener>
     {
         private readonly Bitmap upScrollButtonImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButton.png");
         private readonly Bitmap upScrollButtonDisabledImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonDisabled.png");
