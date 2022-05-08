@@ -125,9 +125,15 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         private int initialMouseY = 0; // mouse's initial location relative to scroll bar graphic
         private int previousMouseX = 0;
         private int previousMouseY = 0; // mouse's previous location relative to scroll bar panel
-        private bool scrollMouseDown = false;
+        private bool scrollBarMouseDown = false;
+        private bool scrollButtonMouseDown = false;
+        public int ScrollButtonsScrollOffset { get; set; }
+        public int MouseWheelScrollOffset { get; set; }
+        private const int BUTTON_TIMER_INITIAL_INTERVAL_DELAY = 200;
+        private const int BUTTON_TIMER_INTERVAL_DELAY = 10;
 
         private Timer scrollTimer;
+        private Timer buttonTimer;
 
         public VScrollBar()
         {
@@ -145,6 +151,12 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             scrollTimer = new Timer();
             scrollTimer.Interval = 1;
             scrollTimer.Tick += new EventHandler(ScrollTimer_Tick);
+
+            buttonTimer = new Timer();
+            buttonTimer.Interval = BUTTON_TIMER_INITIAL_INTERVAL_DELAY;
+            buttonTimer.Tick += new EventHandler(ButtonTimer_Tick);
+
+            ScrollButtonsScrollOffset = 5;
         }
 
         private void vScrollBarPanel_Paint(object sender, PaintEventArgs e)
@@ -272,6 +284,13 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 {
                     upScrollButtonSelected = false;
                 }
+                if (upScrollButtonSelected && !scrollButtonMouseDown)
+                {
+                    VScrollOffset -= ScrollButtonsScrollOffset;
+                    scrollButtonMouseDown = true;
+                    buttonTimer.Interval = BUTTON_TIMER_INITIAL_INTERVAL_DELAY;
+                    buttonTimer.Start();
+                }
 
                 bool oldDownScrollButtonSelected = downScrollButtonSelected;
                 if (downScrollButtonHovered)
@@ -281,6 +300,13 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 else
                 {
                     downScrollButtonSelected = false;
+                }
+                if (downScrollButtonSelected && !scrollButtonMouseDown)
+                {
+                    VScrollOffset += ScrollButtonsScrollOffset;
+                    scrollButtonMouseDown = true;
+                    buttonTimer.Interval = BUTTON_TIMER_INITIAL_INTERVAL_DELAY;
+                    buttonTimer.Start();
                 }
 
                 bool oldVScrollBarSelected = vScrollBarSelected;
@@ -293,9 +319,9 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                     vScrollBarSelected = false;
                 }
 
-                if (vScrollBarSelected && !scrollMouseDown)
+                if (vScrollBarSelected && !scrollBarMouseDown)
                 {
-                    scrollMouseDown = true;
+                    scrollBarMouseDown = true;
                     previousMouseX = e.X;
                     previousMouseY = e.Y;
 
@@ -318,18 +344,20 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         {
             if (e.Button == MouseButtons.Left)
             {
-                scrollMouseDown = false;
+                scrollBarMouseDown = false;
+                scrollButtonMouseDown = false;
                 upScrollButtonSelected = false;
                 downScrollButtonSelected = false;
                 vScrollBarSelected = false;
                 scrollTimer.Stop();
+                buttonTimer.Stop();
                 vScrollBarPanel.Invalidate();
             }
         }
 
         private void ScrollTimer_Tick(object sender, EventArgs e)
         {
-            if (scrollMouseDown)
+            if (scrollBarMouseDown)
             {
                 Point mouseCoords = vScrollBarPanel.PointToClient(new Point(Cursor.Position.X, Cursor.Position.Y));
 
@@ -358,8 +386,26 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 if (differenceY != 0)
                 {
                     vScrollBarPanel.Invalidate();
+                }   
+            }
+        }
+
+        private void ButtonTimer_Tick(object sender, EventArgs e)
+        {
+            if (scrollButtonMouseDown)
+            {
+                if (upScrollButtonSelected)
+                {
+                    VScrollOffset -= ScrollButtonsScrollOffset;
                 }
-                
+                else if (downScrollButtonSelected)
+                {
+                    VScrollOffset += ScrollButtonsScrollOffset;
+                }
+                if (buttonTimer.Interval == BUTTON_TIMER_INITIAL_INTERVAL_DELAY)
+                {
+                    buttonTimer.Interval = BUTTON_TIMER_INTERVAL_DELAY;
+                }
             }
         }
 
