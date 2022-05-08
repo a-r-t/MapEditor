@@ -122,9 +122,9 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         private bool vScrollBarSelected;
 
         private int initialMouseX = 0;
-        private int initialMouseY = 0;
+        private int initialMouseY = 0; // mouse's initial location relative to scroll bar graphic
         private int previousMouseX = 0;
-        private int previousMouseY = 0;
+        private int previousMouseY = 0; // mouse's previous location relative to scroll bar panel
         private bool scrollMouseDown = false;
 
         private Timer scrollTimer;
@@ -298,8 +298,10 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                     scrollMouseDown = true;
                     previousMouseX = e.X;
                     previousMouseY = e.Y;
-                    initialMouseX = e.X;
-                    initialMouseY = e.Y;
+
+                    initialMouseX = e.X - vScrollBarXLocation;
+                    initialMouseY = e.Y - vScrollBarYLocation;
+
                     scrollTimer.Start();
                 }
 
@@ -329,32 +331,35 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         {
             if (scrollMouseDown)
             {
-                Console.WriteLine("v scroll offset: " + vScrollOffset);
-
                 Point mouseCoords = vScrollBarPanel.PointToClient(new Point(Cursor.Position.X, Cursor.Position.Y));
+
                 int differenceY = mouseCoords.Y - previousMouseY;
 
-                VScrollBarYLocation += differenceY;
-                vScrollOffset += differenceY;
+                VScrollOffset += differenceY;
 
-                if (vScrollOffset < MinVScrollOffset)
+                if (VScrollOffset < MinVScrollOffset)
                 {
-                    vScrollOffset = MinVScrollOffset;
-                    VScrollBarYLocation = 18;
+                    VScrollOffset = MinVScrollOffset;
                 }
-                if (vScrollOffset > MaxVScrollOffset)
+                if (VScrollOffset > MaxVScrollOffset)
                 {
-                    vScrollOffset = MaxVScrollOffset;
-                    VScrollBarYLocation = vScrollBarPanel.Height - VScrollBarHeight - 18;
+                    VScrollOffset = MaxVScrollOffset;
                 }
 
                 previousMouseX = mouseCoords.X;
                 previousMouseY = mouseCoords.Y;
 
+                // keep scroll bar relative to where it was originally pressed
+                if (mouseCoords.Y - vScrollBarYLocation != initialMouseY)
+                {
+                    VScrollOffset += ((mouseCoords.Y - vScrollBarYLocation) - initialMouseY);
+                }
+
                 if (differenceY != 0)
                 {
                     vScrollBarPanel.Invalidate();
                 }
+                
             }
         }
 
