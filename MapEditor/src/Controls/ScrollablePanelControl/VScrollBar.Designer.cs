@@ -53,6 +53,7 @@
             this.Controls.Add(this.vScrollBarPanel);
             this.Name = "VScrollBar";
             this.Size = new System.Drawing.Size(17, 293);
+            this.Load += new System.EventHandler(this.VScrollBar_Load);
             this.ResumeLayout(false);
 
         }

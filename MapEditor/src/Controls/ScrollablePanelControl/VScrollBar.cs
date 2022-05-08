@@ -32,7 +32,19 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             }
             set
             {
-                vScrollOffset = value;
+                if (value < MinVScrollOffset)
+                {
+                    vScrollOffset = MinVScrollOffset;
+                }
+                else if (value > MaxVScrollOffset)
+                {
+                    vScrollOffset = MaxVScrollOffset;
+                }
+                else
+                {
+                    vScrollOffset = value;
+                }
+                VScrollBarYLocation = vScrollOffset + (upScrollButtonImage.Height + 1);
             }
         }
 
@@ -43,7 +55,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         {
             get
             {
-                return MinVScrollOffset == VScrollOffset;
+                return VScrollOffset <= MinVScrollOffset;
             }
         }
 
@@ -51,7 +63,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         {
             get
             {
-                return MaxVScrollOffset == VScrollOffset;
+                return VScrollOffset >= MaxVScrollOffset;
             }
         }
 
@@ -109,6 +121,8 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         private bool vScrollBarHovered;
         private bool vScrollBarSelected;
 
+        private int initialMouseX = 0;
+        private int initialMouseY = 0;
         private int previousMouseX = 0;
         private int previousMouseY = 0;
         private bool scrollMouseDown = false;
@@ -122,8 +136,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             vScrollBarPanel.BackColor = Color.FromArgb(241, 241, 241);
             vScrollBarPanel.Resize += (s, e) => vScrollBarPanel.Refresh();
             VScrollOffset = 0;
-            MinVScrollOffset = 0;
-            MaxVScrollOffset = 300; // temp for testing
+
             vScrollBarXLocation = 2;
             VScrollBarYLocation = 18;
             vScrollBarWidth = 13;
@@ -132,34 +145,6 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             scrollTimer = new Timer();
             scrollTimer.Interval = 1;
             scrollTimer.Tick += new EventHandler(ScrollTimer_Tick);
-        }
-
-        private void ScrollTimer_Tick(object sender, EventArgs e)
-        {
-            if (scrollMouseDown)
-            {
-                Point mouseCoords = vScrollBarPanel.PointToClient(new Point(Cursor.Position.X, Cursor.Position.Y));
-                int differenceY = mouseCoords.Y - previousMouseY;
-
-                VScrollBarYLocation += differenceY;
-
-                if (VScrollBarYLocation < 18)
-                {
-                    VScrollBarYLocation = 18;
-                }
-                else if (VScrollBarYLocation + VScrollBarHeight > vScrollBarPanel.Height - 18)
-                {
-                    VScrollBarYLocation = vScrollBarPanel.Height - VScrollBarHeight - 18;
-                }
-
-                previousMouseX = mouseCoords.X;
-                previousMouseY = mouseCoords.Y;
-
-                if (differenceY != 0)
-                {
-                    vScrollBarPanel.Invalidate();
-                }
-            }
         }
 
         private void vScrollBarPanel_Paint(object sender, PaintEventArgs e)
@@ -313,6 +298,8 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                     scrollMouseDown = true;
                     previousMouseX = e.X;
                     previousMouseY = e.Y;
+                    initialMouseX = e.X;
+                    initialMouseY = e.Y;
                     scrollTimer.Start();
                 }
 
@@ -336,6 +323,45 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 scrollTimer.Stop();
                 vScrollBarPanel.Invalidate();
             }
+        }
+
+        private void ScrollTimer_Tick(object sender, EventArgs e)
+        {
+            if (scrollMouseDown)
+            {
+                Console.WriteLine("v scroll offset: " + vScrollOffset);
+
+                Point mouseCoords = vScrollBarPanel.PointToClient(new Point(Cursor.Position.X, Cursor.Position.Y));
+                int differenceY = mouseCoords.Y - previousMouseY;
+
+                VScrollBarYLocation += differenceY;
+                vScrollOffset += differenceY;
+
+                if (vScrollOffset < MinVScrollOffset)
+                {
+                    vScrollOffset = MinVScrollOffset;
+                    VScrollBarYLocation = 18;
+                }
+                if (vScrollOffset > MaxVScrollOffset)
+                {
+                    vScrollOffset = MaxVScrollOffset;
+                    VScrollBarYLocation = vScrollBarPanel.Height - VScrollBarHeight - 18;
+                }
+
+                previousMouseX = mouseCoords.X;
+                previousMouseY = mouseCoords.Y;
+
+                if (differenceY != 0)
+                {
+                    vScrollBarPanel.Invalidate();
+                }
+            }
+        }
+
+        private void VScrollBar_Load(object sender, EventArgs e)
+        {
+            MinVScrollOffset = 0;
+            MaxVScrollOffset = vScrollBarPanel.Height - VScrollBarHeight - 36;
         }
     }
 }
