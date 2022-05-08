@@ -298,7 +298,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             downScrollButtonHovered = e.X > DownScrollButtonLocation.X && e.X < DownScrollButtonLocation.X + downScrollButtonImage.Width && e.Y > DownScrollButtonLocation.Y && e.Y < DownScrollButtonLocation.Y + downScrollButtonImage.Height;
 
             bool oldVScrollBarHoveredValue = vScrollBarHovered;
-            vScrollBarHovered = e.X > vScrollBarXLocation && e.X < vScrollBarXLocation + vScrollBarWidth && e.Y > vScrollBarYLocation && e.Y < vScrollBarYLocation + vScrollBarHeight;
+            vScrollBarHovered = e.X > vScrollBarXLocation && e.X < vScrollBarXLocation + vScrollBarWidth && e.Y > VScrollBarYLocation && e.Y < VScrollBarYLocation + vScrollBarHeight;
 
             if (oldUpScrollButtonHoveredValue != upScrollButtonHovered
                 || oldDownScrollButtonHoveredValue != downScrollButtonHovered
@@ -363,7 +363,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                     previousMouseY = e.Y;
 
                     initialMouseX = e.X - vScrollBarXLocation;
-                    initialMouseY = e.Y - vScrollBarYLocation;
+                    initialMouseY = e.Y - VScrollBarYLocation;
 
                     scrollTimer.Start();
                 }
@@ -371,11 +371,11 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 // if nothing else is selected but mouse was pressed, it happened on the "empty" parts of the scrollbar, which should trigger a jump
                 if (!upScrollButtonSelected && !downScrollButtonSelected && !vScrollBarSelected)
                 {
-                    if (e.Y < vScrollBarYLocation)
+                    if (e.Y < VScrollBarYLocation)
                     {
                         VScrollOffset -= vScrollBarHeight;
                     }
-                    else if (e.Y > vScrollBarYLocation)
+                    else if (e.Y > VScrollBarYLocation)
                     {
                         VScrollOffset += vScrollBarHeight;
                     }
@@ -428,9 +428,9 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 previousMouseY = mouseCoords.Y;
 
                 // keep scroll bar relative to where it was originally pressed
-                if (mouseCoords.Y - vScrollBarYLocation != initialMouseY)
+                if (mouseCoords.Y - VScrollBarYLocation != initialMouseY)
                 {
-                    VScrollOffset += ((mouseCoords.Y - vScrollBarYLocation) - initialMouseY);
+                    VScrollOffset += ((mouseCoords.Y - VScrollBarYLocation) - initialMouseY);
                 }
 
                 if (differenceY != 0)

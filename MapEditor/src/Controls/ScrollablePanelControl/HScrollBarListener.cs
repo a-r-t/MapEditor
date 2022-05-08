@@ -8,5 +8,6 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 {
     public interface HScrollBarListener
     {
+        void onHScroll(int scrollAmount);
     }
 }

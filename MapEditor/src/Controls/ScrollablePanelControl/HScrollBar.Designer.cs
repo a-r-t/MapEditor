@@ -44,6 +44,7 @@
             this.hScrollBarPanel.MouseLeave += new System.EventHandler(this.hScrollBarPanel_MouseLeave);
             this.hScrollBarPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.hScrollBarPanel_MouseMove);
             this.hScrollBarPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.hScrollBarPanel_MouseUp);
+            this.hScrollBarPanel.Resize += new System.EventHandler(this.hScrollBarPanel_Resize);
             // 
             // HScrollBar
             // 
@@ -53,6 +54,7 @@
             this.Controls.Add(this.hScrollBarPanel);
             this.Name = "HScrollBar";
             this.Size = new System.Drawing.Size(293, 17);
+            this.Load += new System.EventHandler(this.HScrollBar_Load);
             this.ResumeLayout(false);
 
         }
