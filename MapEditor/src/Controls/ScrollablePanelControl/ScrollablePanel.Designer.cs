@@ -30,7 +30,7 @@
         {
             this.imagePanel = new System.Windows.Forms.Panel();
             this.hScrollBarPanel = new System.Windows.Forms.Panel();
-            this.vScrollBarPanel = new System.Windows.Forms.Panel();
+            this.vScrollBarContainer = new System.Windows.Forms.Panel();
             this.SuspendLayout();
             // 
             // imagePanel
@@ -60,27 +60,20 @@
             this.hScrollBarPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.hScrollBarPanel_MouseMove);
             this.hScrollBarPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.hScrollBarPanel_MouseUp);
             // 
-            // vScrollBarPanel
+            // vScrollBarContainer
             // 
-            this.vScrollBarPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.vScrollBarContainer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.vScrollBarPanel.BackColor = System.Drawing.SystemColors.GrayText;
-            this.vScrollBarPanel.Location = new System.Drawing.Point(363, 0);
-            this.vScrollBarPanel.Name = "vScrollBarPanel";
-            this.vScrollBarPanel.Size = new System.Drawing.Size(17, 293);
-            this.vScrollBarPanel.TabIndex = 2;
-            this.vScrollBarPanel.Paint += new System.Windows.Forms.PaintEventHandler(this.vScrollBarPanel_Paint);
-            this.vScrollBarPanel.MouseDown += new System.Windows.Forms.MouseEventHandler(this.vScrollBarPanel_MouseDown);
-            this.vScrollBarPanel.MouseEnter += new System.EventHandler(this.vScrollBarPanel_MouseEnter);
-            this.vScrollBarPanel.MouseLeave += new System.EventHandler(this.vScrollBarPanel_MouseLeave);
-            this.vScrollBarPanel.MouseMove += new System.Windows.Forms.MouseEventHandler(this.vScrollBarPanel_MouseMove);
-            this.vScrollBarPanel.MouseUp += new System.Windows.Forms.MouseEventHandler(this.vScrollBarPanel_MouseUp);
+            this.vScrollBarContainer.Location = new System.Drawing.Point(364, 0);
+            this.vScrollBarContainer.Name = "vScrollBarContainer";
+            this.vScrollBarContainer.Size = new System.Drawing.Size(17, 310);
+            this.vScrollBarContainer.TabIndex = 2;
             // 
             // ScrollablePanel
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.vScrollBarPanel);
+            this.Controls.Add(this.vScrollBarContainer);
             this.Controls.Add(this.hScrollBarPanel);
             this.Controls.Add(this.imagePanel);
             this.Name = "ScrollablePanel";
@@ -93,6 +86,6 @@
 
         private System.Windows.Forms.Panel imagePanel;
         private System.Windows.Forms.Panel hScrollBarPanel;
-        private System.Windows.Forms.Panel vScrollBarPanel;
+        private System.Windows.Forms.Panel vScrollBarContainer;
     }
 }

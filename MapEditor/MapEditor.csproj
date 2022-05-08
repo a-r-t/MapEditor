@@ -58,6 +58,12 @@
     <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanelTest.Designer.cs">
       <DependentUpon>ScrollablePanelTest.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\VScrollBar.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\VScrollBar.Designer.cs">
+      <DependentUpon>VScrollBar.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\ExtensionMethods\ControlExtensions.cs" />
     <Compile Include="src\ExtensionMethods\FloatExtensions.cs" />
     <Compile Include="src\ExtensionMethods\NativeWinApi.cs" />
@@ -170,6 +176,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="src\Controls\ScrollablePanelControl\ScrollablePanelTest.resx">
       <DependentUpon>ScrollablePanelTest.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\ScrollablePanelControl\VScrollBar.resx">
+      <DependentUpon>VScrollBar.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="src\MainForm.resx">
       <DependentUpon>MainForm.cs</DependentUpon>
