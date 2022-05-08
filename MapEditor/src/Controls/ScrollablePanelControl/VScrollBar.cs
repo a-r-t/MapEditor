@@ -141,6 +141,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             vScrollBarPanel.DoubleBuffered(true);
             vScrollBarPanel.BackColor = Color.FromArgb(241, 241, 241);
             vScrollBarPanel.Resize += (s, e) => vScrollBarPanel.Refresh();
+            vScrollBarPanel.MouseWheel += new MouseEventHandler(vScrollBarPanel_MouseWheel);
             VScrollOffset = 0;
 
             vScrollBarXLocation = 2;
@@ -157,6 +158,18 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             buttonTimer.Tick += new EventHandler(ButtonTimer_Tick);
 
             ScrollButtonsScrollOffset = 5;
+        }
+
+        private void vScrollBarPanel_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta < 0)
+            {
+                VScrollOffset += 20;
+            }
+            else if (e.Delta > 0)
+            {
+                VScrollOffset -= 20;
+            }
         }
 
         private void vScrollBarPanel_Paint(object sender, PaintEventArgs e)
