@@ -158,17 +158,18 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             buttonTimer.Tick += new EventHandler(ButtonTimer_Tick);
 
             ScrollButtonsScrollOffset = 5;
+            MouseWheelScrollOffset = 20;
         }
 
         private void vScrollBarPanel_MouseWheel(object sender, MouseEventArgs e)
         {
             if (e.Delta < 0)
             {
-                VScrollOffset += 20;
+                VScrollOffset += MouseWheelScrollOffset;
             }
             else if (e.Delta > 0)
             {
-                VScrollOffset -= 20;
+                VScrollOffset -= MouseWheelScrollOffset;
             }
         }
 
@@ -342,6 +343,19 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                     initialMouseY = e.Y - vScrollBarYLocation;
 
                     scrollTimer.Start();
+                }
+
+                // if nothing else is selected but mouse was pressed, it happened on the "empty" parts of the scrollbar, which should trigger a jump
+                if (!upScrollButtonSelected && !downScrollButtonSelected && !vScrollBarSelected)
+                {
+                    if (e.Y < vScrollBarYLocation)
+                    {
+                        VScrollOffset -= vScrollBarHeight;
+                    }
+                    else if (e.Y > vScrollBarYLocation)
+                    {
+                        VScrollOffset += vScrollBarHeight;
+                    }
                 }
 
                 if (oldUpScrollButtonSelected != upScrollButtonSelected
