@@ -69,8 +69,27 @@ namespace MapEditor.src.MapList
                 }
             };
 
-            folderContextMenu.MenuItems.Add("Rename");
+            folderContextMenu.MenuItems.Add("Add New Map");
             folderContextMenu.MenuItems[1].Click += (sender, e) => {
+                TreeNode selectedNode = mapTreeView.SelectedNode;
+                string path = selectedNode.FullPath;
+                int newMapIndex = GetNewMapIndex($"./Resources/{path}");
+                string newMapName = newMapIndex == 0 ? "New map" : $"New map ({newMapIndex})";
+                string newMapFilePath = $"./Resources/{path}/{newMapName}.map";
+                File.Create(newMapFilePath);
+                if (File.Exists(newMapFilePath))
+                {
+                    selectedNode.Nodes.Add(newMapName);
+                    mapTreeView.Sort();
+                }
+                else
+                {
+                    MessageBox.Show("Unknown error creating map");
+                }
+            };
+
+            folderContextMenu.MenuItems.Add("Rename");
+            folderContextMenu.MenuItems[2].Click += (sender, e) => {
                 mapTreeView.LabelEdit = true;
                 oldName = mapTreeView.SelectedNode.Name;
                 oldPath = mapTreeView.SelectedNode.FullPath;
@@ -94,6 +113,19 @@ namespace MapEditor.src.MapList
             string current = name;
             int i = 0;
             while (Directory.Exists($"{path}/{current}")) {
+                i++;
+                current = $"{name} ({i})";
+            }
+            return i;
+        }
+
+        private int GetNewMapIndex(string path)
+        {
+            string name = "/New map";
+            string current = name;
+            int i = 0;
+            while (Directory.Exists($"{path}/{current}"))
+            {
                 i++;
                 current = $"{name} ({i})";
             }
@@ -166,6 +198,7 @@ namespace MapEditor.src.MapList
             return (string)node.Tag == "file";
         }
 
+        // node double click
         private void mapTreeView_DoubleClick(object sender, EventArgs e)
         {
             if (mapTreeView.SelectedNode != null && IsMapNode(mapTreeView.SelectedNode) && mapTreeView.SelectedNode != selectedNode)
@@ -190,6 +223,7 @@ namespace MapEditor.src.MapList
             }
         }
 
+        // node single click
         private void mapTreeView_NodeMouseClick(object sender, TreeNodeMouseClickEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
