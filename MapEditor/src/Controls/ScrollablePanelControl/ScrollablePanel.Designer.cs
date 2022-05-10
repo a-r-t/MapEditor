@@ -43,6 +43,7 @@
             this.imagePanel.Size = new System.Drawing.Size(364, 293);
             this.imagePanel.TabIndex = 0;
             this.imagePanel.Paint += new System.Windows.Forms.PaintEventHandler(this.imagePanel_Paint);
+            this.imagePanel.Resize += new System.EventHandler(this.imagePanel_Resize);
             // 
             // hScrollBarContainer
             // 
@@ -77,9 +78,8 @@
         }
 
         #endregion
-
-        private System.Windows.Forms.Panel imagePanel;
         private System.Windows.Forms.Panel hScrollBarContainer;
         private System.Windows.Forms.Panel vScrollBarContainer;
+        protected System.Windows.Forms.Panel imagePanel;
     }
 }

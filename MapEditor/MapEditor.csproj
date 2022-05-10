@@ -59,6 +59,12 @@
     <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanel.Designer.cs">
       <DependentUpon>ScrollablePanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanelImplementTest.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanelImplementTest.Designer.cs">
+      <DependentUpon>ScrollablePanelImplementTest.cs</DependentUpon>
+    </Compile>
     <Compile Include="src\Controls\ScrollablePanelControl\ScrollablePanelTest.cs">
       <SubType>Form</SubType>
     </Compile>

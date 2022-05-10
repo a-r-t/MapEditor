@@ -150,8 +150,8 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         private int initialMouseY = 0; // mouse's initial location relative to scroll bar graphic
         private int previousMouseX = 0;
         private int previousMouseY = 0; // mouse's previous location relative to scroll bar panel
-        private bool scrollBarMouseRight = false;
-        private bool scrollButtonMouseRight = false;
+        private bool scrollBarMouseDown = false;
+        private bool scrollButtonMouseDown = false;
         public int ScrollButtonsScrollOffset { get; set; }
         public int MouseWheelScrollOffset { get; set; }
         private const int BUTTON_TIMER_INITIAL_INTERVAL_DELAY = 200;
@@ -183,18 +183,6 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 
             ScrollButtonsScrollOffset = 5;
             MouseWheelScrollOffset = 20;
-        }
-
-        private void hScrollBarPanel_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (e.Delta < 0)
-            {
-                HScrollOffset += MouseWheelScrollOffset;
-            }
-            else if (e.Delta > 0)
-            {
-                HScrollOffset -= MouseWheelScrollOffset;
-            }
         }
 
         private void hScrollBarPanel_Paint(object sender, PaintEventArgs e)
@@ -292,21 +280,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 
         private void hScrollBarPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            bool oldLeftScrollButtonHoveredValue = leftScrollButtonHovered;
-            leftScrollButtonHovered = e.X > LeftScrollButtonLocation.X && e.X < LeftScrollButtonLocation.X + leftScrollButtonImage.Width && e.Y > LeftScrollButtonLocation.Y && e.Y < LeftScrollButtonLocation.Y + leftScrollButtonImage.Height;
-
-            bool oldRightScrollButtonHoveredValue = rightScrollButtonHovered;
-            rightScrollButtonHovered = e.X > RightScrollButtonLocation.X && e.X < RightScrollButtonLocation.X + rightScrollButtonImage.Width && e.Y > RightScrollButtonLocation.Y && e.Y < RightScrollButtonLocation.Y + rightScrollButtonImage.Height;
-
-            bool oldHScrollBarHoveredValue = hScrollBarHovered;
-            hScrollBarHovered = e.X > HScrollBarXLocation && e.X < HScrollBarXLocation + hScrollBarWidth && e.Y > hScrollBarYLocation && e.Y < hScrollBarYLocation + hScrollBarHeight;
-
-            if (oldLeftScrollButtonHoveredValue != leftScrollButtonHovered
-                || oldRightScrollButtonHoveredValue != rightScrollButtonHovered
-                || oldHScrollBarHoveredValue != hScrollBarHovered)
-            {
-                hScrollBarPanel.Invalidate();
-            }
+            UpdateHover(e);
         }
 
         private void hScrollBarPanel_MouseDown(object sender, MouseEventArgs e)
@@ -322,10 +296,10 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 {
                     leftScrollButtonSelected = false;
                 }
-                if (leftScrollButtonSelected && !scrollButtonMouseRight)
+                if (leftScrollButtonSelected && !scrollButtonMouseDown)
                 {
                     HScrollOffset -= ScrollButtonsScrollOffset;
-                    scrollButtonMouseRight = true;
+                    scrollButtonMouseDown = true;
                     buttonTimer.Interval = BUTTON_TIMER_INITIAL_INTERVAL_DELAY;
                     buttonTimer.Start();
                 }
@@ -339,10 +313,10 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 {
                     rightScrollButtonSelected = false;
                 }
-                if (rightScrollButtonSelected && !scrollButtonMouseRight)
+                if (rightScrollButtonSelected && !scrollButtonMouseDown)
                 {
                     HScrollOffset += ScrollButtonsScrollOffset;
-                    scrollButtonMouseRight = true;
+                    scrollButtonMouseDown = true;
                     buttonTimer.Interval = BUTTON_TIMER_INITIAL_INTERVAL_DELAY;
                     buttonTimer.Start();
                 }
@@ -357,9 +331,9 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                     hScrollBarSelected = false;
                 }
 
-                if (hScrollBarSelected && !scrollBarMouseRight)
+                if (hScrollBarSelected && !scrollBarMouseDown)
                 {
-                    scrollBarMouseRight = true;
+                    scrollBarMouseDown = true;
                     previousMouseX = e.X;
                     previousMouseY = e.Y;
 
@@ -395,8 +369,8 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         {
             if (e.Button == MouseButtons.Left)
             {
-                scrollBarMouseRight = false;
-                scrollButtonMouseRight = false;
+                scrollBarMouseDown = false;
+                scrollButtonMouseDown = false;
                 leftScrollButtonSelected = false;
                 rightScrollButtonSelected = false;
                 hScrollBarSelected = false;
@@ -406,44 +380,63 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             }
         }
 
+        private void hScrollBarPanel_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta < 0)
+            {
+                HScrollOffset += MouseWheelScrollOffset;
+            }
+            else if (e.Delta > 0)
+            {
+                HScrollOffset -= MouseWheelScrollOffset;
+            }
+
+            UpdateHover(e);
+        }
+
+        public void UpdateHover(MouseEventArgs e)
+        {
+            bool oldLeftScrollButtonHoveredValue = leftScrollButtonHovered;
+            leftScrollButtonHovered = e.X > LeftScrollButtonLocation.X && e.X < LeftScrollButtonLocation.X + leftScrollButtonImage.Width && e.Y > LeftScrollButtonLocation.Y && e.Y < LeftScrollButtonLocation.Y + leftScrollButtonImage.Height;
+
+            bool oldRightScrollButtonHoveredValue = rightScrollButtonHovered;
+            rightScrollButtonHovered = e.X > RightScrollButtonLocation.X && e.X < RightScrollButtonLocation.X + rightScrollButtonImage.Width && e.Y > RightScrollButtonLocation.Y && e.Y < RightScrollButtonLocation.Y + rightScrollButtonImage.Height;
+
+            bool oldHScrollBarHoveredValue = hScrollBarHovered;
+            hScrollBarHovered = e.X > HScrollBarXLocation && e.X < HScrollBarXLocation + hScrollBarWidth && e.Y > hScrollBarYLocation && e.Y < hScrollBarYLocation + hScrollBarHeight;
+
+            if (oldLeftScrollButtonHoveredValue != leftScrollButtonHovered
+                || oldRightScrollButtonHoveredValue != rightScrollButtonHovered
+                || oldHScrollBarHoveredValue != hScrollBarHovered)
+            {
+                hScrollBarPanel.Invalidate();
+            }
+        }
+
         private void ScrollTimer_Tick(object sender, EventArgs e)
         {
-            if (scrollBarMouseRight)
+            if (scrollBarMouseDown)
             {
                 Point mouseCoords = hScrollBarPanel.PointToClient(new Point(Cursor.Position.X, Cursor.Position.Y));
 
                 int differenceX = mouseCoords.X - previousMouseX;
-
-                HScrollOffset += differenceX;
-
-                if (HScrollOffset < MinHScrollOffset)
-                {
-                    HScrollOffset = MinHScrollOffset;
-                }
-                if (HScrollOffset > MaxHScrollOffset)
-                {
-                    HScrollOffset = MaxHScrollOffset;
-                }
-
                 previousMouseX = mouseCoords.X;
-                previousMouseY = mouseCoords.Y;
 
-                // keep scroll bar relative to where it was originally pressed
-                if (mouseCoords.X - HScrollBarXLocation != initialMouseX)
+                if (differenceX > 0 && initialMouseX + HScrollBarXLocation + differenceX <= mouseCoords.X)
                 {
-                    HScrollOffset += ((mouseCoords.X - HScrollBarXLocation) - initialMouseX);
+                    HScrollOffset += differenceX;
                 }
 
-                if (differenceX != 0)
+                if (differenceX < 0 && initialMouseX + HScrollBarXLocation + differenceX >= mouseCoords.X)
                 {
-                    hScrollBarPanel.Invalidate();
+                    HScrollOffset += differenceX;
                 }
             }
         }
 
         private void ButtonTimer_Tick(object sender, EventArgs e)
         {
-            if (scrollButtonMouseRight)
+            if (scrollButtonMouseDown)
             {
                 if (leftScrollButtonSelected)
                 {

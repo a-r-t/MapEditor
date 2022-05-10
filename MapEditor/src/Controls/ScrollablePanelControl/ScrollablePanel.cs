@@ -13,8 +13,8 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 {
     public partial class ScrollablePanel : UserControl, VScrollBarListener, HScrollBarListener
     {
-        private VScrollBar vScrollBar;
-        private HScrollBar hScrollBar;
+        public readonly VScrollBar vScrollBar;
+        public readonly HScrollBar hScrollBar;
 
         public ScrollablePanel()
         {
@@ -36,14 +36,16 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             hScrollBar.AddListener(this);
         }
 
-        public void onVScroll(int scrollAmount)
+        public virtual void onVScroll(int scrollAmount)
         {
             // Console.WriteLine("You scrolled : " + scrollAmount); 
+            imagePanel.Refresh();
         }
 
-        public void onHScroll(int scrollAmount)
+        public virtual void onHScroll(int scrollAmount)
         {
             // Console.WriteLine("You scrolled : " + scrollAmount); 
+            imagePanel.Refresh();
         }
 
         protected virtual void imagePanel_Paint(object sender, PaintEventArgs e)
@@ -51,8 +53,9 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             // TODO: Override me
         }
 
-        
-
-        
+        private void imagePanel_Resize(object sender, EventArgs e)
+        {
+            imagePanel.Refresh();
+        }
     }
 }

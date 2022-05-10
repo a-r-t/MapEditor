@@ -45,6 +45,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 {
                     vScrollOffset = value;
                 }
+
                 VScrollBarYLocation = vScrollOffset + (upScrollButtonImage.Height + 1);
 
                 int scrollDifference = vScrollOffset - oldVScrollOffset;
@@ -184,18 +185,6 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             MouseWheelScrollOffset = 20;
         }
 
-        private void vScrollBarPanel_MouseWheel(object sender, MouseEventArgs e)
-        {
-            if (e.Delta < 0)
-            {
-                VScrollOffset += MouseWheelScrollOffset;
-            }
-            else if (e.Delta > 0)
-            {
-                VScrollOffset -= MouseWheelScrollOffset;
-            }
-        }
-
         private void vScrollBarPanel_Paint(object sender, PaintEventArgs e)
         {
             e.Graphics.DrawImage(getUpScrollButtonImageToPaint(), UpScrollButtonLocation);
@@ -291,21 +280,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 
         private void vScrollBarPanel_MouseMove(object sender, MouseEventArgs e)
         {
-            bool oldUpScrollButtonHoveredValue = upScrollButtonHovered;
-            upScrollButtonHovered = e.X > UpScrollButtonLocation.X && e.X < UpScrollButtonLocation.X + upScrollButtonImage.Width && e.Y > UpScrollButtonLocation.Y && e.Y < UpScrollButtonLocation.Y + upScrollButtonImage.Height;
-
-            bool oldDownScrollButtonHoveredValue = downScrollButtonHovered;
-            downScrollButtonHovered = e.X > DownScrollButtonLocation.X && e.X < DownScrollButtonLocation.X + downScrollButtonImage.Width && e.Y > DownScrollButtonLocation.Y && e.Y < DownScrollButtonLocation.Y + downScrollButtonImage.Height;
-
-            bool oldVScrollBarHoveredValue = vScrollBarHovered;
-            vScrollBarHovered = e.X > vScrollBarXLocation && e.X < vScrollBarXLocation + vScrollBarWidth && e.Y > VScrollBarYLocation && e.Y < VScrollBarYLocation + vScrollBarHeight;
-
-            if (oldUpScrollButtonHoveredValue != upScrollButtonHovered
-                || oldDownScrollButtonHoveredValue != downScrollButtonHovered
-                || oldVScrollBarHoveredValue != vScrollBarHovered)
-            {
-                vScrollBarPanel.Invalidate();
-            }
+            UpdateHover(e);
         }
 
         private void vScrollBarPanel_MouseDown(object sender, MouseEventArgs e)
@@ -405,6 +380,39 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             }
         }
 
+        private void vScrollBarPanel_MouseWheel(object sender, MouseEventArgs e)
+        {
+            if (e.Delta < 0)
+            {
+                VScrollOffset += MouseWheelScrollOffset;
+            }
+            else if (e.Delta > 0)
+            {
+                VScrollOffset -= MouseWheelScrollOffset;
+            }
+
+            UpdateHover(e);
+        }
+
+        private void UpdateHover(MouseEventArgs e)
+        {
+            bool oldUpScrollButtonHoveredValue = upScrollButtonHovered;
+            upScrollButtonHovered = e.X > UpScrollButtonLocation.X && e.X < UpScrollButtonLocation.X + upScrollButtonImage.Width && e.Y > UpScrollButtonLocation.Y && e.Y < UpScrollButtonLocation.Y + upScrollButtonImage.Height;
+
+            bool oldDownScrollButtonHoveredValue = downScrollButtonHovered;
+            downScrollButtonHovered = e.X > DownScrollButtonLocation.X && e.X < DownScrollButtonLocation.X + downScrollButtonImage.Width && e.Y > DownScrollButtonLocation.Y && e.Y < DownScrollButtonLocation.Y + downScrollButtonImage.Height;
+
+            bool oldVScrollBarHoveredValue = vScrollBarHovered;
+            vScrollBarHovered = e.X > vScrollBarXLocation && e.X < vScrollBarXLocation + vScrollBarWidth && e.Y > VScrollBarYLocation && e.Y < VScrollBarYLocation + vScrollBarHeight;
+
+            if (oldUpScrollButtonHoveredValue != upScrollButtonHovered
+                || oldDownScrollButtonHoveredValue != downScrollButtonHovered
+                || oldVScrollBarHoveredValue != vScrollBarHovered)
+            {
+                vScrollBarPanel.Invalidate();
+            }
+        }
+
         private void ScrollTimer_Tick(object sender, EventArgs e)
         {
             if (scrollBarMouseDown)
@@ -412,31 +420,17 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 Point mouseCoords = vScrollBarPanel.PointToClient(new Point(Cursor.Position.X, Cursor.Position.Y));
 
                 int differenceY = mouseCoords.Y - previousMouseY;
-
-                VScrollOffset += differenceY;
-
-                if (VScrollOffset < MinVScrollOffset)
-                {
-                    VScrollOffset = MinVScrollOffset;
-                }
-                if (VScrollOffset > MaxVScrollOffset)
-                {
-                    VScrollOffset = MaxVScrollOffset;
-                }
-
-                previousMouseX = mouseCoords.X;
                 previousMouseY = mouseCoords.Y;
 
-                // keep scroll bar relative to where it was originally pressed
-                if (mouseCoords.Y - VScrollBarYLocation != initialMouseY)
+                if (differenceY > 0 && initialMouseY + VScrollBarYLocation + differenceY <= mouseCoords.Y)
                 {
-                    VScrollOffset += ((mouseCoords.Y - VScrollBarYLocation) - initialMouseY);
+                    VScrollOffset += differenceY;
                 }
 
-                if (differenceY != 0)
+                if (differenceY < 0 && initialMouseY + VScrollBarYLocation + differenceY >= mouseCoords.Y)
                 {
-                    vScrollBarPanel.Invalidate();
-                }   
+                    VScrollOffset += differenceY;
+                }
             }
         }
 
