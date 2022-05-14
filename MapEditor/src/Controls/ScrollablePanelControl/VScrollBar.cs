@@ -13,15 +13,15 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 {
     public partial class VScrollBar : ObservableUserControl<VScrollBarListener>
     {
-        private readonly Bitmap upScrollButtonImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButton.png");
-        private readonly Bitmap upScrollButtonDisabledImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonDisabled.png");
-        private readonly Bitmap upScrollButtonHoveredImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonHovered.png");
-        private readonly Bitmap upScrollButtonSelectedImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonSelected.png");
+        private readonly Bitmap upScrollButtonImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButton.png");
+        private readonly Bitmap upScrollButtonDisabledImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonDisabled.png");
+        private readonly Bitmap upScrollButtonHoveredImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonHovered.png");
+        private readonly Bitmap upScrollButtonSelectedImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonSelected.png");
 
-        private readonly Bitmap downScrollButtonImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButton.png");
-        private readonly Bitmap downScrollButtonDisabledImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonDisabled.png");
-        private readonly Bitmap downScrollButtonHoveredImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonHovered.png");
-        private readonly Bitmap downScrollButtonSelectedImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonSelected.png");
+        private readonly Bitmap downScrollButtonImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButton.png");
+        private readonly Bitmap downScrollButtonDisabledImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonDisabled.png");
+        private readonly Bitmap downScrollButtonHoveredImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonHovered.png");
+        private readonly Bitmap downScrollButtonSelectedImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonSelected.png");
 
         private int vScrollOffset;
         public int VScrollOffset
@@ -46,7 +46,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                     vScrollOffset = value;
                 }
 
-                VScrollBarYLocation = vScrollOffset + (upScrollButtonImage.Height + 1);
+                VScrollBarYLocation = vScrollOffset + (upScrollButtonImage.Height + 1); 
 
                 int scrollDifference = vScrollOffset - oldVScrollOffset;
                 if (scrollDifference != 0)
@@ -61,7 +61,8 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 
         public int MinVScrollOffset { get; set; }
         private int maxVScrollOffset;
-        public int MaxVScrollOffset { 
+        public int MaxVScrollOffset 
+        { 
             get
             {
                 return maxVScrollOffset;
@@ -140,15 +141,14 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             set
             {
                 vScrollBarHeight = value;
+                MaxVScrollOffset = vScrollBarPanel.Height - VScrollBarHeight - 36;
             }
         }
 
         private bool vScrollBarHovered;
         private bool vScrollBarSelected;
 
-        private int initialMouseX = 0;
         private int initialMouseY = 0; // mouse's initial location relative to scroll bar graphic
-        private int previousMouseX = 0;
         private int previousMouseY = 0; // mouse's previous location relative to scroll bar panel
         private bool scrollBarMouseDown = false;
         private bool scrollButtonMouseDown = false;
@@ -156,6 +156,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         public int MouseWheelScrollOffset { get; set; }
         private const int BUTTON_TIMER_INITIAL_INTERVAL_DELAY = 200;
         private const int BUTTON_TIMER_INTERVAL_DELAY = 10;
+        public int MouseDragScrollOffset { get; set; } = 0;
 
         private Timer scrollTimer;
         private Timer buttonTimer;
@@ -163,10 +164,26 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         public VScrollBar()
         {
             InitializeComponent();
+
+            try
+            {
+                upScrollButtonImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButton.png");
+                upScrollButtonDisabledImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonDisabled.png");
+                upScrollButtonHoveredImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonHovered.png");
+                upScrollButtonSelectedImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonSelected.png");
+
+                downScrollButtonImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButton.png");
+                downScrollButtonDisabledImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonDisabled.png");
+                downScrollButtonHoveredImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonHovered.png");
+                downScrollButtonSelectedImage = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonSelected.png");
+            }
+            catch (Exception e) { }
+
+
             vScrollBarPanel.DoubleBuffered(true);
             vScrollBarPanel.BackColor = Color.FromArgb(241, 241, 241);
             vScrollBarPanel.MouseWheel += new MouseEventHandler(vScrollBarPanel_MouseWheel);
-            VScrollOffset = 0;
+            vScrollOffset = 0;
 
             vScrollBarXLocation = 2;
             VScrollBarYLocation = 18;
@@ -187,8 +204,12 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 
         private void vScrollBarPanel_Paint(object sender, PaintEventArgs e)
         {
-            e.Graphics.DrawImage(getUpScrollButtonImageToPaint(), UpScrollButtonLocation);
-            e.Graphics.DrawImage(getDownScrollButtonImageToPaint(), DownScrollButtonLocation);
+            try
+            {
+                e.Graphics.DrawImage(getUpScrollButtonImageToPaint(), UpScrollButtonLocation);
+                e.Graphics.DrawImage(getDownScrollButtonImageToPaint(), DownScrollButtonLocation);
+            }
+            catch (Exception ex) { }
 
             Brush brush = new SolidBrush(getVScrollBarColor());
             e.Graphics.FillRectangle(brush, new Rectangle(vScrollBarXLocation, VScrollBarYLocation, vScrollBarWidth, vScrollBarHeight));
@@ -334,10 +355,8 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 if (vScrollBarSelected && !scrollBarMouseDown)
                 {
                     scrollBarMouseDown = true;
-                    previousMouseX = e.X;
                     previousMouseY = e.Y;
 
-                    initialMouseX = e.X - vScrollBarXLocation;
                     initialMouseY = e.Y - VScrollBarYLocation;
 
                     scrollTimer.Start();

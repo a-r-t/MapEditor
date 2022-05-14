@@ -53,7 +53,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             // TODO: Override me
         }
 
-        private void imagePanel_Resize(object sender, EventArgs e)
+        protected virtual void imagePanel_Resize(object sender, EventArgs e)
         {
             imagePanel.Refresh();
         }

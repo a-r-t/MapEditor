@@ -191,6 +191,9 @@
     <EmbeddedResource Include="src\Controls\ScrollablePanelControl\ScrollablePanel.resx">
       <DependentUpon>ScrollablePanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="src\Controls\ScrollablePanelControl\ScrollablePanelImplementTest.resx">
+      <DependentUpon>ScrollablePanelImplementTest.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="src\Controls\ScrollablePanelControl\ScrollablePanelTest.resx">
       <DependentUpon>ScrollablePanelTest.cs</DependentUpon>
     </EmbeddedResource>

@@ -28,8 +28,20 @@
         /// </summary>
         private void InitializeComponent()
         {
-            components = new System.ComponentModel.Container();
+            this.SuspendLayout();
+            // 
+            // imagePanel
+            // 
+            this.imagePanel.Size = new System.Drawing.Size(363, 292);
+            // 
+            // ScrollablePanelImplementTest
+            // 
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Name = "ScrollablePanelImplementTest";
+            this.Load += new System.EventHandler(this.ScrollablePanelImplementTest_Load);
+            this.ResumeLayout(false);
+
         }
 
         #endregion

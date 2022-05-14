@@ -12,14 +12,11 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 {
     public partial class ScrollablePanelTest : Form
     {
-        ScrollablePanelImplementTest scrollablePanelImplementTest;
 
         public ScrollablePanelTest()
         {
             InitializeComponent();
-            scrollablePanelImplementTest = new ScrollablePanelImplementTest();
-            this.Controls.Add(scrollablePanelImplementTest);
-            scrollablePanelImplementTest.Dock = DockStyle.Fill;
+           
         }
     }
 }
