@@ -23,6 +23,9 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         {
             try
             {
+/*                Console.WriteLine("IMAGE PAINT:\n\tV SCROLL OFFSET: " + vScrollBar.VScrollOffset + "\n\tIMAGE PANEL HEIGHT: " + imagePanel.Height);
+                Console.WriteLine("\tV SCROLL HEIGHT: " + vScrollBar.VScrollBarHeight);
+                Console.WriteLine("\tMAX SCROLL OFFSET: " + vScrollBar.MaxVScrollOffset);*/
                 Bitmap cropped = pikaballoon.Clone(new Rectangle(hScrollBar.HScrollOffset, vScrollBar.VScrollOffset, imagePanel.Width, imagePanel.Height), pikaballoon.PixelFormat);
                 e.Graphics.DrawImage(cropped, new Point(0, 0));
             }
@@ -37,14 +40,21 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             updateScrollBarSize();
         }
 
-        protected override void imagePanel_Resize(object sender, EventArgs e)
+        protected override void ScrollablePanel_Resize(object sender, EventArgs e)
         {
             updateScrollBarSize();
+/*            if (vScrollBar.VScrollOffset > vScrollBar.MaxVScrollOffset)
+            {
+                vScrollBar.VScrollOffset = vScrollBar.MaxVScrollOffset;
+            }*/
+
             base.imagePanel_Resize(sender, e);
         }
 
         private void updateScrollBarSize()
         {
+            Console.WriteLine("V SCROLL HEIGHT: " + vScrollBar.Height); // why is this not showing updated version
+
             // v scroll
             int vScrollAmountRequired = pikaballoon.Height - imagePanel.Height;
             int vScrollBarSize = (vScrollBar.Height - 36) - vScrollAmountRequired;

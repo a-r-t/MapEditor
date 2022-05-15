@@ -36,12 +36,12 @@
             this.scrollablePanelImplementTest1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.scrollablePanelImplementTest1.Location = new System.Drawing.Point(0, 0);
             this.scrollablePanelImplementTest1.Name = "scrollablePanelImplementTest1";
-            this.scrollablePanelImplementTest1.Size = new System.Drawing.Size(461, 343);
+            this.scrollablePanelImplementTest1.Size = new System.Drawing.Size(461, 348);
             this.scrollablePanelImplementTest1.TabIndex = 0;
             // 
             // ScrollablePanelTest
             // 
-            this.ClientSize = new System.Drawing.Size(461, 343);
+            this.ClientSize = new System.Drawing.Size(461, 348);
             this.Controls.Add(this.scrollablePanelImplementTest1);
             this.Name = "ScrollablePanelTest";
             this.ResumeLayout(false);

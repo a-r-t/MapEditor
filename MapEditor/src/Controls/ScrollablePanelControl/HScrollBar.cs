@@ -13,15 +13,15 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 {
     public partial class HScrollBar : ObservableUserControl<HScrollBarListener>
     {
-        private readonly Bitmap leftScrollButtonImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/LeftScrollButton.png");
-        private readonly Bitmap leftScrollButtonDisabledImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/LeftScrollButtonDisabled.png");
-        private readonly Bitmap leftScrollButtonHoveredImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/LeftScrollButtonHovered.png");
-        private readonly Bitmap leftScrollButtonSelectedImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/LeftScrollButtonSelected.png");
+        private readonly Bitmap leftScrollButtonImage;
+        private readonly Bitmap leftScrollButtonDisabledImage;
+        private readonly Bitmap leftScrollButtonHoveredImage;
+        private readonly Bitmap leftScrollButtonSelectedImage;
 
-        private readonly Bitmap rightScrollButtonImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/RightScrollButton.png");
-        private readonly Bitmap rightScrollButtonDisabledImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/RightScrollButtonDisabled.png");
-        private readonly Bitmap rightScrollButtonHoveredImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/RightScrollButtonHovered.png");
-        private readonly Bitmap rightScrollButtonSelectedImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/RightScrollButtonSelected.png");
+        private readonly Bitmap rightScrollButtonImage;
+        private readonly Bitmap rightScrollButtonDisabledImage;
+        private readonly Bitmap rightScrollButtonHoveredImage;
+        private readonly Bitmap rightScrollButtonSelectedImage;
 
         private int hScrollOffset;
         public int HScrollOffset

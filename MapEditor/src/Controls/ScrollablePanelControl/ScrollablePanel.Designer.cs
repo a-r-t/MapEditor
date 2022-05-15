@@ -73,6 +73,7 @@
             this.Controls.Add(this.imagePanel);
             this.Name = "ScrollablePanel";
             this.Size = new System.Drawing.Size(380, 310);
+            this.Resize += new System.EventHandler(this.ScrollablePanel_Resize);
             this.ResumeLayout(false);
 
         }

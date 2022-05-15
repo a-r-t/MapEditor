@@ -13,15 +13,15 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 {
     public partial class VScrollBar : ObservableUserControl<VScrollBarListener>
     {
-        private readonly Bitmap upScrollButtonImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButton.png");
-        private readonly Bitmap upScrollButtonDisabledImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonDisabled.png");
-        private readonly Bitmap upScrollButtonHoveredImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonHovered.png");
-        private readonly Bitmap upScrollButtonSelectedImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/UpScrollButtonSelected.png");
+        private readonly Bitmap upScrollButtonImage;
+        private readonly Bitmap upScrollButtonDisabledImage;
+        private readonly Bitmap upScrollButtonHoveredImage;
+        private readonly Bitmap upScrollButtonSelectedImage;
 
-        private readonly Bitmap downScrollButtonImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButton.png");
-        private readonly Bitmap downScrollButtonDisabledImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonDisabled.png");
-        private readonly Bitmap downScrollButtonHoveredImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonHovered.png");
-        private readonly Bitmap downScrollButtonSelectedImage;// = new Bitmap(@"./Resources/Images/ScrollablePanelControl/DownScrollButtonSelected.png");
+        private readonly Bitmap downScrollButtonImage;
+        private readonly Bitmap downScrollButtonDisabledImage;
+        private readonly Bitmap downScrollButtonHoveredImage;
+        private readonly Bitmap downScrollButtonSelectedImage;
 
         private int vScrollOffset;
         public int VScrollOffset

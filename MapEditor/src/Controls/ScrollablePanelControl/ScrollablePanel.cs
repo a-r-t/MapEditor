@@ -55,6 +55,11 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 
         protected virtual void imagePanel_Resize(object sender, EventArgs e)
         {
+            //imagePanel.Refresh();
+        }
+
+        protected virtual void ScrollablePanel_Resize(object sender, EventArgs e)
+        {
             imagePanel.Refresh();
         }
     }
