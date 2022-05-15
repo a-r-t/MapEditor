@@ -59,20 +59,11 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         }
 
         public int MinHScrollOffset { get; set; }
-        private int maxHScrollOffset;
         public int MaxHScrollOffset
         {
             get
             {
-                return maxHScrollOffset;
-            }
-            set
-            {
-                maxHScrollOffset = value;
-                if (HScrollOffset > MaxHScrollOffset)
-                {
-                    HScrollOffset = MaxHScrollOffset;
-                }
+                return (int)((hScrollBarPanel.Width - HScrollBarWidth - 36) * MouseDragScrollOffset);
             }
         }
 
@@ -139,7 +130,6 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             set
             {
                 hScrollBarWidth = value;
-                MaxHScrollOffset = (int)((hScrollBarPanel.Width - HScrollBarWidth - 36) * MouseDragScrollOffset);
             }
         }
         private int hScrollBarHeight;
@@ -477,12 +467,10 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         private void HScrollBar_Load(object sender, EventArgs e)
         {
             MinHScrollOffset = 0;
-            MaxHScrollOffset = hScrollBarPanel.Width - HScrollBarWidth - 36;
         }
 
         private void hScrollBarPanel_Resize(object sender, EventArgs e)
         {
-            MaxHScrollOffset = hScrollBarPanel.Width - HScrollBarWidth - 36;
             hScrollBarPanel.Refresh();
         }
     }

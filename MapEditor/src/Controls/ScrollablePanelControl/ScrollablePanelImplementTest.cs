@@ -48,35 +48,29 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             // v scroll
             int vScrollAmountRequired = pikaballoon.Height - imagePanel.Height;
             int vScrollBarSize = (vScrollBar.Height - 36) - vScrollAmountRequired;
-
+            double vMouseDragScrollOffset = 1;
             if (vScrollBarSize < 20)
             {
                 int difference = 20 - vScrollBarSize;
                 double dragScrollOffset = vScrollAmountRequired / (double)(vScrollAmountRequired - difference);
-                vScrollBar.MouseDragScrollOffset = dragScrollOffset;
+                vMouseDragScrollOffset = dragScrollOffset;
                 vScrollBarSize = 20;
             }
-            else
-            {
-                vScrollBar.MouseDragScrollOffset = 1;
-            }
             vScrollBar.VScrollBarHeight = vScrollBarSize;
+            vScrollBar.MouseDragScrollOffset = vMouseDragScrollOffset;
 
             // h scroll
             int hScrollAmountRequired = pikaballoon.Width - imagePanel.Width;
             int hScrollBarSize = (hScrollBar.Width - 36) - hScrollAmountRequired;
+            double hMouseDragScrollOffset = 1;
             if (hScrollBarSize < 20)
             {
                 int difference = 20 - hScrollBarSize;
                 double dragScrollOffset = hScrollAmountRequired / (double)(hScrollAmountRequired - difference);
-                hScrollBar.MouseDragScrollOffset = dragScrollOffset;
+                hMouseDragScrollOffset = dragScrollOffset;
                 hScrollBarSize = 20;
             }
-            else
-            {
-                hScrollBar.MouseDragScrollOffset = 1;
-            }
-
+            hScrollBar.MouseDragScrollOffset = hMouseDragScrollOffset;
             hScrollBar.HScrollBarWidth = hScrollBarSize;
         }
     }
