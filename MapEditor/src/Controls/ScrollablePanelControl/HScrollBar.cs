@@ -45,7 +45,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
                 {
                     hScrollOffset = value;
                 }
-                HScrollBarXLocation = hScrollOffset + (leftScrollButtonImage.Width + 1);
+                HScrollBarXLocation = (int)(hScrollOffset / MouseDragScrollOffset) + (leftScrollButtonImage.Width + 1);
 
                 int scrollDifference = hScrollOffset - oldHScrollOffset;
                 if (scrollDifference != 0)
@@ -139,7 +139,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
             set
             {
                 hScrollBarWidth = value;
-                MaxHScrollOffset = hScrollBarPanel.Width - HScrollBarWidth - 36;
+                MaxHScrollOffset = (int)((hScrollBarPanel.Width - HScrollBarWidth - 36) * MouseDragScrollOffset);
             }
         }
         private int hScrollBarHeight;
@@ -157,6 +157,7 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
         public int MouseWheelScrollOffset { get; set; }
         private const int BUTTON_TIMER_INITIAL_INTERVAL_DELAY = 200;
         private const int BUTTON_TIMER_INTERVAL_DELAY = 10;
+        public double MouseDragScrollOffset { get; set; } = 1;
 
         private Timer scrollTimer;
         private Timer buttonTimer;
@@ -444,12 +445,12 @@ namespace MapEditor.src.Controls.ScrollablePanelControl
 
                 if (differenceX > 0 && initialMouseX + HScrollBarXLocation + differenceX <= mouseCoords.X)
                 {
-                    HScrollOffset += differenceX;
+                    HScrollOffset += (int)(differenceX * MouseDragScrollOffset);
                 }
 
                 if (differenceX < 0 && initialMouseX + HScrollBarXLocation + differenceX >= mouseCoords.X)
                 {
-                    HScrollOffset += differenceX;
+                    HScrollOffset += (int)(differenceX * MouseDragScrollOffset);
                 }
             }
         }
